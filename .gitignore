@@ -1,0 +1,16 @@
+# Screenshots written by tools/verify.py
+.verify/
+.verify-live/
+.verify-draft/
+
+# Rebuilt by tools/build_dist.py (and by Netlify's build command)
+dist/
+
+# Netlify CLI link state for this folder
+.netlify/
+
+# Scratch space for the capture and extraction tools
+raw/
+
+__pycache__/
+*.pyc

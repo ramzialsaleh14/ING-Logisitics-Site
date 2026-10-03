@@ -1,0 +1,26 @@
+# Deployment configuration for Netlify.
+#
+# The site itself has no build step - tools/build_dist.py only copies the
+# pages and assets/ into dist/ so that tools/ and .verify/ are never uploaded.
+#
+#   python tools/build_dist.py
+#   npx netlify-cli deploy --dir dist --prod
+
+[build]
+  command = "python3 tools/build_dist.py"
+  publish = "dist"
+
+# The 45 woff2 files never change in place (the font builders write new
+# numbered files), so they are safe to cache indefinitely and expensively to
+# re-fetch. Everything else keeps Netlify's revalidating default, which
+# matters while the photography and stylesheets are still being iterated on.
+[[headers]]
+  for = "/assets/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

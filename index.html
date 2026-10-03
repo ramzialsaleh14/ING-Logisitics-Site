@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ING Logistics — An ideal, professional and safe logistic environment</title>
+<meta name="description" content="ING Logistics: modern warehousing and logistics solutions, logistical support for trading companies, delivery and distribution, track and trace, and versatile workspaces.">
+<link rel="icon" href="assets/logo/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/logo/favicon.png">
+<link rel="stylesheet" href="assets/css/fonts-sarabun.css">
+<link rel="stylesheet" href="assets/css/fonts-cairo.css">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main" data-i18n="nav.skip">Skip to content</a>
+
+<!-- ============================== HEADER ============================== -->
+<header class="header">
+  <div class="header__inner">
+    <a class="header__logo" href="index.html" aria-label="ING Logistics — home">
+      <img class="logo-light" src="assets/logo/ing-logo-light.png" alt="ING Logistics" width="389" height="160">
+      <img class="logo-dark" src="assets/logo/ing-logo-dark.png" alt="" width="389" height="160" aria-hidden="true">
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <ul class="nav__list">
+        <li class="nav__item is-current"><a class="nav__link" href="index.html" data-i18n="nav.home">Home</a></li>
+        <li class="nav__item"><a class="nav__link" href="about-us.html" data-i18n="nav.about">About Us</a></li>
+        <li class="nav__item"><a class="nav__link" href="our-services.html" data-i18n="nav.services">Our Services</a></li>
+        <li class="nav__item"><a class="nav__link" href="our-clients.html" data-i18n="nav.clients">Our Clients</a></li>
+        <li class="nav__item"><a class="nav__link" href="our-team.html" data-i18n="nav.team">Our Team</a></li>
+        <li class="nav__item"><a class="nav__link" href="get-in-touch.html" data-i18n="nav.contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="header__actions">
+      <div class="header__action header__action--track" tabindex="0" role="button" aria-haspopup="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+          <path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="17.5" cy="18" r="2"/>
+        </svg>
+        <span data-i18n="header.track">Track Your Order</span>
+        <div class="track-panel">
+          <strong class="track-panel__title" data-i18n="header.trackTitle">Track your order</strong>
+          <p data-i18n="header.trackText">Follow your shipment from receipt to delivery.</p>
+          <form class="form" onsubmit="return false">
+            <label class="field">
+              <span class="visually-hidden" data-i18n="header.trackTitle">Track your order</span>
+              <input type="text" placeholder="Tracking number" data-i18n-placeholder="header.trackPlaceholder">
+            </label>
+            <button class="btn" type="submit" data-i18n="header.trackButton">Track now</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" data-lang-btn="en" aria-pressed="true" data-i18n-aria="header.langLabel">EN</button>
+        <button type="button" data-lang-btn="ar" aria-pressed="false">ع</button>
+      </div>
+
+      <button class="header__burger" type="button" aria-expanded="false" aria-label="Menu" data-i18n-aria="nav.menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- =============================== HERO =============================== -->
+  <section class="hero" data-slider aria-roledescription="carousel" aria-label="Highlights">
+    <div class="hero__slides">
+
+      <article class="hero__slide is-active">
+        <div class="hero__bg" style="background-image:url('assets/img/hero-1.jpg')"></div>
+        <div class="hero__inner container">
+          <div class="hero__content">
+            <span class="eyebrow" data-i18n="slide1.eyebrow">ING Logistics</span>
+            <h1 class="hero__title" data-i18n="slide1.title">An ideal, professional and safe logistic environment</h1>
+            <p class="hero__text" data-i18n="slide1.text">We provide innovative solutions that serve supply chains and ease their movement.</p>
+            <div class="hero__actions">
+              <a class="btn" href="our-services.html" data-i18n="slide.cta">Our Services</a>
+              <a class="btn btn--ghost" href="get-in-touch.html" data-i18n="slide.cta2">Get in touch</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="hero__slide">
+        <div class="hero__bg" style="background-image:url('assets/img/hero-2.jpg')"></div>
+        <div class="hero__inner container">
+          <div class="hero__content">
+            <span class="eyebrow" data-i18n="slide2.eyebrow">Our Services</span>
+            <h2 class="hero__title" data-i18n="slide2.title">Keeping up with the modern global market</h2>
+            <p class="hero__text" data-i18n="slide2.text">Improving the level of services provided is one of our primary missions.</p>
+            <div class="hero__actions">
+              <a class="btn" href="our-services.html" data-i18n="services.cta">All services</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="hero__slide">
+        <div class="hero__bg" style="background-image:url('assets/img/hero-3.jpg')"></div>
+        <div class="hero__inner container">
+          <div class="hero__content">
+            <span class="eyebrow" data-i18n="slide3.eyebrow">Our Mission</span>
+            <h2 class="hero__title" data-i18n="slide3.title">Logistical support that keeps the supply chain moving</h2>
+            <p class="hero__text" data-i18n="slide3.text">Providing logistical support for trading companies to maintain their sustainability, facilitate the flow of goods between suppliers and markets, and prevent the supply chain from stopping.</p>
+            <div class="hero__actions">
+              <a class="btn" href="get-in-touch.html" data-i18n="slide.cta2">Get in touch</a>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="hero__controls">
+      <div class="hero__controls-inner">
+        <div class="hero__dots" role="tablist" aria-label="Slides">
+          <button class="hero__dot is-active" type="button" role="tab" aria-label="Slide 1"><span></span></button>
+          <button class="hero__dot" type="button" role="tab" aria-label="Slide 2"><span></span></button>
+          <button class="hero__dot" type="button" role="tab" aria-label="Slide 3"><span></span></button>
+        </div>
+        <div class="hero__arrows">
+          <span class="hero__counter">01 / 03</span>
+          <button class="hero__arrow" type="button" data-slide-prev aria-label="Previous slide" data-i18n-aria="hero.prev">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <button class="hero__arrow" type="button" data-slide-next aria-label="Next slide" data-i18n-aria="hero.next">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== STORY =============================== -->
+  <section class="section">
+    <div class="container">
+      <div class="split">
+        <div class="split__media split__media--offset" data-reveal>
+          <img src="assets/img/story.jpg" alt="ING Logistics operations" width="1400" height="1400" loading="lazy">
+        </div>
+        <div class="split__body" data-reveal data-reveal-delay="120">
+          <div class="section-head">
+            <span class="eyebrow" data-i18n="story.eyebrow">Get to know us</span>
+            <h2 data-i18n="story.title">Our Story</h2>
+          </div>
+          <p data-i18n="story.text">In light of the rapid development of the people and the world, and the quantum leap of the global economic market, we decided to join the development and create a logistics revolution that reflects continuous growth and development — by creating a company dedicated to providing innovative, professional, modern solutions to become the distinctive mark in warehousing and logistics services.</p>
+          <a class="link-more" href="about-us.html" data-i18n="story.cta">More about us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ SERVICES ============================== -->
+  <section class="section section--soft" id="services">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow" data-i18n="services.eyebrow">What we do</span>
+        <h2 data-i18n="services.title">Our Services</h2>
+        <p data-i18n="services.text">Providing logistical support for trading companies to maintain their sustainability, facilitate the flow of goods between suppliers and markets to final consumers, and prevent the supply chain from stopping or being obstructed.</p>
+      </div>
+
+      <div class="cards">
+        <article class="card" data-reveal>
+          <span class="card__index">01</span>
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+              <path d="M3 10l9-6 9 6v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M8 20v-6h8v6"/>
+            </svg>
+          </div>
+          <h3 data-i18n="warehouse.title">Warehouse Services Management</h3>
+          <p data-i18n="warehouse.text">We run warehouse services to a high standard with a dedicated team and equipped space, so your goods arrive safely and on time.</p>
+          <a class="link-more" href="our-services.html#warehouse" data-i18n="btn.details">Details</a>
+        </article>
+
+        <article class="card" data-reveal data-reveal-delay="90">
+          <span class="card__index">02</span>
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+              <path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="17.5" cy="18" r="2"/>
+            </svg>
+          </div>
+          <h3 data-i18n="delivery.title">Delivery and Distribution</h3>
+          <p data-i18n="delivery.text">Provides support and assistance to trading companies by delivering products from suppliers to wholesalers, retailers and hypermarkets.</p>
+          <a class="link-more" href="our-services.html#delivery" data-i18n="btn.details">Details</a>
+        </article>
+
+        <article class="card" data-reveal data-reveal-delay="180">
+          <span class="card__index">03</span>
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/>
+            </svg>
+          </div>
+          <h3 data-i18n="track.title">Track and Trace</h3>
+          <p data-i18n="track.text">This service allows our customers to track the status of their order from receipt to delivery.</p>
+          <a class="link-more" href="our-services.html#track" data-i18n="btn.details">Details</a>
+        </article>
+
+        <article class="card" data-reveal data-reveal-delay="270">
+          <span class="card__index">04</span>
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+              <path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/><path d="M3 21h18"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M9 15h2M13 15h2"/>
+            </svg>
+          </div>
+          <h3 data-i18n="offices.title">Various Offices for Work</h3>
+          <p data-i18n="offices.text">It offers administrative offices, meeting spaces and training halls furnished with all the necessary equipment, in a range of sizes to serve the company's customers, businesspeople and entrepreneurs.</p>
+          <a class="link-more" href="our-services.html#offices" data-i18n="btn.details">Details</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= VALUES ============================== -->
+  <section class="section">
+    <div class="container">
+      <div class="split split--reverse">
+        <div class="split__media" data-reveal>
+          <img src="assets/img/values.jpg" alt="Warehouse operations at ING Logistics" width="1920" height="1177" loading="lazy">
+        </div>
+        <div class="split__body" data-reveal data-reveal-delay="120">
+          <div class="section-head">
+            <span class="eyebrow" data-i18n="values.eyebrow">Our Values</span>
+            <h2 data-i18n="values.title">Our Values</h2>
+            <p data-i18n="values.text">Our values at ING are honesty and trust, sincerity, integrity and partnership in pursuit of productivity.</p>
+          </div>
+          <ul class="value-list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+              <div>
+                <strong data-i18n="values.item1.title">Honesty and trust</strong>
+                <span data-i18n="values.item1.text">Honesty in words and deeds, and trust in everything we do with our clients and partners.</span>
+              </div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+              <div>
+                <strong data-i18n="values.item2.title">Sincerity in work</strong>
+                <span data-i18n="values.item2.text">Sincerity and dedication in delivering a service worthy of our clients' trust.</span>
+              </div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+              <div>
+                <strong data-i18n="values.item3.title">Integrity</strong>
+                <span data-i18n="values.item3.text">Transparency and integrity in every dealing, and commitment to professional standards.</span>
+              </div>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+              <div>
+                <strong data-i18n="values.item4.title">Partnership and productivity</strong>
+                <span data-i18n="values.item4.text">One-team spirit and participation in hard work to achieve productivity.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= MISSION & VISION ======================== -->
+  <section class="section section--band">
+    <div class="container">
+      <div class="cards" style="grid-template-columns:repeat(2,1fr);gap:40px">
+        <article class="card" data-reveal>
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="currentColor"/>
+            </svg>
+          </div>
+          <h3 data-i18n="mission.title">Our Mission</h3>
+          <p data-i18n="mission.text">Providing logistical support for trading companies to maintain their sustainability, facilitate the flow of goods between suppliers and markets to final consumers, and prevent the supply chain from stopping or being obstructed.</p>
+        </article>
+
+        <article class="card" data-reveal data-reveal-delay="120">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+              <path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="2.6"/>
+            </svg>
+          </div>
+          <h3 data-i18n="vision.title">Our Vision</h3>
+          <p data-i18n="vision.text">To be an ideal, safe and professional logistics environment with the highest level of equipped transport and distribution fleets, to serve customers and achieve their goals — a leader in its field and a pioneer in the region.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== WAREHOUSE SERVICES MANAGEMENT ================= -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow" data-i18n="warehouse.eyebrow">Warehouse Services Management</span>
+        <h2 data-i18n="warehouse.title">Warehouse Services Management</h2>
+        <p data-i18n="warehouse.text">We run warehouse services to a high standard with a dedicated team and equipped space, so your goods arrive safely and on time.</p>
+      </div>
+
+      <div class="cards">
+        <article class="card" data-reveal>
+          <span class="card__index">01</span>
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+              <path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 21h16"/>
+            </svg>
+          </div>
+          <h3 data-i18n="warehouse.item1.title">Upload and download</h3>
+          <p data-i18n="warehouse.item1.text">Dedicated loading and unloading teams working to full safety standards.</p>
+        </article>
+
+        <article class="card" data-reveal data-reveal-delay="90">
+          <span class="card__index">02</span>
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+              <path d="M3 7l9-4 9 4-9 4z"/><path d="M3 12l9 4 9-4"/><path d="M3 17l9 4 9-4"/>
+            </svg>
+          </div>
+          <h3 data-i18n="warehouse.item2.title">Sorting and grouping</h3>
+          <p data-i18n="warehouse.item2.text">Accurate sorting and consolidation of shipments by destination and requirements.</p>
+        </article>
+
+        <article class="card" data-reveal data-reveal-delay="180">
+          <span class="card__index">03</span>
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+              <path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/>
+            </svg>
+          </div>
+          <h3 data-i18n="warehouse.item3.title">Packaging</h3>
+          <p data-i18n="warehouse.item3.text">Professional packing and packaging that keeps goods intact until delivery.</p>
+        </article>
+
+        <article class="card" data-reveal data-reveal-delay="270">
+          <span class="card__index">04</span>
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+              <path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/>
+            </svg>
+          </div>
+          <h3 data-i18n="warehouse.item4.title">Follow up on damaged goods and returns</h3>
+          <p data-i18n="warehouse.item4.text">Close follow-up and efficient handling of damaged goods and returns.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ QUOTE BAND =========================== -->
+  <section class="band" style="background-image:url('assets/img/band-quote.jpg')">
+    <div class="band__inner container" data-reveal>
+      <blockquote data-i18n="about.heading">Modern logistics solutions for trading companies</blockquote>
+      <cite data-i18n="footer.slogan">To be an ideal, safe and professional logistics environment.</cite>
+    </div>
+  </section>
+
+  <!-- ============================== STATS ============================== -->
+  <section class="section section--soft">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow" data-i18n="stats.eyebrow">By the numbers</span>
+        <h2 data-i18n="stats.title">Our logistics capability</h2>
+      </div>
+      <div class="stats">
+        <div class="stat" data-reveal>
+          <div class="stat__value"><span data-count-to="12"></span><span>+</span></div>
+          <div class="stat__label" data-i18n="stats.value1">Warehouses</div>
+        </div>
+        <div class="stat" data-reveal data-reveal-delay="90">
+          <div class="stat__value"><span data-count-to="85"></span><span>+</span></div>
+          <div class="stat__label" data-i18n="stats.value2">Transport fleet</div>
+        </div>
+        <div class="stat" data-reveal data-reveal-delay="180">
+          <div class="stat__value"><span data-count-to="240"></span><span>+</span></div>
+          <div class="stat__label" data-i18n="stats.value3">Team members</div>
+        </div>
+        <div class="stat" data-reveal data-reveal-delay="270">
+          <div class="stat__value"><span data-count-to="99"></span><span>%</span></div>
+          <div class="stat__label" data-i18n="stats.value4">Accuracy rate</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= CLIENTS ============================= -->
+  <section class="section">
+    <div class="container">
+      <div class="split">
+        <div class="split__media" data-reveal>
+          <img src="assets/img/services-intro.jpg" alt="ING Logistics distribution" width="1600" height="1068" loading="lazy">
+        </div>
+        <div class="split__body" data-reveal data-reveal-delay="120">
+          <div class="section-head">
+            <span class="eyebrow" data-i18n="clients.eyebrow">Our partners</span>
+            <h2 data-i18n="clients.title">Our Clients</h2>
+            <p data-i18n="clients.text">It selects its clients with great care and consideration, since our mission is to offer our clients quick, high-quality services that will set us apart from competitors in the logistics services industry.</p>
+          </div>
+          <a class="link-more" href="our-clients.html" data-i18n="clients.title">Our Clients</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================== TEAM ============================== -->
+  <section class="section section--band">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow" data-i18n="team.eyebrow">Who we work with</span>
+        <h2 data-i18n="team.title">Our Team</h2>
+        <p data-i18n="team.text">By combining individuals with ambition, expertise and in-depth experience in the field of logistics services with the spirit of youth impetuous for innovation and change, it works to create a strong and professional team.</p>
+      </div>
+
+      <div class="team-grid">
+        <article class="member" data-reveal>
+          <div class="member__avatar" aria-hidden="true">EX</div>
+          <h3 data-i18n="team.role1">Executive management</h3>
+          <span data-i18n="stats.value3">Team members</span>
+          <p data-i18n="team.desc1">Strategic leadership that builds partnerships and delivers sustainable growth.</p>
+        </article>
+        <article class="member" data-reveal data-reveal-delay="90">
+          <div class="member__avatar" aria-hidden="true">OP</div>
+          <h3 data-i18n="team.role2">Operations management</h3>
+          <span data-i18n="stats.value3">Team members</span>
+          <p data-i18n="team.desc2">Smooth daily planning and execution of every shipping and storage operation.</p>
+        </article>
+        <article class="member" data-reveal data-reveal-delay="180">
+          <div class="member__avatar" aria-hidden="true">WH</div>
+          <h3 data-i18n="team.role3">Warehouse management</h3>
+          <span data-i18n="stats.value3">Team members</span>
+          <p data-i18n="team.desc3">Managing space and equipment to keep the supply chain efficient.</p>
+        </article>
+        <article class="member" data-reveal data-reveal-delay="270">
+          <div class="member__avatar" aria-hidden="true">CS</div>
+          <h3 data-i18n="team.role4">Customer service</h3>
+          <span data-i18n="stats.value3">Team members</span>
+          <p data-i18n="team.desc4">Continuous support and close follow-up on orders and returns.</p>
+        </article>
+        <article class="member" data-reveal>
+          <div class="member__avatar" aria-hidden="true">FL</div>
+          <h3 data-i18n="team.role5">Transport fleet</h3>
+          <span data-i18n="stats.value3">Team members</span>
+          <p data-i18n="team.desc5">A fleet equipped to the highest standard to cover transport and distribution.</p>
+        </article>
+        <article class="member" data-reveal data-reveal-delay="90">
+          <div class="member__avatar" aria-hidden="true">IT</div>
+          <h3 data-i18n="team.role6">Information technology</h3>
+          <span data-i18n="stats.value3">Team members</span>
+          <p data-i18n="team.desc6">Track and trace systems that connect customers to their shipments live.</p>
+        </article>
+        <article class="member" data-reveal data-reveal-delay="180">
+          <div class="member__avatar" aria-hidden="true">QS</div>
+          <h3 data-i18n="team.role7">Quality and safety</h3>
+          <span data-i18n="stats.value3">Team members</span>
+          <p data-i18n="team.desc7">Commitment to quality and safety standards at every stage.</p>
+        </article>
+        <article class="member" data-reveal data-reveal-delay="270">
+          <div class="member__avatar" aria-hidden="true">BD</div>
+          <h3 data-i18n="team.role8">Business development</h3>
+          <span data-i18n="stats.value3">Team members</span>
+          <p data-i18n="team.desc8">Logistics solutions shaped around each client's needs.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================== FAQ =============================== -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow" data-i18n="faq.eyebrow">Frequently asked</span>
+        <h2 data-i18n="faq.title">Questions we are often asked</h2>
+      </div>
+
+      <div class="accordion" data-reveal>
+        <div class="accordion__item">
+          <button class="accordion__trigger" type="button">
+            <span data-i18n="faq.q1">What services does ING provide?</span>
+            <span class="accordion__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="accordion__panel"><div data-i18n="faq.a1">ING provides warehouse services management, loading and unloading, sorting and grouping, packaging, follow-up on damaged goods and returns, as well as delivery and distribution, track and trace, and various offices for work.</div></div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__trigger" type="button">
+            <span data-i18n="faq.q2">Can I track my shipment?</span>
+            <span class="accordion__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="accordion__panel"><div data-i18n="faq.a2">Yes. ING provides a track and trace service that lets customers follow the status of their order from receipt through to delivery.</div></div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__trigger" type="button">
+            <span data-i18n="faq.q3">Who are ING's clients?</span>
+            <span class="accordion__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="accordion__panel"><div data-i18n="faq.a3">We serve trading companies, wholesalers, retailers and hypermarkets, businesspeople and entrepreneurs, and the company selects its clients with great care and consideration.</div></div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__trigger" type="button">
+            <span data-i18n="faq.q4">How do I start working with you?</span>
+            <span class="accordion__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </button>
+          <div class="accordion__panel"><div data-i18n="faq.a4">Get in touch using the contact details below and our team will review your requirements and propose the right logistics solution.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== CTA ================================ -->
+  <section class="band" style="background-image:url('assets/img/cta.jpg')">
+    <div class="band__inner container" data-reveal>
+      <span class="eyebrow eyebrow--plain" data-i18n="contact.eyebrow">Get in touch</span>
+      <blockquote data-i18n="cta.title" style="font-size:64px">Thank you</blockquote>
+      <p class="lead" style="color:rgba(255,255,255,.82);max-width:640px;margin:0 auto 32px" data-i18n="cta.text">Thank you for your trust. We are ready to support your business with end-to-end logistics solutions, from warehousing to your customer's door.</p>
+      <a class="btn" href="get-in-touch.html" data-i18n="cta.button">Start with us</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================== FOOTER ============================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <img class="footer__logo" src="assets/logo/ing-logo-light.png" alt="ING Logistics" width="389" height="160" loading="lazy">
+        <p data-i18n="footer.about">ING Logistics: an ideal, safe and professional logistics environment delivering innovative solutions that serve supply chains and keep them moving.</p>
+        <div class="socials" style="margin-top:24px">
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 1 0 3.5a2.5 2.5 0 0 1 4.98 0zM.4 8.2h4.2V24H.4zM8.3 8.2h4v2.2h.1c.6-1.1 2-2.4 4.1-2.4 4.4 0 5.2 2.9 5.2 6.6V24h-4.2v-8.3c0-2 0-4.5-2.8-4.5s-3.2 2.2-3.2 4.4V24H8.3z"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-7 8 8.2 12h-6.4l-5-7.3L5.9 22H2.8l7.5-8.6L2.4 2h6.6l4.5 6.6zM17.8 20h1.7L7.3 3.8H5.5z"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.3 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .3-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.3-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.3 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 4.9a4.9 4.9 0 1 0 0 9.8 4.9 4.9 0 0 0 0-9.8zm0 8.1a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zm6.2-8.3a1.1 1.1 0 1 1-2.3 0 1.1 1.1 0 0 1 2.3 0z"/></svg></a>
+        </div>
+      </div>
+
+      <div>
+        <h3 data-i18n="footer.linksTitle">Quick links</h3>
+        <ul class="footer__links">
+          <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+          <li><a href="about-us.html" data-i18n="nav.about">About Us</a></li>
+          <li><a href="our-clients.html" data-i18n="nav.clients">Our Clients</a></li>
+          <li><a href="our-team.html" data-i18n="nav.team">Our Team</a></li>
+          <li><a href="get-in-touch.html" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 data-i18n="footer.servicesTitle">Our Services</h3>
+        <ul class="footer__links">
+          <li><a href="our-services.html#warehouse" data-i18n="warehouse.title">Warehouse Services Management</a></li>
+          <li><a href="our-services.html#delivery" data-i18n="delivery.title">Delivery and Distribution</a></li>
+          <li><a href="our-services.html#track" data-i18n="track.title">Track and Trace</a></li>
+          <li><a href="our-services.html#offices" data-i18n="offices.title">Various Offices for Work</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 data-i18n="footer.contactTitle">Contact information</h3>
+        <ul class="footer__contact">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg>
+            <span data-i18n="contact.address">Saudi Arabia</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg>
+            <a href="tel:+966000000000" dir="ltr">+966 00 000 0000</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+            <a href="mailto:info@ing-logistics.com" dir="ltr">info@ing-logistics.com</a>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+            <span data-i18n="contact.hours">Sunday – Thursday: 9:00 AM – 6:00 PM</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>&copy; <span data-year>2026</span> ING Logistics. <span data-i18n="footer.copyright">All rights reserved.</span></span>
+      <a href="#main" data-i18n="footer.backToTop">Back to top</a>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" type="button" aria-label="Back to top" data-i18n-aria="footer.backToTop">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
