@@ -521,14 +521,14 @@ PAGES = [
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg>
               </div>
               <div><strong data-i18n="contact.addressLabel">Address</strong>
-              <span data-i18n="contact.address">Saudi Arabia</span></div>
+              <a href="https://maps.google.com/?q=32.51422635237183,35.94295766426107" target="_blank" rel="noopener" dir="ltr" data-i18n="contact.address">32.514226, 35.942958</a></div>
             </li>
             <li>
               <div class="card__icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg>
               </div>
               <div><strong data-i18n="contact.phoneLabel">Phone</strong>
-              <a href="tel:+966000000000" dir="ltr">+966 00 000 0000</a></div>
+              <a href="tel:+962799723777" dir="ltr">0799723777</a></div>
             </li>
             <li>
               <div class="card__icon">
@@ -542,7 +542,7 @@ PAGES = [
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
               </div>
               <div><strong data-i18n="contact.hoursLabel">Opening hours</strong>
-              <span data-i18n="contact.hours">Sunday – Thursday: 9:00 AM – 6:00 PM</span></div>
+              <span data-i18n="contact.hours">Saturday – Thursday: 8:00 AM – 5:00 PM</span></div>
             </li>
           </ul>
         </div>

@@ -5,7 +5,6 @@ commercial **GlobeFarer** theme by Qode), with every piece of content replaced b
 company's own brochure, `ing_company_profile_updated0.pdf`.
 
 No build step, no framework, no CDN: open `index.html` in a browser and it works.
-It is deployed at <https://inglogistics.netlify.app> — see [Deploying](#deploying).
 
 ```powershell
 # simplest
@@ -21,7 +20,7 @@ python -m http.server 8765 --bind 127.0.0.1   # then open http://127.0.0.1:8765/
 
 | File | Contents |
 | --- | --- |
-| `index.html` | 3-slide hero, story, services, values, mission & vision, warehouse services, stats, clients, team, FAQ, closing CTA |
+| `index.html` | Hero slider, story, services, values, mission & vision, warehouse services, stats, clients, team, FAQ, closing CTA |
 | `about-us.html` | Our Story, Mission, Vision, Values, capability stats |
 | `our-services.html` | Warehouse Services Management, Delivery & Distribution, Track & Trace, Offices, FAQ |
 | `our-clients.html` | Who ING serves |
@@ -37,11 +36,8 @@ assets/
         fonts-cairo.css      self-hosted Cairo (Arabic)
   js/   i18n.js              Arabic strings, keyed by data-i18n
         main.js              slider, sticky header, nav, accordion, form, counters
-  img/  hero-1…3.jpg         slider frames
-        band-*.jpg           full-bleed quote / service bands
-        page-head-*.jpg      inner-page headers
-        story/values/services-*/cta.jpg   section insets
-  logo/ ing-logo-{dark,light}.png, favicon.png
+  img/  hero slides + brand photography
+  logo/ ing-logo-{dark,light}.png, ing-mark.png, favicon.png
   fonts/                    woff2 files
 tools/                       capture, extraction and validation scripts (see below)
 ```
@@ -56,20 +52,54 @@ rate-limits by TLS fingerprint, so the reference capture was made with a real br
 (`tools/scrape_pw.py`) and the design values were read from the rendered page with
 `getComputedStyle` (`tools/tokens.py`).
 
-The recreated tokens are those measured values, not guesses:
+**Layout metrics** are those measured values, not guesses:
 
 | Token | Value |
 | --- | --- |
-| Accent (buttons, links, rules) | `#f7c600` |
-| Dark (headings, footer) | `#1b1b1b` |
 | Body text | `#5b5b5b` |
-| Section band | `#dfdfdf` |
 | Latin type | Sarabun — 18px/1.444 body, 45px h2, 22px h4, 17px nav & buttons |
 | Content grid | 1400px, header 80px, transparent over the hero and sticky on scroll |
 
 Component shapes follow the theme's own vocabulary: transparent header with logo left /
 nav right / "Track Your Order" dropdown, full-height hero slider with progress dots,
-160px section rhythm, gold-underlined list markers, dark 4-column footer.
+160px section rhythm, orange-underlined list markers, dark 4-column footer.
+
+### Brand refresh (Oct 2026)
+
+`ing logo guideline new.pdf` (Brand Identity v1.0) replaced the site's original colours,
+logo raster and photography. The palette now comes from the guidelines rather than from
+the theme:
+
+| Token | Value | Source |
+| --- | --- | --- |
+| Accent (buttons, links, rules) | `#f36c24` | p14 "3.1 Main Logo Colors" (RGB 243 108 36) |
+| Charcoal (headings, dark bands) | `#373839` | p4 "1.1 Design Overview" |
+| Deepest ink (footer) | `#231f20` | logo artwork |
+| Section band / soft | `#e5e5e5` / `#f4f4f4` | p4 brand neutrals |
+| Muted / hairline | `#939598` / `#dcddde` | pattern artwork strokes |
+| Hover tint | `#f78a50` | derived from the orange (not specified) |
+
+The logo is re-cut from the guidelines' *vectors* (p10 primary logomark, p12 iconic
+logomark), so the two brand colours are exact and the variants the guidelines prescribe
+are available — see `tools/build_brand.py`. Typography is unchanged: the guidelines name
+Eurostile Extended and Frutiger LT Arabic, both commercial licences the site cannot
+self-host, so Sarabun/Cairo stay.
+
+The logo itself is the same design the site already carried (the mark, proportions and
+orange accents match to within a fraction of a percent); what changed is the orange
+(`#f16b22` → `#f36c24`), the favicon (now the iconic logomark instead of a squeezed
+lockup) and the photography below.
+
+Guidelines' usage rules worth keeping in mind when the logo is placed:
+
+* **Clear space** — 50% of the logomark's height on every side (p9 "2.2 Minimum clear
+  space"); the header/footer already clear this.
+* **Variants** — two colour on white, one colour where colour is impossible, one colour
+  reverse on photography or charcoal (p11 "2.4 Logo Variation"). The header swaps
+  `ing-logo-light.png` (reverse, over the hero) for `ing-logo-dark.png` (two colour, once
+  the header turns white); the footer uses the reverse mark.
+* **Iconic logomark** (`ing-mark.png`) is the small-size variant (p10 "2.3 Logo Usage") —
+  it is what the favicon is built from.
 
 ### Arabic mode
 
@@ -90,47 +120,25 @@ Every text and image comes from `ing_company_profile_updated0.pdf` (17 slides, 1
 
 | PDF page | Section on the site |
 | --- | --- |
-| 2–4 | Hero slider copy (slides 1 and 2) |
+| 2–4 | Hero slider (3 slides) |
 | 5 | Our Values (`values.jpg`) |
 | 6 | Our Story (`story.jpg`) |
-| 7 | Our Mission (hero slide 3) |
+| 7 | Our Mission |
 | 8 | Our Vision |
-| 9 | Our Services divider (`services-hero.jpg`, hero slide 1) |
-| 10 | Our Services (`services-intro.jpg`, hero slide 2) |
+| 9–10 | Our Services (`services-hero.jpg`, `services-intro.jpg`) |
 | 11 | Warehouse Services Management (4 services) |
 | 12 | Delivery and Distribution |
 | 13 | Track and Trace |
 | 14 | Various Offices for Work |
 | 15 | Our Clients |
 | 16 | Our Team |
-| 17 | Closing CTA (`cta.jpg`, hero slide 3) |
+| 17 | Closing CTA (`cta.jpg`) |
 
-### The five photographs
-
-The brochure embeds 32 images, but only five are photographs. The rest carry no artwork
-at all: 20 flat black-and-white stencils that sit behind the Arabic text runs, five faint
-glow overlays on page 7 (mean opacity 5–44 out of 255), and the ING logo. Those five
-photographs are therefore the entire photographic source for the site. The sliders that
-used to be here, `slide-1…4.jpg`, were the WordPress site's own uploads; they have been
-dropped.
-
-`tools/build_images.py` therefore cuts each photograph more than once: a cinematic 16:9
-frame for the slider, a wider letterbox for the full-bleed bands and page headers, and a
-taller frame anchored lower down for the section insets. Each cut is fixed by an aspect
-ratio and a vertical focus, so no page shows the same framing twice.
-
-| xref | Resolution | Brochure page | Cut into |
-| --- | --- | --- | --- |
-| `6269` | 5040×3360 | p9 Our Services divider | hero 1, `services-hero.jpg`, `band-quote.jpg`, `page-head-clients.jpg` |
-| `6315` | 4026×2687 | p10 Our Services | hero 2, `services-intro.jpg`, `page-head-contact.jpg` |
-| `6641` | 4030×2687 | p17 Thank you | hero 3, `cta.jpg` |
-| `6040` | 3327×2040 | p5 Our Values | `values.jpg` |
-| `6058` | 2292×2292 | p6 Our Story | `story.jpg`, `band-services.jpg`, `page-head-team.jpg` |
-
-Every file is read straight out of the PDF at the resolution it stores, so nothing on the
-site is a downscaled copy of anything else — the photography is now up to 5040px wide
-where it used to be 1600–1920px. The logo is the site's `cropped-ingLogo.png`, re-cut as
-dark and white variants plus a favicon.
+The brochure supplied the photography for the first build. The brand refresh replaced it:
+all nine site photos (`slide-1…4.jpg`, `story.jpg`, `values.jpg`, `services-hero.jpg`,
+`services-intro.jpg`, `cta.jpg`) are now cut from the guidelines' four "Visual
+Application" photographs (p25-28), and the logo is re-cut from the guideline vectors.
+See [Brand refresh](#brand-refresh-oct-2026) and `tools/build_images.py`.
 
 ### Faithfulness notes
 
@@ -139,11 +147,9 @@ The Arabic in the PDF is stored as *Arabic Presentation Forms-B* (pre-shaped gly
 justification kashida were dropped. Otherwise the wording is the brochure's, including
 its own inconsistencies, which you may want to correct at some point:
 
-* **Hero statement 3 (PDF p4)** — its English is a copy-paste of p2 ("An ideal,
+* **Hero slide 3** — the brochure's English is a copy-paste of slide 1 ("An ideal,
   professional and safe logistic environment") while the Arabic says *"we provide
-  innovative solutions that serve supply chains and ease their movement"*. The site
-  translates the Arabic and uses it as the opening slide's supporting line, so the hero
-  now says something new on every slide.
+  innovative solutions that serve supply chains"*. The site translates the Arabic.
 * **Our Services intro (PDF p10)** — the English paragraph there is actually the *Vision*
   text, while the Arabic is the *Mission* text. The site uses the Mission wording in both
   languages so the two languages agree.
@@ -152,9 +158,9 @@ its own inconsistencies, which you may want to correct at some point:
   in the value list below it.
 * The word "ing" appears inline inside several Arabic sentences (it is the logo sitting in
   the middle of the line in the PDF); it is rendered as **ING** on the site.
-* The brochure's orange (`#ff8906`) is its own brand accent, but the site keeps the
-  GlobeFarer gold (`#f7c600`) so the rebuild still reads as the same website. Changing
-  `--main` in `assets/css/style.css` switches the whole palette to the brochure orange.
+* The brochure's own orange (`#ff8906`) was ignored by the first build, which kept the
+  GlobeFarer gold (`#f7c600`). The brand refresh settled this: the site now uses the
+  guidelines' orange `#f36c24` for `--main`, so the logo, buttons and rules all match.
 
 ---
 
@@ -167,23 +173,25 @@ Capture and extraction (require network access to ing-logistics.com and the PDF)
 | `fetch.py` | curl-based fetcher that retries through the Cloudflare 403s |
 | `scrape_pw.py` | renders pages in a real browser, saving DOM + screenshots |
 | `tokens.py` | measures the live typography/palette via `getComputedStyle` |
-| `download_assets.py` | mirrors the logo and the two web fonts |
+| `download_assets.py` | mirrors the logo, the uploaded slides and the two web fonts |
 | `render_pdf.py` | renders brochure pages and builds contact sheets |
 | `pdf_layout.py` | dumps per-page text spans (font/size/colour/position) and image placement |
 | `classify_images.py` | maps every embedded image to its brochure page/section |
 | `normalize_arabic.py` | converts presentation-form Arabic to standard characters |
-| `build_images.py` | cuts every site image out of the brochure's five photographs |
-| `build_brand.py` | produces the logo variants and favicon |
+| `extract_pdf_images.py`, `classify_images.py` | brochure-era: pull and map the company profile's embedded photos |
+| `brand_source.py` | the guidelines' logo geometry, palette and photo crops, shared by the two builders below |
+| `build_images.py` | cuts the nine site photos from the guidelines' four photographs (EDSR upscale, then exact-size crop) |
+| `build_brand.py` | re-cuts the logo, its reverse variant, the iconic logomark and the favicon from the guideline vectors |
 
 Build and validation (no network needed):
 
 | Script | Purpose |
 | --- | --- |
 | `build_pages.py` | regenerates the five inner pages from the header/footer shell in `index.html` |
-| `build_dist.py` | assembles `dist/`, the deployable subset (pages + `assets/`) |
 | `verify.py` | loads every page in Chromium, fails on console errors/broken requests, screenshots EN + AR + mobile |
 | `check_layout.py` | asserts geometry, palette, fonts and zero horizontal overflow in both directions |
 | `check_content.py` | asserts i18n key coverage, no dead links, no missing assets, sane headings |
+| `build_dist.py` | assembles `dist/`, the deployable subset (six pages + `assets/`) |
 
 Validation scripts expect the site to be served on `127.0.0.1:8765`:
 
@@ -192,12 +200,11 @@ python -m http.server 8765 --bind 127.0.0.1   # in one shell
 python tools/verify.py; python tools/check_layout.py; python tools/check_content.py
 ```
 
-`verify.py` and `check_layout.py` take a `SITE_BASE` environment variable, so the
-same suites can be pointed at a deployment (`SITE_SHOTS` keeps the screenshots
-they write away from the localhost set).
-
 Requirements: Python 3 with `pymupdf`, `pillow`, `numpy`, `beautifulsoup4`, `lxml`,
 `playwright` (plus `playwright install chromium`) and Node.js for `check_content.py`.
+Rebuilding the photography with `build_images.py` additionally needs
+`opencv-contrib-python-headless` and the EDSR model in `tools/models/` (38 MB, kept out
+of the site itself and re-downloadable from `Saafke/EDSR_Tensorflow`).
 
 ---
 
@@ -210,32 +217,16 @@ python tools/build_dist.py
 npx netlify-cli@26 deploy --dir dist --prod --message "…"
 ```
 
-`build_dist.py` copies only the six pages and `assets/` into `dist/`, so the
-capture scripts in `tools/`, the screenshots in `.verify/` and this README are
-never uploaded — they 404 on the live site. `netlify.toml` records the same
-publish directory and long-lived caching for the woff2 files (everything else
-keeps Netlify's revalidating default, which matters while the photography and
-stylesheets are still being iterated on).
+`build_dist.py` copies only the six pages and `assets/` into `dist/`, so the capture
+scripts in `tools/`, the screenshots in `.verify/` and this README are never uploaded —
+they 404 on the live site. `netlify.toml` records the same publish directory plus
+long-lived caching for the 45 woff2 files; everything else keeps Netlify's revalidating
+default, which matters while the photography and stylesheets are still being iterated on.
 
-Two details of the Netlify team defaults are worth knowing:
-
-* New sites inherit the team's **SSO login** gate, which makes every URL answer
-  `401` until it is switched off. It is off for this site (`sso_login: false`);
-  the other sites in the team are untouched.
-* The `command` in `netlify.toml` runs `build_dist.py`, but only so that a future
-  Git-connected build produces the same output. The site has no real build step,
-  and CLI deploys pass `--no-build`.
-
-The deployment was accepted by the same suites that run locally:
-
-```powershell
-$env:SITE_BASE = "https://inglogistics.netlify.app"
-$env:SITE_SHOTS = ".verify-live"
-python tools/verify.py; python tools/check_layout.py
-```
-
-`netlify-cli` 26.x is current here because the CLI 27 line requires Node 22 and
-this machine runs Node 20.
+The `command` in `netlify.toml` runs `build_dist.py`, but only so that a Git-connected
+build would produce the same output. The site has no real build step, so CLI deploys pass
+`--no-build`. `netlify-cli` 26.x is the line to use here: 27.x requires Node 22 and this
+machine runs Node 20.
 
 ---
 
@@ -243,9 +234,12 @@ this machine runs Node 20.
 
 * The contact form has **no backend** — it validates in the browser and stops there.
   Point it at your form handler (or a service such as Formspree) before going live.
-* Phone number, e-mail address, street address and the statistic figures are **not** in
-  the brochure; they are placeholders. Replace them in the footer, on
-  `get-in-touch.html`, and in the counters (`data-count-to`) on the home page.
+* Phone number, e-mail address and street address are **not** in the brochure. The phone
+  (`0799723777`, i.e. `+962 79 972 3777`), the opening hours (Saturday–Thursday,
+  8:00 AM – 5:00 PM) and the location — linked to the company's coordinates
+  `32.514226, 35.942958` on Google Maps — are the company's real details. The e-mail
+  address, the social links and the statistic figures (`data-count-to`) are still
+  placeholders.
 * Social links in the footer are `#` placeholders.
 * Team members are shown as functions (executive, operations, warehouse, …) because the
   brochure has no named staff photos.

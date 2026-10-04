@@ -12,5 +12,9 @@ dist/
 # Scratch space for the capture and extraction tools
 raw/
 
+# The EDSR upscaling model build_images.py needs (38 MB, re-downloadable from
+# Saafke/EDSR_Tensorflow). Kept out of the repo; it is not a runtime file.
+tools/models/
+
 __pycache__/
 *.pyc

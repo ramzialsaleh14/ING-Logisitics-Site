@@ -3,22 +3,16 @@ errors or broken local requests, exercise the EN/AR toggle, and capture
 screenshots of both languages plus mobile widths.
 
 usage: python tools/verify.py
-
-SITE_BASE overrides the target, so the same suite can also check a deployment:
-
-  $env:SITE_BASE = "https://inglogistics.netlify.app"
-  $env:SITE_SHOTS = ".verify-live"
-  python tools/verify.py
 """
 import os
 import sys
 
 from playwright.sync_api import sync_playwright
 
-BASE = os.environ.get("SITE_BASE", "http://127.0.0.1:8765")
+BASE = "http://127.0.0.1:8765"
 PAGES = ["index.html", "about-us.html", "our-services.html",
          "our-clients.html", "our-team.html", "get-in-touch.html"]
-SHOTS = os.environ.get("SITE_SHOTS", ".verify")
+SHOTS = ".verify"
 
 problems = []
 

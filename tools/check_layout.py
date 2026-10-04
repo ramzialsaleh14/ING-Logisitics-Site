@@ -1,20 +1,17 @@
 """Assert the rendered geometry, palette and fonts against the values measured
 from the original GlobeFarer build, and check for horizontal overflow.
 
+The palette assertions were re-based on `ing logo guideline new.pdf` when the
+brand refresh replaced the GlobeFarer gold accent with the brand orange.
+
 usage: python tools/check_layout.py
-
-SITE_BASE overrides the target, so the same suite can also check a deployment:
-
-  $env:SITE_BASE = "https://inglogistics.netlify.app"
-  python tools/check_layout.py
 """
 import json
-import os
 import sys
 
 from playwright.sync_api import sync_playwright
 
-BASE = os.environ.get("SITE_BASE", "http://127.0.0.1:8765")
+BASE = "http://127.0.0.1:8765"
 failures = []
 
 
@@ -40,15 +37,15 @@ def main():
         page.goto(f"{BASE}/index.html", wait_until="load")
         page.wait_for_timeout(2500)
 
-        print("\n--- typography & palette (vs measured GlobeFarer values) ---")
+        print("\n--- typography & palette (layout: measured GlobeFarer, colours: brand guidelines) ---")
         check("body font-family", rgb(page, "body", "font-family").split(",")[0].strip("'\""), "Sarabun")
         check("body font-size", rgb(page, "body", "font-size"), "18px")
         check("body color", rgb(page, "body", "color"), "rgb(91, 91, 91)")
         check("h2 font-size", rgb(page, ".section-head h2", "font-size"), "45px")
-        check("h2 color", rgb(page, ".section-head h2", "color"), "rgb(27, 27, 27)")
-        check("btn background", rgb(page, ".hero .btn", "background-color"), "rgb(247, 198, 0)")
-        check("main accent var", rgb(page, "html", "--main").strip(), "#f7c600")
-        check("section band bg", rgb(page, ".section--band", "background-color"), "rgb(223, 223, 223)")
+        check("h2 color", rgb(page, ".section-head h2", "color"), "rgb(55, 56, 57)")
+        check("btn background", rgb(page, ".hero .btn", "background-color"), "rgb(243, 108, 36)")
+        check("main accent var", rgb(page, "html", "--main").strip(), "#f36c24")
+        check("section band bg", rgb(page, ".section--band", "background-color"), "rgb(229, 229, 229)")
 
         print("\n--- layout ---")
         check("container max-width", rgb(page, ".container", "max-width"), "1400px")

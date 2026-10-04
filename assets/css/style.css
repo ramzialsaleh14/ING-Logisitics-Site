@@ -1,26 +1,29 @@
 @charset "UTF-8";
 /* ==========================================================================
    ING Logistics — design system
-   Visual language recreated from the live GlobeFarer (Qode) build:
-     accent  #f7c600   dark #1b1b1b   body #5b5b5b   section band #dfdfdf
+   Palette taken from `ing logo guideline new.pdf` (Brand Identity v1.0):
+     orange   #f36c24  (p14 "3.1 Main Logo Colors")
+     charcoal #373839  (p4  "1.1 Design Overview")
+     neutrals #e5e5e5 / #f4f4f4, muted #939598, hairline #dcddde
+   Structure follows the recreated GlobeFarer (Qode) layout: 1400px content
+   grid, header 80px tall and transparent over the hero, 160px section rhythm.
      Latin type: Sarabun (theme font)   Arabic type: Cairo (brochure font)
-     header 80px tall and transparent over the hero, 1400px content grid
    Layout is written with logical properties so the Arabic (RTL) mode mirrors
    without a second stylesheet.
    ========================================================================== */
 
 /* ------------------------------- tokens --------------------------------- */
 :root {
-  --main: #f7c600;
-  --main-hover: #ffd731;
-  --dark: #1b1b1b;
-  --dark-2: #101010;
-  --dark-3: #262626;
+  --main: #f36c24;
+  --main-hover: #f78a50;
+  --dark: #373839;
+  --dark-2: #231f20;
+  --dark-3: #4c4e50;
   --body: #5b5b5b;
-  --muted: #979797;
-  --line: #e6e6e6;
-  --band: #dfdfdf;
-  --soft: #f7f7f7;
+  --muted: #939598;
+  --line: #dcddde;
+  --band: #e5e5e5;
+  --soft: #f4f4f4;
   --white: #fff;
 
   --container: 1400px;
@@ -109,7 +112,7 @@ html[data-lang="ar"] h3 { font-size: 28px; line-height: 1.35; }
 .section--tight { padding: 80px 0; }
 .section--band { background: var(--band); }
 .section--soft { background: var(--soft); }
-.section--dark { background: var(--dark); color: #c9c9c9; }
+.section--dark { background: var(--dark); color: #c9cbcc; }
 .section--dark h1, .section--dark h2, .section--dark h3, .section--dark h4 { color: var(--white); }
 .section--flush { padding: 0; }
 
@@ -413,10 +416,10 @@ html[data-lang="ar"] h3 { font-size: 28px; line-height: 1.35; }
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(12, 12, 12, .88) 0%, rgba(12, 12, 12, .62) 46%, rgba(12, 12, 12, .3) 100%);
+  background: linear-gradient(90deg, rgba(35, 31, 32, .88) 0%, rgba(35, 31, 32, .62) 46%, rgba(35, 31, 32, .3) 100%);
 }
 html[dir="rtl"] .hero__slide::after {
-  background: linear-gradient(270deg, rgba(12, 12, 12, .88) 0%, rgba(12, 12, 12, .62) 46%, rgba(12, 12, 12, .3) 100%);
+  background: linear-gradient(270deg, rgba(35, 31, 32, .88) 0%, rgba(35, 31, 32, .62) 46%, rgba(35, 31, 32, .3) 100%);
 }
 
 .hero__inner { position: relative; z-index: 2; }
@@ -502,7 +505,7 @@ html[dir="rtl"] .hero__slide::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(12, 12, 12, .72), rgba(12, 12, 12, .88));
+  background: linear-gradient(180deg, rgba(35, 31, 32, .72), rgba(35, 31, 32, .88));
 }
 .page-head__inner { position: relative; z-index: 2; }
 .page-head__title { color: var(--white); margin-bottom: 12px; }
@@ -560,7 +563,7 @@ html[dir="rtl"] .hero__slide::after {
   height: 62px;
   display: grid;
   place-items: center;
-  background: rgba(247, 198, 0, .14);
+  background: rgba(243, 108, 36, .14);
   color: var(--dark);
   border-radius: 50%;
   margin-bottom: 24px;
@@ -575,7 +578,7 @@ html[dir="rtl"] .hero__slide::after {
   inset-inline-end: 26px;
   font-size: 40px;
   font-weight: 800;
-  color: rgba(27, 27, 27, .06);
+  color: rgba(55, 56, 57, .07);
   line-height: 1;
 }
 
@@ -593,7 +596,7 @@ html[dir="rtl"] .hero__slide::after {
   font-weight: 800;
   line-height: 1;
   color: transparent;
-  -webkit-text-stroke: 1.5px rgba(27, 27, 27, .25);
+  -webkit-text-stroke: 1.5px rgba(55, 56, 57, .38);
 }
 .feature__body h3 { font-size: 28px; margin-bottom: 12px; }
 .feature__body p { margin-bottom: 0; font-size: 19px; }
@@ -606,7 +609,7 @@ html[dir="rtl"] .hero__slide::after {
   overflow: hidden;
   text-align: center;
 }
-.band::after { content: ""; position: absolute; inset: 0; background: rgba(12, 12, 12, .78); }
+.band::after { content: ""; position: absolute; inset: 0; background: rgba(35, 31, 32, .78); }
 .band__inner { position: relative; z-index: 2; max-width: 900px; margin-inline: auto; }
 .band blockquote {
   margin: 0 0 30px;
@@ -685,7 +688,7 @@ html[dir="rtl"] .hero__slide::after {
 .field input:focus, .field textarea:focus, .field select:focus {
   outline: 0;
   border-color: var(--main);
-  box-shadow: 0 0 0 3px rgba(247, 198, 0, .22);
+  box-shadow: 0 0 0 3px rgba(243, 108, 36, .25);
 }
 .form__note { font-size: 14px; color: var(--muted); }
 .form__status { font-size: 16px; font-weight: 700; color: var(--dark); }
@@ -724,7 +727,7 @@ html[dir="rtl"] .hero__slide::after {
 .accordion__panel > div { padding-block-end: 26px; font-size: 18px; max-width: 900px; }
 
 /* --------------------------------- footer ------------------------------- */
-.footer { background: var(--dark-2); color: #9a9a9a; padding-block: 90px 0; }
+.footer { background: var(--dark-2); color: #9fa1a3; padding-block: 90px 0; }
 .footer__grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.3fr; gap: 50px; padding-block-end: 70px; }
 .footer__logo { height: 54px; margin-bottom: 26px; }
 .footer h3 { color: var(--white); font-size: 19px; margin-bottom: 24px; }
