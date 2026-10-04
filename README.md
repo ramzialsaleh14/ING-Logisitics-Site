@@ -6,6 +6,8 @@ company's own brochure, `ing_company_profile_updated0.pdf`.
 
 No build step, no framework, no CDN: open `index.html` in a browser and it works.
 
+It is deployed at <https://ing-logistics.com> — see [Deploying](#deploying).
+
 ```powershell
 # simplest
 start index.html
@@ -210,12 +212,18 @@ of the site itself and re-downloadable from `Saafke/EDSR_Tensorflow`).
 
 ## Deploying
 
-The site is live on Netlify at **<https://inglogistics.netlify.app>**.
+The site is live on Netlify as project `inglogistics`
+(`09c6217d-55e3-41d8-88bb-7b8a5e033aea`), serving **<https://ing-logistics.com>** as its
+custom domain and **<https://inglogistics.netlify.app>** as its Netlify subdomain.
 
 ```powershell
+npx netlify-cli@26 link --name inglogistics   # writes .netlify/state.json
 python tools/build_dist.py
-npx netlify-cli@26 deploy --dir dist --prod --message "…"
+npx netlify-cli@26 deploy --dir dist --prod --no-build --message "…"
 ```
+
+`.netlify/` is gitignored, so a fresh clone needs the `link` step once before it can
+deploy.
 
 `build_dist.py` copies only the six pages and `assets/` into `dist/`, so the capture
 scripts in `tools/`, the screenshots in `.verify/` and this README are never uploaded —
