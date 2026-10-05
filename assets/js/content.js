@@ -16,15 +16,9 @@
    ========================================================================== */
 window.ING_CONTENT = {
   "version": 1,
-  "updated": "2026-10-05T10:00:00.000Z",
-  "publishes": [
-    "2026-10-05T09:40:54.566Z"
-  ],
-  "text": {
-    "story.title": {
-      "en": "Our Story, since 2014"
-    }
-  },
+  "updated": "",
+  "publishes": [],
+  "text": {},
   "hrefs": {},
   "numbers": {},
   "images": {}
