@@ -42,6 +42,8 @@ const MAX_HREF = 2000;
 const LIMIT_WINDOW_MS = 24 * 60 * 60 * 1000;
 const PUBLISH_LOG_FIELD = "publishes";
 const PUBLISH_LOG_MAX = 20;
+const MAX_HIDDEN = 200;
+const MAX_ADDED = 50;
 const CONTENT_COMMIT_MESSAGE = "Update site content from the admin screen";
 
 function publishLimit() {
@@ -59,6 +61,13 @@ const CONTENT_HEADER = `/* =====================================================
 
    publishes is the list of recent push times, used to enforce the daily
    limit on the admin screen. It is trimmed to the most recent few.
+
+   hidden  [ "team.m3" ]   member cards taken off the page (their data-cmember)
+   added   [ { "id": "team.new1", "initials": "SM" } ]
+                           extra member cards, built from the first member card
+                           on the page. A card's role and description are the
+                           text keys "<id>.role" and "<id>.desc", and its photo
+                           is the image key "<id>.photo".
 
    Written by netlify/functions/publish.js when an admin presses "Push
    changes". Anything not listed here falls back to the English copy in the
@@ -318,13 +327,62 @@ function cleanContent(input) {
   });
 
   const empty = function (value) { return value && Object.keys(value).length; };
-  const content = { version: 1, updated: "", text: {}, hrefs: {}, numbers: {}, images: {} };
+  const content = { version: 1, updated: "", text: {}, hrefs: {}, numbers: {}, images: {}, hidden: [], added: [] };
   content.updated = typeof input.updated === "string" ? input.updated.slice(0, 40) : new Date().toISOString();
   Object.keys(text).forEach(function (key) { if (empty(text[key])) content.text[key] = text[key]; });
   Object.keys(numbers).forEach(function (key) { if (empty(numbers[key])) content.numbers[key] = numbers[key]; });
   content.hrefs = cleanMap(input.hrefs, "hrefs", cleanHref);
   content.images = cleanMap(input.images, "images", function (path, key) { return safePath(path, key); });
+  content.hidden = cleanHidden(input.hidden);
+  content.added = cleanAdded(input.added, content.text);
+  content.added.forEach(function (member) {
+    if (content.hidden.indexOf(member.id) !== -1) {
+      throw new Refused(400, "The new member " + member.id + " is also on the list of removed cards.");
+    }
+  });
   return content;
+}
+
+/* The cards taken off the page. An unknown name would simply never match
+   anything in the markup, so only the shape of the names is checked. */
+function cleanHidden(input) {
+  if (input === undefined || input === null) return [];
+  if (!Array.isArray(input)) throw new Refused(400, "The list of hidden cards is malformed.");
+  if (input.length > MAX_HIDDEN) {
+    throw new Refused(400, "Too many cards are being removed at once (the limit is " + MAX_HIDDEN + ").");
+  }
+  const seen = [];
+  input.forEach(function (id) {
+    const name = cleanText(String(id), "a hidden card").slice(0, 80).trim();
+    if (!KEY.test(name)) throw new Refused(400, "A hidden card has an unexpected name: " + name);
+    if (seen.indexOf(name) === -1) seen.push(name);
+  });
+  return seen;
+}
+
+/* New member cards. A card is only the identity and the initials - its role,
+   description and photo are ordinary entries in the text and images above, so
+   that they are validated and applied like every other edit. */
+function cleanAdded(input, text) {
+  if (input === undefined || input === null) return [];
+  if (!Array.isArray(input)) throw new Refused(400, "The list of new members is malformed.");
+  if (input.length > MAX_ADDED) {
+    throw new Refused(400, "Too many new members are being added at once (the limit is " + MAX_ADDED + ").");
+  }
+  const seen = [];
+  return input.map(function (entry) {
+    if (!entry || typeof entry !== "object") throw new Refused(400, "A new member is malformed.");
+    const id = String(entry.id || "").trim();
+    if (!KEY.test(id) || id.length > 80) throw new Refused(400, "A new member has an unexpected name: " + id);
+    if (seen.indexOf(id) !== -1) throw new Refused(400, "Two new members share the name " + id + ".");
+    seen.push(id);
+    const role = (text[id + ".role"] || {}).en;
+    const desc = (text[id + ".desc"] || {}).en;
+    if (!role || !desc) {
+      throw new Refused(400, "The new member " + id + " needs both a role and a description.");
+    }
+    return { id: id, initials: cleanText(String(entry.initials || ""), "the initials of a new member").slice(0, 4) };
+  });
 }
 
 function serialise(content) {
@@ -358,6 +416,8 @@ async function saveContent(config, body, state, file) {
     hrefs: content.hrefs,
     numbers: content.numbers,
     images: content.images,
+    hidden: content.hidden,
+    added: content.added,
   };
   const base64 = Buffer.from(serialise(published), "utf8").toString("base64");
   const commitUrl = await writeFile(config, CONTENT_PATH, base64, CONTENT_COMMIT_MESSAGE, file.sha);

@@ -9,6 +9,13 @@
    publishes is the list of recent push times, used to enforce the daily
    limit on the admin screen. It is trimmed to the most recent few.
 
+   hidden  [ "team.m3" ]   member cards taken off the page (their data-cmember)
+   added   [ { "id": "team.new1", "initials": "SM" } ]
+                           extra member cards, built from the first member card
+                           on the page. A card's role and description are the
+                           text keys "<id>.role" and "<id>.desc", and its photo
+                           is the image key "<id>.photo".
+
    Written by netlify/functions/publish.js when an admin presses "Push
    changes". Anything not listed here falls back to the English copy in the
    markup and the Arabic in i18n.js, so an empty file means "unchanged".
@@ -21,5 +28,7 @@ window.ING_CONTENT = {
   "text": {},
   "hrefs": {},
   "numbers": {},
-  "images": {}
+  "images": {},
+  "hidden": [],
+  "added": []
 };

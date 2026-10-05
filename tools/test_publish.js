@@ -88,15 +88,17 @@ const HOUR = 60 * 60 * 1000;
 
 /* The file as it was actually written, so the assertions read what a browser
    would load rather than a copy of the source text. */
-const writtenContent = () => {
+const parseContent = (text) => {
   try {
     const scope = {};
-    new Function("window", stored.text)(scope);
+    new Function("window", text)(scope);
     return scope.ING_CONTENT;
   } catch (e) {
     return {}; // a file that does not parse: the checks below will say so
   }
 };
+
+const writtenContent = () => parseContent(stored.text);
 
 const content = (extra) => Object.assign({
   updated: "2026-10-05T08:00:00.000Z",
@@ -188,6 +190,62 @@ async function run() {
 
   response = await handler(event(Object.assign({ action: "content" }, auth)));
   check("content that is missing entirely -> 400", response.statusCode === 400, response);
+
+  /* --------------------------------------------------------- member cards */
+  const memberText = (id) => ({
+    [id + ".role"]: { en: "Fleet mechanics", ar: "\u0645\u064a\u0643\u0627\u0646\u064a\u0643\u0627" },
+    [id + ".desc"]: { en: "Keeping every vehicle road ready.", ar: "\u0627\u0644\u062d\u0641\u0627\u0638" },
+  });
+  const member = (extra) => Object.assign({ id: "team.new1", initials: "SM" }, extra || {});
+  let published;
+
+  const write = async (extra) => {
+    calls = [];
+    const answer = await handler(event(Object.assign({ action: "content", content: content(extra) }, auth)));
+    const put = calls.find(call => call.method === "PUT" && /content\.js$/.test(call.url));
+    published = put ? parseContent(Buffer.from(put.body.content, "base64").toString("utf8")) : null;
+    return answer;
+  };
+
+  response = await write({ hidden: ["team.m3"] });
+  check("a removed member is written into content.js",
+    response.statusCode === 200 && published.hidden.join() === "team.m3", published && published.hidden);
+  check("the published file always carries both member lists",
+    Array.isArray(published.added) && !published.added.length, published && published.added);
+
+  response = await write({ hidden: [] });
+  check("bringing a member back clears the list",
+    response.statusCode === 200 && published.hidden.length === 0, published && published.hidden);
+
+  response = await write({ hidden: "team.m3" });
+  check("a hidden list that is not a list -> 400", response.statusCode === 400, response);
+  response = await write({ hidden: ["<script>alert(1)</script>"] });
+  check("a hidden name that is not an id -> 400", response.statusCode === 400, response);
+  response = await write({ hidden: Array.from({ length: 201 }, (unused, i) => "team.m" + i) });
+  check("more removed cards than the limit -> 400", response.statusCode === 400, response);
+
+  response = await write({ added: [member()] });
+  check("a new member with no role and no description -> 400", response.statusCode === 400, response);
+  response = await write({ added: [member()], text: { "team.new1.role": { en: "Fleet mechanics" } } });
+  check("a new member with a role but no description -> 400", response.statusCode === 400, response);
+
+  response = await write({ added: [member({ initials: "SMITH" })], text: memberText("team.new1") });
+  check("a new member with a role and a description is kept",
+    response.statusCode === 200 && published.added[0].id === "team.new1", published && published.added);
+  check("initials are kept to four characters",
+    published.added[0].initials === "SMIT", published && published.added[0]);
+  check("the new member's text is written like any other",
+    published.text["team.new1.role"].en === "Fleet mechanics", published && published.text);
+
+  response = await write({ added: [member(), member()], text: memberText("team.new1") });
+  check("two new members with the same name -> 400", response.statusCode === 400, response);
+  response = await write({ added: [member({ id: "team.new1.role" })], text: memberText("team.new1") });
+  check("a new member named like a text key has no text of its own -> 400",
+    response.statusCode === 400, response);
+  response = await write({ added: [member()], hidden: ["team.new1"], text: memberText("team.new1") });
+  check("a new member that is also on the removed list -> 400", response.statusCode === 400, response);
+  response = await write({ added: "team.new1" });
+  check("a new member list that is not a list -> 400", response.statusCode === 400, response);
 
   /* -------------------------------------------------------------- photos */
   response = await handler(event(Object.assign({

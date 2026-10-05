@@ -2681,8 +2681,7 @@ window.ING_ADMIN_FIELDS = {
         "get-in-touch.html"
       ],
       "label": "Logo light",
-      "default": "assets/logo/ing-logo-light.png",
-      "kind": "Photo"
+      "default": "assets/logo/ing-logo-light.png"
     },
     "logo.header.dark": {
       "group": "site:header",
@@ -2695,8 +2694,7 @@ window.ING_ADMIN_FIELDS = {
         "get-in-touch.html"
       ],
       "label": "Logo dark",
-      "default": "assets/logo/ing-logo-dark.png",
-      "kind": "Photo"
+      "default": "assets/logo/ing-logo-dark.png"
     },
     "home.hero1": {
       "group": "Hero slider",
@@ -2755,6 +2753,78 @@ window.ING_ADMIN_FIELDS = {
       "label": "Photo - Home",
       "default": "assets/img/services-intro.jpg"
     },
+    "team.m1.photo": {
+      "group": "Who we work with",
+      "where": [
+        "index.html",
+        "our-team.html"
+      ],
+      "label": "Photo - Executive management",
+      "default": ""
+    },
+    "team.m2.photo": {
+      "group": "Who we work with",
+      "where": [
+        "index.html",
+        "our-team.html"
+      ],
+      "label": "Photo - Operations management",
+      "default": ""
+    },
+    "team.m3.photo": {
+      "group": "Who we work with",
+      "where": [
+        "index.html",
+        "our-team.html"
+      ],
+      "label": "Photo - Warehouse management",
+      "default": ""
+    },
+    "team.m4.photo": {
+      "group": "Who we work with",
+      "where": [
+        "index.html",
+        "our-team.html"
+      ],
+      "label": "Photo - Customer service",
+      "default": ""
+    },
+    "team.m5.photo": {
+      "group": "Who we work with",
+      "where": [
+        "index.html",
+        "our-team.html"
+      ],
+      "label": "Photo - Transport fleet",
+      "default": ""
+    },
+    "team.m6.photo": {
+      "group": "Who we work with",
+      "where": [
+        "index.html",
+        "our-team.html"
+      ],
+      "label": "Photo - Information technology",
+      "default": ""
+    },
+    "team.m7.photo": {
+      "group": "Who we work with",
+      "where": [
+        "index.html",
+        "our-team.html"
+      ],
+      "label": "Photo - Quality and safety",
+      "default": ""
+    },
+    "team.m8.photo": {
+      "group": "Who we work with",
+      "where": [
+        "index.html",
+        "our-team.html"
+      ],
+      "label": "Photo - Business development",
+      "default": ""
+    },
     "band.cta": {
       "group": "Banner band",
       "where": [
@@ -2779,8 +2849,7 @@ window.ING_ADMIN_FIELDS = {
         "get-in-touch.html"
       ],
       "label": "Footer logo",
-      "default": "assets/logo/ing-logo-light.png",
-      "kind": "Photo"
+      "default": "assets/logo/ing-logo-light.png"
     },
     "about.pagehead": {
       "group": "Page banner",
@@ -2900,6 +2969,82 @@ window.ING_ADMIN_FIELDS = {
       "label": "Accuracy rate",
       "value": "99",
       "suffix": "%"
+    }
+  },
+  "members": {
+    "team": {
+      "group": "Who we work with",
+      "where": [
+        "index.html",
+        "our-team.html"
+      ],
+      "label": "Our Team",
+      "items": [
+        {
+          "id": "team.m1",
+          "label": "Executive management",
+          "photo": "team.m1.photo",
+          "initials": "EX",
+          "role": "team.role1",
+          "desc": "team.desc1"
+        },
+        {
+          "id": "team.m2",
+          "label": "Operations management",
+          "photo": "team.m2.photo",
+          "initials": "OP",
+          "role": "team.role2",
+          "desc": "team.desc2"
+        },
+        {
+          "id": "team.m3",
+          "label": "Warehouse management",
+          "photo": "team.m3.photo",
+          "initials": "WH",
+          "role": "team.role3",
+          "desc": "team.desc3"
+        },
+        {
+          "id": "team.m4",
+          "label": "Customer service",
+          "photo": "team.m4.photo",
+          "initials": "CS",
+          "role": "team.role4",
+          "desc": "team.desc4"
+        },
+        {
+          "id": "team.m5",
+          "label": "Transport fleet",
+          "photo": "team.m5.photo",
+          "initials": "FL",
+          "role": "team.role5",
+          "desc": "team.desc5"
+        },
+        {
+          "id": "team.m6",
+          "label": "Information technology",
+          "photo": "team.m6.photo",
+          "initials": "IT",
+          "role": "team.role6",
+          "desc": "team.desc6"
+        },
+        {
+          "id": "team.m7",
+          "label": "Quality and safety",
+          "photo": "team.m7.photo",
+          "initials": "QS",
+          "role": "team.role7",
+          "desc": "team.desc7"
+        },
+        {
+          "id": "team.m8",
+          "label": "Business development",
+          "photo": "team.m8.photo",
+          "initials": "BD",
+          "role": "team.role8",
+          "desc": "team.desc8"
+        }
+      ]
     }
   }
 };

@@ -283,9 +283,10 @@ Sign in with the user name `ing-logistics` and the admin password. What can be c
 | --- | --- |
 | **Every page** | header and footer: navigation labels, the "Track Your Order" panel, quick links, service links, contact details, copyright line |
 | **Text** | every heading, paragraph, quote, FAQ question and answer, form label, menu option, button and link on the six pages, in English and Arabic |
-| **Photos** | the 20 places a photo appears: the three hero slides, the story / values / clients photos, the five page banners, the two banner bands and the three logos |
+| **Photos** | the 28 places a photo appears: the three hero slides, the story / values / clients photos, the five page banners, the two banner bands, the three logos and the eight team members |
 | **Links** | the phone number, e-mail address, map link and button targets that sit alongside the text |
 | **Numbers** | the four statistics in the "By the numbers" band |
+| **Team members** | remove a member, bring one back, add a new one, and give each one a photo, a role and a description (see below) |
 
 ### How saving works
 
@@ -314,6 +315,38 @@ attribute. Arabic overrides are merged into the dictionary `main.js` already rea
 EN/AR toggle keeps working — text changed only in English keeps its existing Arabic until
 that field is filled in too. Superseded photo files stay in the repository, so a photo can
 be put back by uploading it again.
+
+### The team members
+
+The team cards are marked in the markup (`data-cmember`, one per member) in both places
+they appear — the home page and the team page — so the screen can offer them as a list:
+
+* **Photo** — each member has one. It fills the round badge on the card and the initials
+  (`EX`, `OP`, …) come back when there is no photo, so a card never looks empty.
+* **Remove this member** — takes the card off both pages. Nothing is deleted: the member
+  stays in the list marked *Removed* with a **Bring this member back** button, and the site
+  only changes when the next push goes out.
+* **Add a member** — adds a card to the end of the grid on both pages. It is built from the
+  first card on the page, so it looks and behaves like the rest, including the EN/AR
+  toggle; give it a role and a description (and a photo) before pushing. Its initials are
+  worked out from the role unless you type your own.
+* **Delete this member** — only for a member you added: the card, its text and its photo
+  are dropped from `content.js`. A member that came from the page cannot be deleted, only
+  removed.
+
+Two more lists travel in `assets/js/content.js` alongside the text and photos:
+
+| List | Meaning |
+| --- | --- |
+| `hidden` | the ids of the cards taken off the page, e.g. `["team.m3"]` |
+| `added` | the cards put on it, e.g. `[{ "id": "team.new1", "initials": "SM" }]` |
+
+An added member needs no other kind of entry: its role and description are ordinary text
+keys named `<id>.role` and `<id>.desc`, and its photo is the image key `<id>.photo`, so
+they are validated, previewed and applied exactly like every other edit.
+
+The publish function refuses a new member that has no role or description, so a half-made
+card can never reach the site.
 
 ### The two-pushes-a-day limit
 

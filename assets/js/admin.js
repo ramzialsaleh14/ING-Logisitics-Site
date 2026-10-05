@@ -42,6 +42,9 @@
   var answerDialog = null;      // resolves the open confirm/notice dialog
   var previewTimer = null;
   var quota = null;             // { used, limit, remaining, resetAt } from the publish function
+  var photoInfo = {};           // photos the manifest does not know about, e.g. a new member's
+
+  normaliseMembers();
 
   /* -------------------------------------------------------------- storage -- */
 
@@ -79,6 +82,10 @@
     ["text", "hrefs", "numbers", "images"].forEach(function (name) {
       if (stored[name] && typeof stored[name] === "object") clean[name] = stored[name];
     });
+    // the member lists are a whole state rather than an edit per key, so an
+    // absent list means "nothing changed" and is filled from the published one
+    if (Array.isArray(stored.hidden)) clean.hidden = stored.hidden;
+    if (Array.isArray(stored.added)) clean.added = stored.added;
     return clean;
   }
 
@@ -140,6 +147,7 @@
 
   function isChanged(kind, key) {
     if (kind === "image") return Boolean(draft.images[key]);
+    if (kind === "member") return isMemberChanged(String(key).replace(/^member:/, ""));
     if (kind === "href") return hrefValue(key) !== baselineHref(key);
     if (kind === "number") {
       return numberValue(key, "value") !== baselineNumber(key, "value")
@@ -154,7 +162,7 @@
     Object.keys(draft.text).forEach(function (key) { if (isChanged("text", key)) total += 1; });
     Object.keys(draft.hrefs).forEach(function (key) { if (isChanged("href", key)) total += 1; });
     Object.keys(draft.numbers).forEach(function (key) { if (isChanged("number", key)) total += 1; });
-    return total;
+    return total + memberChangeCount();
   }
 
   /* Only differences from the published content are worth keeping. */
@@ -178,6 +186,12 @@
       if (Object.keys(entry).length) out.numbers[key] = entry;
     });
     out.images = clone(source.images);
+    // the member lists are kept only when they differ from the published ones;
+    // readDraft() fills them back from the published content when they are absent
+    if (membersChanged()) {
+      out.hidden = source.hidden.slice();
+      out.added = clone(source.added);
+    }
     return out;
   }
 
@@ -196,6 +210,7 @@
 
   function discardDraft() {
     draft = emptyDraft();
+    normaliseMembers();
     remove(window.localStorage, DRAFT_KEY);
     Object.keys(blobs).forEach(function (key) {
       URL.revokeObjectURL(blobs[key].url);
@@ -235,6 +250,201 @@
   function setState(text, className) {
     $("#state").textContent = text;
     $("#state").className = "bar__state " + (className || "");
+  }
+
+  /* --------------------------------------------------------------- members -- */
+
+  /* The member lists the markup declares, one per team grid, with the fields of
+     the members already on the page. */
+  function memberSets() {
+    var sets = MANIFEST.members || {};
+    return Object.keys(sets).map(function (name) { return sets[name]; });
+  }
+
+  function primaryMemberSet() { return memberSets()[0] || null; }
+
+  function manifestMember(id) {
+    var found = null;
+    memberSets().forEach(function (set) {
+      (set.items || []).forEach(function (item) { if (item.id === id) found = item; });
+    });
+    return found;
+  }
+
+  /* The keys a member's role, description and photo live under. For the members
+     in the markup the manifest names them; a member added in this screen uses
+     the "<id>.role" / "<id>.desc" / "<id>.photo" names that the site reads when
+     it builds the extra cards. */
+  function memberKeys(id) {
+    var item = manifestMember(id);
+    return item
+      ? { role: item.role, desc: item.desc, photo: item.photo, initials: item.initials }
+      : { role: id + ".role", desc: id + ".desc", photo: id + ".photo", initials: "" };
+  }
+
+  /* Every key the member cards own, so the group's plain list does not offer
+     the same fields a second time. */
+  function memberOwnedKeys() {
+    var owned = {};
+    memberSets().forEach(function (set) {
+      (set.items || []).forEach(function (item) {
+        [item.role, item.desc, item.photo].forEach(function (key) { if (key) owned[key] = true; });
+      });
+    });
+    return owned;
+  }
+
+  function isRemoved(id) { return draft.hidden.indexOf(id) !== -1; }
+  function wasRemoved(id) { return (baseline.hidden || []).indexOf(id) !== -1; }
+  function isAdded(id) { return Boolean(addedEntry(id)); }
+  function wasAdded(id) {
+    return (baseline.added || []).some(function (member) { return member.id === id; });
+  }
+
+  function addedEntry(id) {
+    var found = null;
+    draft.added.forEach(function (member) { if (member.id === id) found = member; });
+    return found;
+  }
+
+  function memberInitials(id) {
+    var entry = addedEntry(id);
+    return entry ? entry.initials || "" : memberKeys(id).initials;
+  }
+
+  function memberTitle(id) {
+    var role = textValue(memberKeys(id).role, "en");
+    if (role) return role;
+    return isAdded(id) ? "New member" : "Member";
+  }
+
+  /* The published member lists, used as the starting point of the draft. */
+  function memberStateFromBaseline() {
+    return { hidden: (baseline.hidden || []).slice(), added: clone(baseline.added || []) };
+  }
+
+  function memberState(source) {
+    return { hidden: (source.hidden || []).slice(), added: clone(source.added || []) };
+  }
+
+  function membersChanged() {
+    return JSON.stringify(memberState(draft)) !== JSON.stringify(memberState(baseline));
+  }
+
+  function normaliseMembers() {
+    var state = memberStateFromBaseline();
+    if (Array.isArray(draft.hidden)) state.hidden = draft.hidden.slice();
+    if (Array.isArray(draft.added)) state.added = clone(draft.added);
+    draft.hidden = state.hidden;
+    draft.added = state.added;
+    return state;
+  }
+
+  /* The "N changes not pushed" count for the member cards. Role, description
+     and photo edits are counted by their own keys, so only membership and
+     initials are counted here. */
+  function memberChangeCount() {
+    var total = 0;
+    draft.hidden.forEach(function (id) { if (!wasRemoved(id)) total += 1; });
+    (baseline.hidden || []).forEach(function (id) { if (!isRemoved(id)) total += 1; });
+    draft.added.forEach(function (member) {
+      if (!wasAdded(member.id)) total += 1;
+      else if (member.initials !== publishedInitials(member.id)) total += 1;
+    });
+    (baseline.added || []).forEach(function (member) { if (!isAdded(member.id)) total += 1; });
+    return total;
+  }
+
+  function publishedInitials(id) {
+    var found = "";
+    (baseline.added || []).forEach(function (member) { if (member.id === id) found = member.initials || ""; });
+    return found;
+  }
+
+  function isMemberChanged(id) {
+    if (memberKeys(id).role && isChanged("text", memberKeys(id).role)) return true;
+    if (memberKeys(id).desc && isChanged("text", memberKeys(id).desc)) return true;
+    if (memberKeys(id).photo && isChanged("image", memberKeys(id).photo)) return true;
+    if (isRemoved(id) !== wasRemoved(id)) return true;
+    if (isAdded(id) !== wasAdded(id)) return true;
+    if (isAdded(id) && addedEntry(id).initials !== publishedInitials(id)) return true;
+    return false;
+  }
+
+  /* The initials a card falls back to when it has no photo. */
+  function initialsFrom(text) {
+    var words = String(text || "").trim().split(/\s+/).filter(Boolean);
+    return words.slice(0, 2).map(function (word) { return Array.from(word)[0] || ""; }).join("").toUpperCase();
+  }
+
+  function autoInitials(id) {
+    var entry = addedEntry(id);
+    if (!entry || entry.initials) return; // the admin typed their own, or already derived
+    entry.initials = initialsFrom(textValue(memberKeys(id).role, "en"));
+  }
+
+  function setMemberRemoved(id, removed) {
+    var at = draft.hidden.indexOf(id);
+    if (removed && at === -1) draft.hidden.push(id);
+    if (!removed && at !== -1) draft.hidden.splice(at, 1);
+    saveDraft();
+    renderFields();
+    schedulePreview();
+  }
+
+  /* A member is added by naming a card; its role, description and photo are
+     ordinary edits, which is what makes the new card render like the others. */
+  function nextMemberId() {
+    var set = primaryMemberSet();
+    var prefix = (set && set.items.length ? set.items[0].id : "team").split(".")[0];
+    var taken = {};
+    ((set && set.items) || []).forEach(function (item) { taken[item.id] = true; });
+    (baseline.added || []).forEach(function (member) { taken[member.id] = true; });
+    draft.added.forEach(function (member) { taken[member.id] = true; });
+    var number = 1;
+    while (taken[prefix + ".new" + number]) number += 1;
+    return prefix + ".new" + number;
+  }
+
+  function addMember() {
+    var id = nextMemberId();
+    draft.added.push({ id: id, initials: "" });
+    saveDraft();
+    renderFields();
+    schedulePreview();
+    var role = $('.field[data-key="' + memberKey(id) + '"] .field__row input');
+    if (role) {
+      role.focus();
+      role.scrollIntoView({ block: "nearest" });
+    }
+  }
+
+  function deleteMember(id) {
+    var keys = memberKeys(id);
+    draft.added = draft.added.filter(function (member) { return member.id !== id; });
+    draft.hidden = draft.hidden.filter(function (name) { return name !== id; });
+    delete draft.text[keys.role];
+    delete draft.text[keys.desc];
+    delete draft.images[keys.photo];
+    if (blobs[keys.photo]) {
+      URL.revokeObjectURL(blobs[keys.photo].url);
+      delete blobs[keys.photo];
+    }
+    window.INGDraftImages.remove(keys.photo).catch(function () { /* nothing stored */ });
+    saveDraft();
+    renderFields();
+    schedulePreview();
+  }
+
+  function memberKey(id) { return "member:" + id; }
+
+  function imageInfo(key) {
+    if (MANIFEST.images[key]) return MANIFEST.images[key];
+    if (!photoInfo[key]) {
+      var set = primaryMemberSet();
+      photoInfo[key] = { label: "Member photo", where: (set && set.where) || [], default: "" };
+    }
+    return photoInfo[key];
   }
 
   /* --------------------------------------------------------------- sign in -- */
@@ -386,9 +596,203 @@
       + ". Changes stay in this browser until you push them.";
     host.appendChild(lead);
 
-    keysWhere(MANIFEST.fields, group.id).forEach(function (key) { host.appendChild(textField(key)); });
+    var owned = memberOwnedKeys();
+    keysWhere(MANIFEST.fields, group.id).forEach(function (key) {
+      if (!owned[key]) host.appendChild(textField(key));
+    });
     keysWhere(MANIFEST.numbers, group.id).forEach(function (key) { host.appendChild(numberField(key)); });
-    keysWhere(MANIFEST.images, group.id).forEach(function (key) { host.appendChild(photoField(key)); });
+    keysWhere(MANIFEST.images, group.id).forEach(function (key) {
+      if (!owned[key]) host.appendChild(photoField(key));
+    });
+    memberSets().forEach(function (set) {
+      if (set.group === group.id) host.appendChild(memberSection(set));
+    });
+  }
+
+  /* ------------------------------------------------------------ members UI -- */
+
+  function memberSection(set) {
+    var wrapper = document.createElement("section");
+    wrapper.className = "members";
+
+    var head = document.createElement("h2");
+    head.className = "members__head";
+    head.textContent = set.label || "Members";
+    wrapper.appendChild(head);
+
+    var lead = document.createElement("p");
+    lead.className = "fields__lead";
+    lead.textContent = "A card with a photo, a role and a description each, on "
+      + pagesLabel(set.where) + ". Removing a member takes it off every page it appears on; "
+      + "nothing changes on the site until you push.";
+    wrapper.appendChild(lead);
+
+    set.items.forEach(function (item) { wrapper.appendChild(memberCard(item.id)); });
+    draft.added.forEach(function (member) { wrapper.appendChild(memberCard(member.id)); });
+
+    var add = document.createElement("button");
+    add.type = "button";
+    add.className = "members__add";
+    add.textContent = "Add a member";
+    add.addEventListener("click", addMember);
+    wrapper.appendChild(add);
+    return wrapper;
+  }
+
+  function memberCard(id) {
+    var keys = memberKeys(id);
+    var card = document.createElement("article");
+    card.className = "field field--member" + (isMemberChanged(id) ? " is-changed" : "")
+      + (isRemoved(id) ? " is-removed" : "");
+    card.setAttribute("data-kind", "member");
+    card.setAttribute("data-key", memberKey(id));
+
+    var head = document.createElement("div");
+    head.className = "field__head";
+    var name = document.createElement("span");
+    name.className = "field__label";
+    name.textContent = memberTitle(id);
+    var tag = document.createElement("span");
+    tag.className = "field__tag";
+    tag.textContent = isRemoved(id) ? "Removed" : "Changed";
+    tag.hidden = !isMemberChanged(id);
+    head.appendChild(name);
+    head.appendChild(tag);
+    card.appendChild(head);
+
+    card.appendChild(photoBlock(keys.photo, card, "Back to no photo"));
+
+    card.appendChild(memberTextBox(id, keys.role, "Role", false));
+    card.appendChild(memberTextBox(id, keys.desc, "Description", true));
+
+    var warn = document.createElement("p");
+    warn.className = "field__warn";
+    warn.textContent = "The Arabic side is empty, so the Arabic site shows the English text.";
+    warn.hidden = !(isAdded(id) && missingArabic(id));
+    card.appendChild(warn);
+
+    card.appendChild(memberFoot(id));
+
+    var note = document.createElement("p");
+    note.className = "field__hint";
+    note.textContent = isAdded(id)
+      ? "The initials " + (memberInitials(id) || "\u2014") + " are used when the member has no photo."
+      : "This card is in the page, so it can be removed but not deleted. The initials "
+        + (memberInitials(id) || "") + " are used when it has no photo.";
+    card.appendChild(note);
+    return card;
+  }
+
+  /* The initials an added member falls back to, and the actions on the card. */
+  function memberFoot(id) {
+    var foot = document.createElement("div");
+    foot.className = "member__foot";
+
+    if (isAdded(id)) {
+      var entry = addedEntry(id);
+      var initials = document.createElement("input");
+      initials.type = "text";
+      initials.maxLength = 4;
+      initials.value = (entry && entry.initials) || "";
+      initials.setAttribute("data-initials", id);
+      initials.addEventListener("input", function () {
+        var current = addedEntry(id);
+        if (current) current.initials = initials.value.trim().slice(0, 4);
+        changed(memberKey(id), "member");
+        refreshMember(id);
+      });
+      foot.appendChild(box("Initials", initials));
+    }
+
+    var actions = document.createElement("div");
+    actions.className = "member__actions";
+
+    var toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "member__toggle";
+    toggle.textContent = isRemoved(id) ? "Bring this member back" : "Remove this member";
+    toggle.addEventListener("click", function () {
+      setMemberRemoved(id, !isRemoved(id));
+      changed(memberKey(id), "member");
+    });
+    actions.appendChild(toggle);
+
+    if (isAdded(id)) {
+      var drop = document.createElement("button");
+      drop.type = "button";
+      drop.className = "member__delete";
+      drop.textContent = "Delete this member";
+      drop.addEventListener("click", function () {
+        confirmDialog("Delete this member?",
+          "Its card, text and photo are dropped from the site the next time you push. "
+          + "Removing it instead keeps the text, so you can bring it back later.", "Delete")
+          .then(function (yes) { if (yes) deleteMember(id); });
+      });
+      actions.appendChild(drop);
+    }
+
+    foot.appendChild(actions);
+    return foot;
+  }
+
+  function missingArabic(id) {
+    var keys = memberKeys(id);
+    return !textValue(keys.role, "ar") || !textValue(keys.desc, "ar");
+  }
+
+  function memberTextBox(id, key, label, multiline) {
+    var row = document.createElement("div");
+    row.className = "field__row";
+
+    [["English", "en"], ["Arabic", "ar"]].forEach(function (pair) {
+      var control = document.createElement(multiline ? "textarea" : "input");
+      if (multiline) control.rows = 3;
+      else control.type = "text";
+      control.value = textValue(key, pair[1]);
+      if (pair[1] === "ar") control.dir = "rtl";
+      control.addEventListener("input", function () {
+        setText(key, pair[1], control.value);
+        if (!multiline && pair[1] === "en") autoInitials(id);
+        refreshMember(id);
+      });
+
+      var wrapper = box(label + " (" + pair[0] + ")", control);
+      if (pair[1] === "ar") wrapper.className += " field__box--ar";
+      row.appendChild(wrapper);
+    });
+    return row;
+  }
+
+  /* A member photo belongs to a member card, which has to be told when it
+     changes so its "Changed" chip keeps up. */
+  function refreshPhotoOwner(key) {
+    var owner = null;
+    memberSets().forEach(function (set) {
+      (set.items || []).forEach(function (item) { if (item.photo === key) owner = item.id; });
+    });
+    draft.added.forEach(function (member) {
+      var memberPhoto = memberKeys(member.id).photo;
+      if (memberPhoto === key) owner = member.id;
+    });
+    if (owner) refreshMember(owner);
+  }
+
+  /* The parts of a member card that change while it is being edited. */
+  function refreshMember(id) {
+    var card = $('.field[data-key="' + memberKey(id) + '"]');
+    if (!card) return;
+    var changed = isMemberChanged(id);
+    card.classList.toggle("is-changed", changed);
+    card.classList.toggle("is-removed", isRemoved(id));
+    $(".field__label", card).textContent = memberTitle(id);
+    var tag = $(".field__tag", card);
+    tag.textContent = isRemoved(id) ? "Removed" : "Changed";
+    tag.hidden = !changed;
+    $(".field__warn", card).hidden = !(isAdded(id) && missingArabic(id));
+    var toggle = $(".member__toggle", card);
+    if (toggle) toggle.textContent = isRemoved(id) ? "Bring this member back" : "Remove this member";
+    var initials = $("input[data-initials]", card);
+    if (initials && !initials.value) initials.value = memberInitials(id);
   }
 
   function fieldShell(kind, key, label) {
@@ -496,8 +900,17 @@
   }
 
   function photoField(key) {
-    var info = MANIFEST.images[key];
+    var info = imageInfo(key);
     var card = fieldShell("image", key, info.label);
+    card.appendChild(photoBlock(key, card, "Back to the original photo"));
+    card.appendChild(hint("Used on " + pagesLabel(info.where) + "."));
+    paintPhoto(card, key);
+    return card;
+  }
+
+  /* The thumbnail, its caption and the buttons that change it. Used for a photo
+     on its own and inside a member card. */
+  function photoBlock(key, card, revertLabel) {
     var layout = document.createElement("div");
     layout.className = "photo";
 
@@ -527,7 +940,7 @@
     var revert = document.createElement("button");
     revert.type = "button";
     revert.className = "photo__revert";
-    revert.textContent = "Back to the original photo";
+    revert.textContent = revertLabel;
     revert.addEventListener("click", function () {
       delete draft.images[key];
       if (blobs[key]) {
@@ -537,6 +950,7 @@
       window.INGDraftImages.remove(key).catch(function () { /* nothing stored */ });
       paintPhoto(card, key);
       changed(key, "image");
+      refreshPhotoOwner(key);
       renderPreview();
     });
     actions.appendChild(revert);
@@ -544,19 +958,16 @@
     input.addEventListener("change", function () {
       var file = input.files && input.files[0];
       input.value = "";
-      if (file) pickImage(key, file, card);
+      if (file) pickImage(key, file, card).then(function () { refreshPhotoOwner(key); });
     });
 
     body.appendChild(actions);
     layout.appendChild(body);
-    card.appendChild(layout);
-    card.appendChild(hint("Used on " + pagesLabel(info.where) + "."));
-    paintPhoto(card, key);
-    return card;
+    return layout;
   }
 
   function paintPhoto(card, key) {
-    var info = MANIFEST.images[key];
+    var info = imageInfo(key);
     var source = imageSrc(key);
     $(".photo__thumb", card).style.backgroundImage = source ? "url('" + source + "')" : "none";
 
@@ -573,7 +984,7 @@
     } else if (chosen) {
       detail.textContent = Math.round(chosen.size / 1024) + " KB \u00b7 new photo";
     } else {
-      detail.textContent = info.default;
+      detail.textContent = info.default || "the fallback in the page is used";
     }
     meta.appendChild(title);
     meta.appendChild(detail);
@@ -649,9 +1060,9 @@
   function pickImage(key, file, card) {
     if (!/^image\//.test(file.type)) {
       notice("That file is not an image", "Choose a JPG, PNG or WebP picture.", "Close");
-      return;
+      return Promise.resolve();
     }
-    prepareImage(file).then(function (prepared) {
+    return prepareImage(file).then(function (prepared) {
       var name = fileName(key, prepared.hash, prepared.type);
       draft.images[key] = { path: UPLOAD_DIR + name, name: name };
       if (blobs[key]) URL.revokeObjectURL(blobs[key].url);
@@ -863,7 +1274,32 @@
       content.images[key] = draft.images[key].path;
     });
 
+    content.hidden = draft.hidden.slice();
+    content.added = clone(draft.added);
+    forgetDeletedMembers(content);
     return content;
+  }
+
+  /* The text and photo of a member that has been deleted stay in the published
+     file unless they are taken out here. */
+  function forgetDeletedMembers(content) {
+    var live = {};
+    memberSets().forEach(function (set) {
+      (set.items || []).forEach(function (item) { live[item.id] = true; });
+    });
+    draft.added.forEach(function (member) { live[member.id] = true; });
+
+    [["text", ["role", "desc"]], ["images", ["photo"]]].forEach(function (bucket) {
+      Object.keys(content[bucket[0]]).forEach(function (key) {
+        var match = /^(.*)\.(role|desc|photo)$/.exec(key);
+        if (!match) return;
+        var id = match[1];
+        if (bucket[1].indexOf(match[2]) === -1 || live[id]) return;
+        // only a member that was published and has since been deleted qualifies
+        if (!wasAdded(id)) return;
+        delete content[bucket[0]][key];
+      });
+    });
   }
 
   function imagesToUpload() {
