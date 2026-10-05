@@ -248,10 +248,13 @@ deploy.
 scripts in `tools/`, the screenshots in `.verify/` and this README are never uploaded —
 they 404 on the live site. `netlify/functions/` is outside `dist/` on purpose: Netlify
 bundles functions from the repository, not from the publish directory. `netlify.toml`
-records the same publish directory, the functions directory (Node 20), long-lived caching
-for the 45 woff2 files and a `noindex` header for `admin.html`; everything else keeps
-Netlify's revalidating default, which matters while the photography and stylesheets are
-still being iterated on.
+records the same publish directory, the functions directory, long-lived caching for the
+45 woff2 files and a `noindex` header for `admin.html`; everything else keeps Netlify's
+revalidating default, which matters while the photography and stylesheets are still being
+iterated on. The Node version comes from `.node-version` (20) rather than from
+`netlify.toml`: the publish function needs Node 18+ for `fetch`, and `[functions]
+node_version` is an unrelated setting that must be a table, so a string there fails the
+build.
 
 The `command` in `netlify.toml` runs `build_dist.py`, but only so that a Git-connected
 build would produce the same output. The site has no real build step, so CLI deploys pass

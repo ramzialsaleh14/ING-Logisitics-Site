@@ -12,9 +12,12 @@
 
 # The admin screen's "Push changes" button calls the publish function, which
 # verifies the admin credentials and commits to GitHub. See README.md.
+#
+# The Node version is NOT set here: Netlify takes it from .node-version (or a
+# NODE_VERSION variable), and `[functions] node_version` is a different
+# setting that must be a table.
 [functions]
   directory = "netlify/functions"
-  node_version = "20"
 
 # The admin screen is deliberately unlinked and must never be indexed.
 [[headers]]
