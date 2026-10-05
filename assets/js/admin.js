@@ -28,9 +28,25 @@
   var MAX_IMAGE_WIDTH = 1920;
   var UPLOAD_DIR = "assets/img/uploads/";
 
-  var MANIFEST = window.ING_ADMIN_FIELDS || { pages: [], groups: [], fields: {}, images: {}, numbers: {} };
+  var MANIFEST = window.ING_ADMIN_FIELDS || { pages: [], groups: [], fields: {}, images: {}, numbers: {}, members: {} };
+
+  /* The screen's own words are translated by admin-i18n.js. English is the
+     default and anything missing falls back to the English it was written as. */
+  var TEXT = window.ING_ADMIN_TEXT || {
+    isArabic: function () { return false; },
+    lang: function () { return "en"; },
+    t: function (text) { return text; },
+    setLang: function () {},
+    applyScreen: function () {},
+  };
+  var t = function (text, values) { return TEXT.t(text, values); };
+
   var PAGE_LABEL = {};
-  (MANIFEST.pages || []).forEach(function (page) { PAGE_LABEL[page.file] = page.label; });
+  var PAGE_LABEL_AR = {};
+  (MANIFEST.pages || []).forEach(function (page) {
+    PAGE_LABEL[page.file] = page.label;
+    PAGE_LABEL_AR[page.file] = page.labelAr || page.label;
+  });
 
   var $ = function (sel, root) { return (root || document).querySelector(sel); };
 
@@ -198,13 +214,15 @@
   function saveDraft() {
     var stored = writeJSON(window.localStorage, DRAFT_KEY, prune(draft));
     var count = changeCount();
-    var stamp = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    var stamp = new Date().toLocaleTimeString(TEXT.isArabic() ? "ar" : [], { hour: "2-digit", minute: "2-digit" });
     if (!stored) {
-      setState("This browser is not saving the draft", "is-error");
+      setState(t("This browser is not saving the draft"), "is-error");
     } else if (count) {
-      setState(count + (count === 1 ? " change" : " changes") + " not pushed \u00b7 kept " + stamp, "is-dirty");
+      setState(count === 1
+        ? t("1 change not pushed · kept {time}", { time: stamp })
+        : t("{n} changes not pushed · kept {time}", { n: count, time: stamp }), "is-dirty");
     } else {
-      setState("Everything is pushed \u00b7 " + stamp, "");
+      setState(t("Everything is pushed · {time}", { time: stamp }), "");
     }
   }
 
@@ -313,9 +331,12 @@
   }
 
   function memberTitle(id) {
-    var role = textValue(memberKeys(id).role, "en");
+    var keys = memberKeys(id);
+    var first = TEXT.isArabic() ? "ar" : "en";
+    var second = TEXT.isArabic() ? "en" : "ar";
+    var role = textValue(keys.role, first) || textValue(keys.role, second);
     if (role) return role;
-    return isAdded(id) ? "New member" : "Member";
+    return t(isAdded(id) ? "New member" : "Member");
   }
 
   /* The published member lists, used as the starting point of the draft. */
@@ -442,7 +463,7 @@
     if (MANIFEST.images[key]) return MANIFEST.images[key];
     if (!photoInfo[key]) {
       var set = primaryMemberSet();
-      photoInfo[key] = { label: "Member photo", where: (set && set.where) || [], default: "" };
+      photoInfo[key] = { label: "Member photo", labelAr: t("Member photo"), where: (set && set.where) || [], default: "" };
     }
     return photoInfo[key];
   }
@@ -451,8 +472,8 @@
 
   function sha256Hex(text) {
     if (!(window.crypto && window.crypto.subtle)) {
-      return Promise.reject(new Error(
-        "Signing in needs a secure address. Open the https:// site, or http://localhost while testing."));
+      return Promise.reject(new Error(t(
+        "Signing in needs a secure address. Open the https:// site, or http://localhost while testing.")));
     }
     return window.crypto.subtle.digest("SHA-256", new TextEncoder().encode(text))
       .then(function (buffer) {
@@ -489,11 +510,11 @@
 
     error.hidden = true;
     button.disabled = true;
-    button.textContent = "Checking\u2026";
+    button.textContent = t("Checking\u2026");
 
     sha256Hex(password).then(function (hash) {
       if (user !== ADMIN_USER || hash !== ADMIN_SHA256) {
-        throw new Error("That user name or password is not correct.");
+        throw new Error(t("That user name or password is not correct."));
       }
       writeJSON(window.sessionStorage, SESSION_KEY, { user: user, password: password, at: Date.now() });
       start();
@@ -502,12 +523,12 @@
       error.hidden = false;
     }).then(function () {
       button.disabled = false;
-      button.textContent = "Sign in";
+      button.textContent = t("Sign in");
     });
   });
 
   $("#signout").addEventListener("click", function () {
-    confirmDialog("Sign out?", "Your draft stays in this browser, so you can sign back in and carry on.", "Sign out")
+    confirmDialog(t("Sign out?"), t("Your draft stays in this browser, so you can sign back in and carry on."), t("Sign out"))
       .then(function (yes) {
         if (!yes) return;
         remove(window.sessionStorage, SESSION_KEY);
@@ -534,9 +555,9 @@
   function renderGroups() {
     var nav = $("#groups");
     nav.textContent = "";
-    addGroupHeading(nav, "Every page");
+    addGroupHeading(nav, t("Every page"));
     MANIFEST.groups.filter(isChrome).forEach(function (group) { nav.appendChild(groupButton(group)); });
-    addGroupHeading(nav, "Page sections");
+    addGroupHeading(nav, t("Page sections"));
     MANIFEST.groups.filter(function (group) { return !isChrome(group); })
       .forEach(function (group) { nav.appendChild(groupButton(group)); });
   }
@@ -554,7 +575,7 @@
     var button = document.createElement("button");
     button.type = "button";
     button.className = "side__item" + (group.id === currentGroup ? " is-current" : "");
-    button.appendChild(document.createTextNode(group.label));
+    button.appendChild(document.createTextNode(label(group)));
     var where = document.createElement("span");
     where.textContent = pagesLabel(group.where);
     button.appendChild(where);
@@ -566,10 +587,21 @@
     return button;
   }
 
+  /* A label from the manifest (a group, a field, a photo, a page), in the
+     language the screen is in. The generator writes the Arabic next to the
+     English, taking it from the site's own dictionary wherever the label is
+     real page content. */
+  function label(entry) {
+    if (!entry) return "";
+    return TEXT.isArabic() && entry.labelAr ? entry.labelAr : entry.label;
+  }
+
   function pagesLabel(pages) {
     if (!pages || !pages.length) return "";
-    if (pages.length === MANIFEST.pages.length) return "every page";
-    return pages.map(function (page) { return PAGE_LABEL[page] || page; }).join(", ");
+    if (pages.length === MANIFEST.pages.length) return t("every page");
+    var names = TEXT.isArabic() ? PAGE_LABEL_AR : PAGE_LABEL;
+    return pages.map(function (page) { return names[page] || page; })
+      .join(TEXT.isArabic() ? "، " : ", ");
   }
 
   function keysWhere(source, group) {
@@ -583,17 +615,17 @@
     host.textContent = "";
     if (!group) return;
 
-    $("#group-title").textContent = group.label;
+    $("#group-title").textContent = label(group);
 
     var head = document.createElement("h1");
     head.className = "fields__head";
-    head.textContent = group.label;
+    head.textContent = label(group);
     host.appendChild(head);
 
     var lead = document.createElement("p");
     lead.className = "fields__lead";
-    lead.textContent = "Shown on " + pagesLabel(group.where)
-      + ". Changes stay in this browser until you push them.";
+    lead.textContent = t("Shown on {pages}. Changes stay in this browser until you push them.",
+      { pages: pagesLabel(group.where) });
     host.appendChild(lead);
 
     var owned = memberOwnedKeys();
@@ -617,14 +649,14 @@
 
     var head = document.createElement("h2");
     head.className = "members__head";
-    head.textContent = set.label || "Members";
+    head.textContent = label(set) || t("Members");
     wrapper.appendChild(head);
 
     var lead = document.createElement("p");
     lead.className = "fields__lead";
-    lead.textContent = "A card with a photo, a role and a description each, on "
-      + pagesLabel(set.where) + ". Removing a member takes it off every page it appears on; "
-      + "nothing changes on the site until you push.";
+    lead.textContent = t("A card with a photo, a role and a description each, on {pages}. "
+      + "Removing a member takes it off every page it appears on; nothing changes on the site "
+      + "until you push.", { pages: pagesLabel(set.where) });
     wrapper.appendChild(lead);
 
     set.items.forEach(function (item) { wrapper.appendChild(memberCard(item.id)); });
@@ -633,7 +665,7 @@
     var add = document.createElement("button");
     add.type = "button";
     add.className = "members__add";
-    add.textContent = "Add a member";
+    add.textContent = t("Add a member");
     add.addEventListener("click", addMember);
     wrapper.appendChild(add);
     return wrapper;
@@ -654,20 +686,20 @@
     name.textContent = memberTitle(id);
     var tag = document.createElement("span");
     tag.className = "field__tag";
-    tag.textContent = isRemoved(id) ? "Removed" : "Changed";
+    tag.textContent = t(isRemoved(id) ? "Removed" : "Changed");
     tag.hidden = !isMemberChanged(id);
     head.appendChild(name);
     head.appendChild(tag);
     card.appendChild(head);
 
-    card.appendChild(photoBlock(keys.photo, card, "Back to no photo"));
+    card.appendChild(photoBlock(keys.photo, card, t("Back to no photo")));
 
-    card.appendChild(memberTextBox(id, keys.role, "Role", false));
-    card.appendChild(memberTextBox(id, keys.desc, "Description", true));
+    card.appendChild(memberTextBox(id, keys.role, t("Role"), false));
+    card.appendChild(memberTextBox(id, keys.desc, t("Description"), true));
 
     var warn = document.createElement("p");
     warn.className = "field__warn";
-    warn.textContent = "The Arabic side is empty, so the Arabic site shows the English text.";
+    warn.textContent = t("The Arabic side is empty, so the Arabic site shows the English text.");
     warn.hidden = !(isAdded(id) && missingArabic(id));
     card.appendChild(warn);
 
@@ -676,9 +708,11 @@
     var note = document.createElement("p");
     note.className = "field__hint";
     note.textContent = isAdded(id)
-      ? "The initials " + (memberInitials(id) || "\u2014") + " are used when the member has no photo."
-      : "This card is in the page, so it can be removed but not deleted. The initials "
-        + (memberInitials(id) || "") + " are used when it has no photo.";
+      ? t("The initials {initials} are used when the member has no photo.",
+        { initials: memberInitials(id) || "\u2014" })
+      : t("This card is in the page, so it can be removed but not deleted. "
+        + "The initials {initials} are used when it has no photo.",
+        { initials: memberInitials(id) || "\u2014" });
     card.appendChild(note);
     return card;
   }
@@ -701,7 +735,7 @@
         changed(memberKey(id), "member");
         refreshMember(id);
       });
-      foot.appendChild(box("Initials", initials));
+      foot.appendChild(box(t("Initials"), initials));
     }
 
     var actions = document.createElement("div");
@@ -710,7 +744,7 @@
     var toggle = document.createElement("button");
     toggle.type = "button";
     toggle.className = "member__toggle";
-    toggle.textContent = isRemoved(id) ? "Bring this member back" : "Remove this member";
+    toggle.textContent = t(isRemoved(id) ? "Bring this member back" : "Remove this member");
     toggle.addEventListener("click", function () {
       setMemberRemoved(id, !isRemoved(id));
       changed(memberKey(id), "member");
@@ -721,11 +755,11 @@
       var drop = document.createElement("button");
       drop.type = "button";
       drop.className = "member__delete";
-      drop.textContent = "Delete this member";
+      drop.textContent = t("Delete this member");
       drop.addEventListener("click", function () {
-        confirmDialog("Delete this member?",
-          "Its card, text and photo are dropped from the site the next time you push. "
-          + "Removing it instead keeps the text, so you can bring it back later.", "Delete")
+        confirmDialog(t("Delete this member?"),
+          t("Its card, text and photo are dropped from the site the next time you push. "
+            + "Removing it instead keeps the text, so you can bring it back later."), t("Delete"))
           .then(function (yes) { if (yes) deleteMember(id); });
       });
       actions.appendChild(drop);
@@ -740,11 +774,11 @@
     return !textValue(keys.role, "ar") || !textValue(keys.desc, "ar");
   }
 
-  function memberTextBox(id, key, label, multiline) {
+  function memberTextBox(id, key, labelText, multiline) {
     var row = document.createElement("div");
     row.className = "field__row";
 
-    [["English", "en"], ["Arabic", "ar"]].forEach(function (pair) {
+    [[t("English"), "en"], [t("Arabic"), "ar"]].forEach(function (pair) {
       var control = document.createElement(multiline ? "textarea" : "input");
       if (multiline) control.rows = 3;
       else control.type = "text";
@@ -756,7 +790,7 @@
         refreshMember(id);
       });
 
-      var wrapper = box(label + " (" + pair[0] + ")", control);
+      var wrapper = box(labelText + " (" + pair[0] + ")", control);
       if (pair[1] === "ar") wrapper.className += " field__box--ar";
       row.appendChild(wrapper);
     });
@@ -786,11 +820,11 @@
     card.classList.toggle("is-removed", isRemoved(id));
     $(".field__label", card).textContent = memberTitle(id);
     var tag = $(".field__tag", card);
-    tag.textContent = isRemoved(id) ? "Removed" : "Changed";
+    tag.textContent = t(isRemoved(id) ? "Removed" : "Changed");
     tag.hidden = !changed;
     $(".field__warn", card).hidden = !(isAdded(id) && missingArabic(id));
     var toggle = $(".member__toggle", card);
-    if (toggle) toggle.textContent = isRemoved(id) ? "Bring this member back" : "Remove this member";
+    if (toggle) toggle.textContent = t(isRemoved(id) ? "Bring this member back" : "Remove this member");
     var initials = $("input[data-initials]", card);
     if (initials && !initials.value) initials.value = memberInitials(id);
   }
@@ -811,7 +845,7 @@
     id.textContent = key;
     var tag = document.createElement("span");
     tag.className = "field__tag";
-    tag.textContent = "Changed";
+    tag.textContent = t("Changed");
     tag.hidden = !isChanged(kind, key);
 
     head.appendChild(name);
@@ -841,11 +875,11 @@
   function textField(key) {
     var info = MANIFEST.fields[key];
     var langs = info.langs || ["en", "ar"];
-    var card = fieldShell("text", key, info.label);
+    var card = fieldShell("text", key, label(info));
     var row = document.createElement("div");
     row.className = "field__row";
 
-    [["English", "en"], ["Arabic", "ar"]].filter(function (pair) {
+    [[t("English"), "en"], [t("Arabic"), "ar"]].filter(function (pair) {
       return langs.indexOf(pair[1]) !== -1;
     }).forEach(function (pair) {
       var value = textValue(key, pair[1]);
@@ -872,22 +906,22 @@
       link.type = "text";
       link.value = hrefValue(key);
       link.addEventListener("input", function () { setHref(key, link.value); });
-      card.appendChild(box("Link (where clicking it goes)", link));
+      card.appendChild(box(t("Link (where clicking it goes)"), link));
     }
 
     card.appendChild(hint(langs.indexOf("ar") === -1
-      ? "Used on " + pagesLabel(info.where) + ", in English and Arabic alike."
-      : "Used on " + pagesLabel(info.where) + "."));
+      ? t("Used on {pages}, in English and Arabic alike.", { pages: pagesLabel(info.where) })
+      : t("Used on {pages}.", { pages: pagesLabel(info.where) })));
     return card;
   }
 
   function numberField(key) {
     var info = MANIFEST.numbers[key];
-    var card = fieldShell("number", key, info.label);
+    var card = fieldShell("number", key, label(info));
     var row = document.createElement("div");
     row.className = "number";
 
-    [["Number", "value"], ["After the number", "suffix"]].forEach(function (pair) {
+    [[t("Number"), "value"], [t("After the number"), "suffix"]].forEach(function (pair) {
       var control = document.createElement("input");
       control.type = "text";
       control.value = numberValue(key, pair[1]);
@@ -895,15 +929,15 @@
       row.appendChild(box(pair[0], control));
     });
     card.appendChild(row);
-    card.appendChild(hint("The figure that counts up on " + pagesLabel(info.where) + "."));
+    card.appendChild(hint(t("The figure that counts up on {pages}.", { pages: pagesLabel(info.where) })));
     return card;
   }
 
   function photoField(key) {
     var info = imageInfo(key);
-    var card = fieldShell("image", key, info.label);
-    card.appendChild(photoBlock(key, card, "Back to the original photo"));
-    card.appendChild(hint("Used on " + pagesLabel(info.where) + "."));
+    var card = fieldShell("image", key, label(info));
+    card.appendChild(photoBlock(key, card, t("Back to the original photo")));
+    card.appendChild(hint(t("Used on {pages}.", { pages: pagesLabel(info.where) })));
     paintPhoto(card, key);
     return card;
   }
@@ -929,7 +963,7 @@
 
     var pick = document.createElement("label");
     pick.className = "photo__pick";
-    pick.textContent = "Choose photo";
+    pick.textContent = t("Choose photo");
     var input = document.createElement("input");
     input.type = "file";
     input.accept = "image/*";
@@ -976,15 +1010,15 @@
 
     var chosen = blobs[key];
     var title = document.createElement("strong");
-    title.textContent = (chosen && chosen.name) || source.split("/").pop() || "No photo";
+    title.textContent = (chosen && chosen.name) || source.split("/").pop() || t("No photo");
     var detail = document.createElement("em");
     if (chosen && chosen.width) {
       detail.textContent = chosen.width + " \u00d7 " + chosen.height + " px \u00b7 "
-        + Math.round(chosen.size / 1024) + " KB \u00b7 new photo";
+        + Math.round(chosen.size / 1024) + " KB \u00b7 " + t("new photo");
     } else if (chosen) {
-      detail.textContent = Math.round(chosen.size / 1024) + " KB \u00b7 new photo";
+      detail.textContent = Math.round(chosen.size / 1024) + " KB \u00b7 " + t("new photo");
     } else {
-      detail.textContent = info.default || "the fallback in the page is used";
+      detail.textContent = info.default || t("the fallback in the page is used");
     }
     meta.appendChild(title);
     meta.appendChild(detail);
@@ -1024,7 +1058,7 @@
       image.onload = function () { URL.revokeObjectURL(url); resolve(image); };
       image.onerror = function () {
         URL.revokeObjectURL(url);
-        reject(new Error("That image file could not be read."));
+        reject(new Error(t("That image file could not be read.")));
       };
       image.src = url;
     });
@@ -1034,7 +1068,7 @@
     return new Promise(function (resolve, reject) {
       canvas.toBlob(function (blob) {
         if (blob) resolve(blob);
-        else reject(new Error("This browser could not prepare the image."));
+        else reject(new Error(t("This browser could not prepare the image.")));
       }, type, 0.85);
     });
   }
@@ -1059,7 +1093,7 @@
 
   function pickImage(key, file, card) {
     if (!/^image\//.test(file.type)) {
-      notice("That file is not an image", "Choose a JPG, PNG or WebP picture.", "Close");
+      notice(t("That file is not an image"), t("Choose a JPG, PNG or WebP picture."), t("Close"));
       return Promise.resolve();
     }
     return prepareImage(file).then(function (prepared) {
@@ -1080,7 +1114,7 @@
         renderPreview();
       });
     }).catch(function (problem) {
-      notice("That photo could not be used", escapeHtml(problem.message), "Close");
+      notice(t("That photo could not be used"), escapeHtml(problem.message), t("Close"));
     });
   }
 
@@ -1132,7 +1166,8 @@
   function dialog(title, html, okLabel, withCancel) {
     $("#notice-title").textContent = title;
     $("#notice-text").innerHTML = html;
-    $("#notice-ok").textContent = okLabel || "OK";
+    $("#notice-ok").textContent = t(okLabel || "Continue");
+    $("#notice-cancel").textContent = t("Cancel");
     $("#notice-cancel").hidden = !withCancel;
     $("#notice").hidden = false;
     $("#notice-ok").focus();
@@ -1173,7 +1208,7 @@
   function whenText(iso) {
     var when = new Date(iso);
     if (isNaN(when.getTime())) return iso;
-    return when.toLocaleString([], { weekday: "short", hour: "2-digit", minute: "2-digit" });
+    return when.toLocaleString(TEXT.isArabic() ? "ar" : [], { weekday: "short", hour: "2-digit", minute: "2-digit" });
   }
 
   function renderQuota() {
@@ -1189,15 +1224,18 @@
     badge.hidden = false;
     badge.classList.toggle("is-empty", quota.remaining <= 0);
     if (quota.remaining > 0) {
-      badge.textContent = quota.remaining === 1 ? "1 push left today" : quota.remaining + " pushes left today";
+      badge.textContent = quota.remaining === 1
+        ? t("1 push left today")
+        : t("{n} pushes left today", { n: quota.remaining });
       button.disabled = false;
-      button.title = "This screen can push changes " + quota.limit + " times a day.";
+      button.title = t("This screen can push changes {n} times a day.", { n: quota.limit });
     } else {
-      badge.textContent = "No pushes left today"
-        + (quota.resetAt ? " \u00b7 next " + whenText(quota.resetAt) : "");
+      badge.textContent = quota.resetAt
+        ? t("No pushes left today · next {when}", { when: whenText(quota.resetAt) })
+        : t("No pushes left today");
       button.disabled = true;
-      button.title = "Changes can be pushed " + quota.limit
-        + " times a day, and that allowance is used up.";
+      button.title = t("Changes can be pushed {n} times a day, and that allowance is used up.",
+        { n: quota.limit });
     }
   }
 
@@ -1213,19 +1251,19 @@
         var body = {};
         try { body = JSON.parse(text); } catch (e) { /* not JSON: fall back to the status */ }
         if (response.status === 404 || response.status === 405 || response.status === 501) {
-          throw new Error("Publishing is not connected yet: " + PUBLISH_URL + " was not found. See the "
-            + "\u201cPublishing changes\u201d section of README.md.");
+          throw new Error(t("Publishing is not connected yet: {url} was not found. "
+            + "See the “Publishing changes” section of README.md.", { url: PUBLISH_URL }));
         }
         if (!response.ok || !body.ok) {
           var refused = new Error(body.error
-            || ("The publish function refused the request (HTTP " + response.status + ")."));
+            || t("The publish function refused the request (HTTP {code}).", { code: response.status }));
           if (body.quota) refused.quota = body.quota;
           throw refused;
         }
         return body;
       });
     }, function () {
-      throw new Error("Could not reach " + PUBLISH_URL + ". Check the connection and try again.");
+      throw new Error(t("Could not reach {url}. Check the connection and try again.", { url: PUBLISH_URL }));
     });
   }
 
@@ -1316,44 +1354,50 @@
         var result = String(reader.result);
         resolve(result.slice(result.indexOf(",") + 1));
       };
-      reader.onerror = function () { reject(new Error("The photo could not be read for uploading.")); };
+      reader.onerror = function () { reject(new Error(t("The photo could not be read for uploading."))); };
       reader.readAsDataURL(blob);
     });
   }
 
   function publish() {
     if (quota && quota.remaining <= 0) {
-      notice("No pushes left today",
-        "Changes can be pushed " + quota.limit + " times a day, and that allowance is used up."
-        + (quota.resetAt ? " The next push becomes available " + escapeHtml(whenText(quota.resetAt)) + "." : "")
-        + "<br><br>Nothing is lost \u2014 your draft stays saved in this browser, and you can push it later.",
-        "Close");
+      notice(t("No pushes left today"),
+        t("Changes can be pushed {n} times a day, and that allowance is used up.", { n: quota.limit })
+        + (quota.resetAt ? " " + t("The next push becomes available {when}.",
+          { when: escapeHtml(whenText(quota.resetAt)) }) : "")
+        + "<br><br>" + t("Nothing is lost — your draft stays saved in this browser, and you can push it later."),
+        t("Close"));
       return;
     }
 
     var count = changeCount();
     if (!count) {
-      notice("Nothing to push", "Change something first, or use \u201cDiscard draft\u201d to clear the draft.", "Close");
+      notice(t("Nothing to push"), t("Change something first, or use “Discard draft” to clear the draft."),
+        t("Close"));
       return;
     }
 
     var uploads = imagesToUpload();
     var missing = uploads.filter(function (image) { return !blobs[image.key]; });
     if (missing.length) {
-      notice("A photo is missing from this browser",
-        "Please choose the photo again for: " + escapeHtml(missing.map(function (image) {
-          return MANIFEST.images[image.key].label;
-        }).join(", ")) + ".", "Close");
+      notice(t("A photo is missing from this browser"),
+        t("Please choose the photo again for: {list}.", { list: escapeHtml(missing.map(function (image) {
+          return label(imageInfo(image.key));
+        }).join(TEXT.isArabic() ? "، " : ", ")) }), t("Close"));
       return;
     }
 
     var about = uploads.length
-      ? "This saves " + uploads.length + (uploads.length === 1 ? " new photo" : " new photos")
-        + " and the text changes to the website\u2019s repository. "
-      : "This saves the text changes to the website\u2019s repository. ";
-    about += "Netlify then rebuilds the site, which usually takes about a minute.";
+      ? (uploads.length === 1
+        ? t("This saves 1 new photo and the text changes to the website’s repository. "
+          + "Netlify then rebuilds the site, which usually takes about a minute.")
+        : t("This saves {n} new photos and the text changes to the website’s repository. "
+          + "Netlify then rebuilds the site, which usually takes about a minute.", { n: uploads.length }))
+      : t("This saves the text changes to the website’s repository. "
+        + "Netlify then rebuilds the site, which usually takes about a minute.");
 
-    confirmDialog("Push " + count + (count === 1 ? " change" : " changes") + "?", about, "Push changes")
+    confirmDialog(count === 1 ? t("Push 1 change?") : t("Push {n} changes?", { n: count }),
+      about, t("Push changes"))
       .then(function (yes) { if (yes) runPublish(uploads); });
   }
 
@@ -1362,12 +1406,12 @@
     if (!auth) { showGate(); return; }
 
     $("#publish").disabled = true;
-    setState("Pushing\u2026", "");
+    setState(t("Pushing…"), "");
 
     var chain = Promise.resolve();
     uploads.forEach(function (image, index) {
       chain = chain.then(function () {
-        setState("Uploading photo " + (index + 1) + " of " + uploads.length + "\u2026", "");
+        setState(t("Uploading photo {n} of {total}…", { n: index + 1, total: uploads.length }), "");
         return blobToBase64(blobs[image.key].blob).then(function (base64) {
           return api({
             action: "image",
@@ -1381,7 +1425,7 @@
     });
 
     chain.then(function () {
-      setState("Saving the text changes\u2026", "");
+      setState(t("Saving the text changes…"), "");
       var content = contentToPublish();
       content.updated = new Date().toISOString();
       return api({ action: "content", user: auth.user, password: auth.password, content: content })
@@ -1394,23 +1438,25 @@
             renderFields();
             renderPreview();
             saveDraft();
-            setState("Pushed \u00b7 the site updates in about a minute", "is-ok");
-            return notice("Changes pushed",
-              "The website is rebuilding now and usually updates within a minute. "
-              + (result.commit
-                ? '<a href="' + escapeHtml(result.commit) + '" target="_blank" rel="noopener">See the commit</a>.'
+            setState(t("Pushed · the site updates in about a minute"), "is-ok");
+            return notice(t("Changes pushed"),
+              t("The website is rebuilding now and usually updates within a minute.")
+              + " " + (result.commit
+                ? '<a href="' + escapeHtml(result.commit) + '" target="_blank" rel="noopener">'
+                  + t("See the commit") + "</a>."
                 : ""),
-              "Close");
+              t("Close"));
           });
         });
     }).catch(function (problem) {
       saveDraft();
       applyQuota(problem.quota);
-      setState("Nothing was pushed", "is-error");
-      notice("The changes were not pushed",
+      setState(t("Nothing was pushed"), "is-error");
+      notice(t("The changes were not pushed"),
         escapeHtml(problem.message)
-        + "<br><br>Your draft is still saved in this browser \u2014 fix the problem and press \u201cPush changes\u201d again.",
-        "Close");
+        + "<br><br>" + t("Your draft is still saved in this browser — fix the problem and "
+          + "press “Push changes” again."),
+        t("Close"));
     }).then(function () {
       renderQuota();
     });
@@ -1420,12 +1466,12 @@
 
   $("#discard").addEventListener("click", function () {
     if (!changeCount()) {
-      notice("Nothing to discard", "The draft has no changes in it.", "Close");
+      notice(t("Nothing to discard"), t("The draft has no changes in it."), t("Close"));
       return;
     }
-    confirmDialog("Discard the draft?",
-      "Every change you have not pushed is thrown away and the original text and photos come back.",
-      "Discard draft").then(function (yes) {
+    confirmDialog(t("Discard the draft?"),
+      t("Every change you have not pushed is thrown away and the original text and photos come back."),
+      t("Discard")).then(function (yes) {
       if (!yes) return;
       discardDraft().then(function () {
         renderFields();
@@ -1441,12 +1487,46 @@
     if (changeCount()) saveDraft();
   });
 
+  /* The EN / ع buttons in the sign-in card and in the bar. The choice is kept
+     in this browser, and everything the screen says is redrawn in it. */
+  function renderLangButtons() {
+    Array.prototype.forEach.call(document.querySelectorAll("[data-admin-lang]"), function (button) {
+      var isCurrent = button.getAttribute("data-admin-lang") === TEXT.lang();
+      button.setAttribute("aria-pressed", isCurrent ? "true" : "false");
+    });
+  }
+
+  function setScreenLang(next) {
+    if (next === TEXT.lang()) return;
+    TEXT.setLang(next);
+    TEXT.applyScreen();
+    renderLangButtons();
+    renderGroups();
+    renderFields();
+    renderPreviewTabs();
+    renderQuota();
+    saveDraft();
+    // the preview shows the site, and the site reads its language from the same
+    // preference, so the two stay in step
+    try { window.localStorage.setItem("ing-lang", next); } catch (e) { /* private mode */ }
+    renderPreview();
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-admin-lang]"), function (button) {
+    button.addEventListener("click", function () {
+      setScreenLang(button.getAttribute("data-admin-lang"));
+    });
+  });
+
+  TEXT.applyScreen();
+  renderLangButtons();
+
   if (!MANIFEST.groups.length) {
     // admin-fields.js did not load: say so rather than show an empty screen
     $("#gate").hidden = true;
     $("#dash").hidden = false;
-    $("#fields").textContent = "The list of editable fields (assets/js/admin-fields.js) could not be loaded. "
-      + "Run: python tools/build_admin_manifest.py";
+    $("#fields").textContent = t("The list of editable fields (assets/js/admin-fields.js) could not be loaded.")
+      + " Run: python tools/build_admin_manifest.py";
   } else if (session()) {
     start();
   } else {

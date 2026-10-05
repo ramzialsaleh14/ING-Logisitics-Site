@@ -18,13 +18,59 @@ from bs4 import BeautifulSoup
 OUT = os.path.join("assets", "js", "admin-fields.js")
 
 PAGES = [
-    ("index.html", "Home"),
-    ("about-us.html", "About Us"),
-    ("our-services.html", "Our Services"),
-    ("our-clients.html", "Our Clients"),
-    ("our-team.html", "Our Team"),
-    ("get-in-touch.html", "Contact"),
+    ("index.html", "Home", "الرئيسية"),
+    ("about-us.html", "About Us", "من نحن"),
+    ("our-services.html", "Our Services", "خدماتنا"),
+    ("our-clients.html", "Our Clients", "عملاؤنا"),
+    ("our-team.html", "Our Team", "فريقنا"),
+    ("get-in-touch.html", "Contact", "اتصل بنا"),
 ]
+
+# The admin screen is offered in Arabic as well, so a label that this tool
+# composes needs its Arabic here. Labels that come from the page itself (a
+# section's eyebrow or heading, a member's role) are translated by the site's
+# own dictionary instead - see arabic_labels().
+AR_LABELS = {
+    # what a field is
+    "Heading": "عنوان",
+    "Paragraph": "فقرة",
+    "Quote": "اقتباس",
+    "Attribution": "المصدر",
+    "Name": "الاسم",
+    "Link": "رابط",
+    "Button": "زر",
+    "Menu option": "خيار في القائمة",
+    "Text": "نص",
+    "Field label": "عنوان الحقل",
+    "Eyebrow": "سطر تمهيدي",
+    "Navigation link": "رابط تنقّل",
+    "Caption": "تعليق",
+    "Client name": "اسم العميل",
+    "Headline": "عنوان رئيسي",
+    "Intro text": "نص تمهيدي",
+    "Question": "سؤال",
+    "Answer": "جواب",
+    # what a photo is
+    "Photo": "صورة",
+    "Background photo": "صورة خلفية",
+    "Member photo": "صورة العضو",
+    "Footer logo": "شعار التذييل",
+    "Logo light": "الشعار الفاتح",
+    "Logo dark": "الشعار الغامق",
+    # sections that name themselves
+    "Hero slider": "شريط الصور الرئيسي",
+    "Page banner": "بانر الصفحة",
+    "Banner band": "شريط البانر",
+    "Client grid": "شبكة العملاء",
+    "Every page - header": "كل الصفحات - الترويسة",
+    "Every page - footer": "كل الصفحات - التذييل",
+    # odds and ends
+    "Members": "الأعضاء",
+    "Member": "عضو",
+    "every page": "كل الصفحات",
+}
+
+SLIDE_PREFIX_AR = "شريحة %d - "
 
 ROLES = {
     "h1": "Heading", "h2": "Heading", "h3": "Heading", "h4": "Heading",
@@ -61,6 +107,24 @@ GENERIC_CLASSES = {
 }
 
 
+def arabic_for(el, arabic):
+    """The Arabic of an element's own i18n key, when it has one."""
+    key = el.get("data-i18n") if el is not None else None
+    return arabic.get(key, "") if key else ""
+
+
+def arabic_label(english):
+    """The Arabic for a label this tool composes, or "" to leave it English."""
+    return AR_LABELS.get(english, "")
+
+
+def keep_arabic(entry, arabic_text):
+    """Attach the Arabic label only when there is one to attach."""
+    if arabic_text:
+        entry["labelAr"] = arabic_text
+    return entry
+
+
 def arabic_keys():
     """The i18n dictionary as the browser sees it."""
     out = subprocess.run(
@@ -73,36 +137,38 @@ def arabic_keys():
     return json.loads(out.stdout)
 
 
-def group_of(el):
-    """(group id, group label) for an editable element - the id is None for
-    sections, which are then identified by their label."""
+def group_of(el, arabic):
+    """(group id, group label, Arabic label) for an editable element - the id is
+    None for sections, which are then identified by their label."""
     if el.find_parent("header"):
-        return "site:header", "Every page - header"
+        return "site:header", "Every page - header", arabic_label("Every page - header")
     if el.find_parent("footer"):
-        return "site:footer", "Every page - footer"
+        return "site:footer", "Every page - footer", arabic_label("Every page - footer")
 
     section = el if el.name == "section" else el.find_parent("section")
     if section is None:
         # page chrome that sits outside <header>, e.g. the skip link
-        return "site:header", "Every page - header"
+        return "site:header", "Every page - header", arabic_label("Every page - header")
 
     for cls in section.get("class") or []:
         if (section.name, cls) in BANNERS:
-            return None, BANNERS[(section.name, cls)]
+            label = BANNERS[(section.name, cls)]
+            return None, label, arabic_label(label)
 
     eyebrow = section.select_one(".eyebrow")
     heading = section.find(["h1", "h2", "h3"])
-    label = None
+    label, label_ar = None, ""
     if eyebrow is not None and len(eyebrow.get_text(strip=True)) <= 40:
-        label = eyebrow.get_text(strip=True)
+        label, label_ar = eyebrow.get_text(strip=True), arabic_for(eyebrow, arabic)
     elif heading is not None:
-        label = heading.get_text(strip=True)
+        label, label_ar = heading.get_text(strip=True), arabic_for(heading, arabic)
     if not label:
         label = section.get("id") or first_meaningful_class(section) or "Section"
     label = label.strip()
     if len(label) > 60:
         label = label[:57].rstrip() + "..."
-    return None, label
+        label_ar = ""
+    return None, label, label_ar or arabic_label(label)
 
 
 def first_meaningful_class(section):
@@ -128,6 +194,11 @@ def field_label(el):
     return ROLES.get(el.name, "Text")
 
 
+def field_label_ar(el):
+    """The same, in Arabic."""
+    return arabic_label(field_label(el))
+
+
 def humanise(name):
     return name.replace("__", " ").replace("-", " ").strip().capitalize()
 
@@ -140,11 +211,13 @@ def marker_class(el):
     return None
 
 
-def pages_label(pages):
+def pages_label(pages, arabic=False):
     if len(pages) == len(PAGES):
-        return "every page"
-    names = [{f: n for f, n in PAGES}[page] for page in pages]
-    return ", ".join(names)
+        return arabic_label("every page") if arabic else "every page"
+    en = {f: n for f, n, _ in PAGES}
+    ar = {f: a for f, _, a in PAGES}
+    names = [ar[page] if arabic else en[page] for page in pages]
+    return "، ".join(names) if arabic else ", ".join(names)
 
 
 def slide_prefix(el):
@@ -153,6 +226,14 @@ def slide_prefix(el):
         return ""
     parent = slide.find_parent(class_="hero__slides")
     return "Slide %d - " % (list(parent.find_all(class_="hero__slide")).index(slide) + 1)
+
+
+def slide_prefix_ar(el):
+    slide = el.find_parent(class_="hero__slide")
+    if slide is None:
+        return ""
+    parent = slide.find_parent(class_="hero__slides")
+    return SLIDE_PREFIX_AR % (list(parent.find_all(class_="hero__slide")).index(slide) + 1)
 
 
 def text_value(el, attr):
@@ -168,17 +249,21 @@ def member_card(el):
     return el.find_parent(lambda tag: tag.has_attr("data-cmember"))
 
 
-def member_label(card):
+def member_label(card, arabic):
     """What a member is called - their role, taken from the card's heading."""
     heading = card.find(["h3", "h4", "h2"])
-    return heading.get_text(strip=True) if heading else "Member"
+    if not heading:
+        return "Member", arabic_label("Member")
+    return heading.get_text(strip=True), arabic_for(heading, arabic) or arabic_label("Member")
 
 
-def section_heading(card):
+def section_heading(card, arabic):
     """The name of the section a member grid belongs to."""
     section = card.find_parent("section")
     heading = section.find(["h1", "h2"]) if section else None
-    return heading.get_text(strip=True) if heading else "Members"
+    if not heading:
+        return "Members", arabic_label("Members")
+    return heading.get_text(strip=True), arabic_for(heading, arabic) or arabic_label("Members")
 
 
 def link_href(el):
@@ -190,39 +275,40 @@ def link_href(el):
     return "" if href.startswith("#") else href
 
 
-def member_item(card, member_id):
+def member_item(card, member_id, arabic):
     """One editable member: the photo, the role, the description and the
     initials the card falls back to when there is no photo."""
     avatar = card.select_one("[data-cimg]")
     role = card.find(["h3", "h4"])
     desc = card.find("p")
-    return {
+    label, label_ar = member_label(card, arabic)
+    return keep_arabic({
         "id": member_id,
-        "label": member_label(card),
+        "label": label,
         "photo": avatar.get("data-cimg") if avatar else "",
         "initials": avatar.get_text(strip=True) if avatar else "",
         "role": (role.get("data-i18n") or "") if role else "",
         "desc": (desc.get("data-i18n") or "") if desc else "",
-    }
+    }, label_ar)
 
 
 def collect(arabic):
     fields, images, numbers, members = {}, {}, {}, {}
     groups, order = {}, []
 
-    for page, _ in PAGES:
+    for page, _, _ in PAGES:
         soup = BeautifulSoup(open(page, encoding="utf-8").read(), "lxml")
         for el in soup.find_all(True):
             if el.find_parent(["script", "style"]):
                 continue
-            scope, label = group_of(el)
+            scope, label, label_ar = group_of(el, arabic)
 
             # shared sections (the same fragment on several pages) are one
             # group, because the fields inside them are one set of keys
-            def group_id(page=page, scope=scope, label=label):
+            def group_id(page=page, scope=scope, label=label, label_ar=label_ar):
                 gid = scope or label
                 if gid not in groups:
-                    groups[gid] = {"id": gid, "label": label, "where": []}
+                    groups[gid] = keep_arabic({"id": gid, "label": label, "where": []}, label_ar)
                     order.append(gid)
                 if page not in groups[gid]["where"]:
                     groups[gid]["where"].append(page)
@@ -237,9 +323,11 @@ def collect(arabic):
                 if page not in entry["where"]:
                     entry["where"].append(page)
                 if entry["label"] is None:
-                    entry["label"] = section_heading(el)
+                    keep_arabic(entry, "")  # label set below, with its Arabic
+                    entry["label"], heading_ar = section_heading(el, arabic)
+                    keep_arabic(entry, heading_ar)
                 if not any(item["id"] == member_id for item in entry["items"]):
-                    entry["items"].append(member_item(el, member_id))
+                    entry["items"].append(member_item(el, member_id, arabic))
 
             for attr in ("data-i18n", "data-i18n-placeholder", "data-i18n-aria", "data-ctext"):
                 key = el.get(attr)
@@ -256,6 +344,7 @@ def collect(arabic):
                     entry["where"].append(page)
                 if entry["label"] is None:
                     entry["label"] = slide_prefix(el) + field_label(el)
+                    entry["labelAr"] = slide_prefix_ar(el) + field_label_ar(el)
                 if not entry["en"]:
                     entry["en"] = text_value(el, attr)
                 entry["ar"] = entry["ar"] or arabic.get(key, "")
@@ -271,19 +360,19 @@ def collect(arabic):
                     start = style.find("url('")
                     if start != -1:
                         url = style[start + 5:style.find("')", start)]
+                card = member_card(el)
                 entry = images.setdefault(key, {
                     "group": group_id(), "where": [], "label": None, "default": url,
-                    "named": marker_class(el), "prefix": slide_prefix(el),
+                    "named": marker_class(el), "prefix": slide_prefix(el), "prefixAr": slide_prefix_ar(el),
                     "kind": "Photo" if el.name == "img" else "Background photo",
-                    "member": None,
+                    "member": member_label(card, arabic) if card is not None else None,
                 })
                 if page not in entry["where"]:
                     entry["where"].append(page)
                 if entry["named"] is None:
                     entry["named"] = marker_class(el)
-                card = member_card(el)
-                if card is not None and entry["member"] is None:
-                    entry["member"] = member_label(card)
+                if entry["member"] is None and card is not None:
+                    entry["member"] = member_label(card, arabic)
 
             key = el.get("data-cnum")
             if key:
@@ -314,22 +403,28 @@ def collect(arabic):
     for key, entry in numbers.items():
         caption = fields.get(captions.get(key, ""))
         entry["label"] = caption["en"] if caption else (entry["label"] or "Number")
+        keep_arabic(entry, caption["ar"] if caption else "")
 
     # photos are named after their class when it is descriptive, otherwise after
     # the pages they appear on, so the admin can tell the placements apart
     for entry in images.values():
         named = entry.pop("named")
         prefix = entry.pop("prefix")
+        prefix_ar = entry.pop("prefixAr")
         kind = entry.pop("kind")
         member = entry.pop("member")
         if member:
-            entry["label"] = "Photo - " + member
+            entry["label"] = "Photo - " + member[0]
+            keep_arabic(entry, "%s - %s" % (arabic_label("Photo"), member[1]))
         elif named:
             entry["label"] = named
+            keep_arabic(entry, arabic_label(named))
         elif prefix:
             entry["label"] = prefix + kind
+            keep_arabic(entry, prefix_ar + arabic_label(kind))
         else:
             entry["label"] = "%s - %s" % (kind, pages_label(entry["where"]))
+            keep_arabic(entry, "%s - %s" % (arabic_label(kind), pages_label(entry["where"], arabic=True)))
 
     return fields, images, numbers, ordered_groups(groups, order), members
 
@@ -355,7 +450,7 @@ def render(fields, images, numbers, groups, members):
         "       python tools/build_admin_manifest.py",
         "*/",
         "window.ING_ADMIN_FIELDS = " + json.dumps(
-            {"pages": [{"file": f, "label": n} for f, n in PAGES],
+            {"pages": [{"file": f, "label": n, "labelAr": a} for f, n, a in PAGES],
              "groups": groups, "fields": fields, "images": images, "numbers": numbers,
              "members": members},
             ensure_ascii=False, indent=2) + ";",

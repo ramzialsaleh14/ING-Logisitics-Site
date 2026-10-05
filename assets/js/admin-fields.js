@@ -9,27 +9,33 @@ window.ING_ADMIN_FIELDS = {
   "pages": [
     {
       "file": "index.html",
-      "label": "Home"
+      "label": "Home",
+      "labelAr": "الرئيسية"
     },
     {
       "file": "about-us.html",
-      "label": "About Us"
+      "label": "About Us",
+      "labelAr": "من نحن"
     },
     {
       "file": "our-services.html",
-      "label": "Our Services"
+      "label": "Our Services",
+      "labelAr": "خدماتنا"
     },
     {
       "file": "our-clients.html",
-      "label": "Our Clients"
+      "label": "Our Clients",
+      "labelAr": "عملاؤنا"
     },
     {
       "file": "our-team.html",
-      "label": "Our Team"
+      "label": "Our Team",
+      "labelAr": "فريقنا"
     },
     {
       "file": "get-in-touch.html",
-      "label": "Contact"
+      "label": "Contact",
+      "labelAr": "اتصل بنا"
     }
   ],
   "groups": [
@@ -43,7 +49,8 @@ window.ING_ADMIN_FIELDS = {
         "our-clients.html",
         "our-team.html",
         "get-in-touch.html"
-      ]
+      ],
+      "labelAr": "كل الصفحات - الترويسة"
     },
     {
       "id": "site:footer",
@@ -55,14 +62,16 @@ window.ING_ADMIN_FIELDS = {
         "our-clients.html",
         "our-team.html",
         "get-in-touch.html"
-      ]
+      ],
+      "labelAr": "كل الصفحات - التذييل"
     },
     {
       "id": "Hero slider",
       "label": "Hero slider",
       "where": [
         "index.html"
-      ]
+      ],
+      "labelAr": "شريط الصور الرئيسي"
     },
     {
       "id": "Get to know us",
@@ -70,7 +79,8 @@ window.ING_ADMIN_FIELDS = {
       "where": [
         "index.html",
         "about-us.html"
-      ]
+      ],
+      "labelAr": "تعرف علينا"
     },
     {
       "id": "What we do",
@@ -78,7 +88,8 @@ window.ING_ADMIN_FIELDS = {
       "where": [
         "index.html",
         "our-services.html"
-      ]
+      ],
+      "labelAr": "ما نقوم به"
     },
     {
       "id": "Our Values",
@@ -87,7 +98,8 @@ window.ING_ADMIN_FIELDS = {
         "index.html",
         "about-us.html",
         "our-team.html"
-      ]
+      ],
+      "labelAr": "قيمنا"
     },
     {
       "id": "Our Mission",
@@ -95,7 +107,8 @@ window.ING_ADMIN_FIELDS = {
       "where": [
         "index.html",
         "about-us.html"
-      ]
+      ],
+      "labelAr": "غايتنا"
     },
     {
       "id": "Warehouse Services Management",
@@ -103,7 +116,8 @@ window.ING_ADMIN_FIELDS = {
       "where": [
         "index.html",
         "our-services.html"
-      ]
+      ],
+      "labelAr": "اداره الخدمات المستودعيه"
     },
     {
       "id": "Banner band",
@@ -115,7 +129,8 @@ window.ING_ADMIN_FIELDS = {
         "our-clients.html",
         "our-team.html",
         "get-in-touch.html"
-      ]
+      ],
+      "labelAr": "شريط البانر"
     },
     {
       "id": "By the numbers",
@@ -124,7 +139,8 @@ window.ING_ADMIN_FIELDS = {
         "index.html",
         "about-us.html",
         "our-clients.html"
-      ]
+      ],
+      "labelAr": "بالارقام"
     },
     {
       "id": "Our partners",
@@ -132,7 +148,8 @@ window.ING_ADMIN_FIELDS = {
       "where": [
         "index.html",
         "our-clients.html"
-      ]
+      ],
+      "labelAr": "شركاؤنا"
     },
     {
       "id": "Who we work with",
@@ -140,7 +157,8 @@ window.ING_ADMIN_FIELDS = {
       "where": [
         "index.html",
         "our-team.html"
-      ]
+      ],
+      "labelAr": "من نعمل معهم"
     },
     {
       "id": "Frequently asked",
@@ -149,7 +167,8 @@ window.ING_ADMIN_FIELDS = {
         "index.html",
         "our-services.html",
         "get-in-touch.html"
-      ]
+      ],
+      "labelAr": "الاسئله الشائعه"
     },
     {
       "id": "Page banner",
@@ -160,21 +179,24 @@ window.ING_ADMIN_FIELDS = {
         "our-clients.html",
         "our-team.html",
         "get-in-touch.html"
-      ]
+      ],
+      "labelAr": "بانر الصفحة"
     },
     {
       "id": "Client grid",
       "label": "Client grid",
       "where": [
         "our-clients.html"
-      ]
+      ],
+      "labelAr": "شبكة العملاء"
     },
     {
       "id": "Get in touch",
       "label": "Get in touch",
       "where": [
         "get-in-touch.html"
-      ]
+      ],
+      "labelAr": "تواصل معنا"
     }
   ],
   "fields": {
@@ -195,7 +217,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "رابط"
     },
     "nav.home": {
       "group": "site:header",
@@ -214,7 +237,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "رابط تنقّل"
     },
     "nav.about": {
       "group": "site:header",
@@ -233,7 +257,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "رابط تنقّل"
     },
     "nav.services": {
       "group": "site:header",
@@ -252,7 +277,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "رابط تنقّل"
     },
     "nav.clients": {
       "group": "site:header",
@@ -271,7 +297,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "رابط تنقّل"
     },
     "nav.team": {
       "group": "site:header",
@@ -290,7 +317,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "رابط تنقّل"
     },
     "nav.contact": {
       "group": "site:header",
@@ -309,7 +337,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "رابط تنقّل"
     },
     "header.track": {
       "group": "site:header",
@@ -328,7 +357,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "نص"
     },
     "header.trackTitle": {
       "group": "site:header",
@@ -347,7 +377,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "الاسم"
     },
     "header.trackText": {
       "group": "site:header",
@@ -366,7 +397,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "header.trackPlaceholder": {
       "group": "site:header",
@@ -385,7 +417,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "نص"
     },
     "header.trackButton": {
       "group": "site:header",
@@ -404,7 +437,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "زر"
     },
     "header.langLabel": {
       "group": "site:header",
@@ -423,7 +457,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "زر"
     },
     "nav.menu": {
       "group": "site:header",
@@ -442,7 +477,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "زر"
     },
     "slide1.eyebrow": {
       "group": "Hero slider",
@@ -456,7 +492,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "شريحة 1 - سطر تمهيدي"
     },
     "slide1.title": {
       "group": "Hero slider",
@@ -470,7 +507,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "شريحة 1 - عنوان رئيسي"
     },
     "slide1.text": {
       "group": "Hero slider",
@@ -484,7 +522,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "شريحة 1 - نص تمهيدي"
     },
     "slide.cta": {
       "group": "Hero slider",
@@ -498,7 +537,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "شريحة 1 - زر"
     },
     "slide.cta2": {
       "group": "Hero slider",
@@ -512,7 +552,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "شريحة 1 - زر"
     },
     "slide2.eyebrow": {
       "group": "Hero slider",
@@ -526,7 +567,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "شريحة 2 - سطر تمهيدي"
     },
     "slide2.title": {
       "group": "Hero slider",
@@ -540,7 +582,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "شريحة 2 - عنوان رئيسي"
     },
     "slide2.text": {
       "group": "Hero slider",
@@ -554,7 +597,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "شريحة 2 - نص تمهيدي"
     },
     "story.cta": {
       "group": "Hero slider",
@@ -568,7 +612,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "شريحة 2 - زر"
     },
     "slide3.eyebrow": {
       "group": "Hero slider",
@@ -582,7 +627,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "شريحة 3 - سطر تمهيدي"
     },
     "slide3.title": {
       "group": "Hero slider",
@@ -596,7 +642,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "شريحة 3 - عنوان رئيسي"
     },
     "slide3.text": {
       "group": "Hero slider",
@@ -610,7 +657,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "شريحة 3 - نص تمهيدي"
     },
     "services.cta": {
       "group": "Hero slider",
@@ -624,7 +672,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "شريحة 3 - زر"
     },
     "hero.prev": {
       "group": "Hero slider",
@@ -638,7 +687,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "زر"
     },
     "hero.next": {
       "group": "Hero slider",
@@ -652,7 +702,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "زر"
     },
     "story.eyebrow": {
       "group": "Get to know us",
@@ -667,7 +718,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "سطر تمهيدي"
     },
     "story.title": {
       "group": "Get to know us",
@@ -682,7 +734,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "story.text": {
       "group": "Get to know us",
@@ -697,7 +750,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "services.eyebrow": {
       "group": "What we do",
@@ -712,7 +766,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "سطر تمهيدي"
     },
     "services.title": {
       "group": "What we do",
@@ -727,7 +782,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "services.text": {
       "group": "What we do",
@@ -742,7 +798,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "warehouse.title": {
       "group": "What we do",
@@ -761,7 +818,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "warehouse.text": {
       "group": "What we do",
@@ -776,7 +834,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "btn.details": {
       "group": "What we do",
@@ -790,7 +849,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "رابط"
     },
     "delivery.title": {
       "group": "What we do",
@@ -809,7 +869,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "delivery.text": {
       "group": "What we do",
@@ -824,7 +885,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "track.title": {
       "group": "What we do",
@@ -843,7 +905,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "track.text": {
       "group": "What we do",
@@ -858,7 +921,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "offices.title": {
       "group": "What we do",
@@ -877,7 +941,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "offices.text": {
       "group": "What we do",
@@ -892,7 +957,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "values.eyebrow": {
       "group": "Our Values",
@@ -908,7 +974,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "سطر تمهيدي"
     },
     "values.title": {
       "group": "Our Values",
@@ -924,7 +991,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "values.text": {
       "group": "Our Values",
@@ -940,7 +1008,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "values.item1.title": {
       "group": "Our Values",
@@ -956,7 +1025,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "الاسم"
     },
     "values.item1.text": {
       "group": "Our Values",
@@ -972,7 +1042,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "نص"
     },
     "values.item2.title": {
       "group": "Our Values",
@@ -988,7 +1059,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "الاسم"
     },
     "values.item2.text": {
       "group": "Our Values",
@@ -1004,7 +1076,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "نص"
     },
     "values.item3.title": {
       "group": "Our Values",
@@ -1020,7 +1093,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "الاسم"
     },
     "values.item3.text": {
       "group": "Our Values",
@@ -1036,7 +1110,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "نص"
     },
     "values.item4.title": {
       "group": "Our Values",
@@ -1052,7 +1127,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "الاسم"
     },
     "values.item4.text": {
       "group": "Our Values",
@@ -1068,7 +1144,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "نص"
     },
     "mission.title": {
       "group": "Our Mission",
@@ -1083,7 +1160,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "mission.text": {
       "group": "Our Mission",
@@ -1098,7 +1176,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "vision.title": {
       "group": "Our Mission",
@@ -1113,7 +1192,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "vision.text": {
       "group": "Our Mission",
@@ -1128,7 +1208,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "warehouse.eyebrow": {
       "group": "Warehouse Services Management",
@@ -1143,7 +1224,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "سطر تمهيدي"
     },
     "warehouse.item1.title": {
       "group": "Warehouse Services Management",
@@ -1158,7 +1240,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "warehouse.item1.text": {
       "group": "Warehouse Services Management",
@@ -1173,7 +1256,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "warehouse.item2.title": {
       "group": "Warehouse Services Management",
@@ -1188,7 +1272,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "warehouse.item2.text": {
       "group": "Warehouse Services Management",
@@ -1203,7 +1288,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "warehouse.item3.title": {
       "group": "Warehouse Services Management",
@@ -1218,7 +1304,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "warehouse.item3.text": {
       "group": "Warehouse Services Management",
@@ -1233,7 +1320,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "warehouse.item4.title": {
       "group": "Warehouse Services Management",
@@ -1248,7 +1336,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "warehouse.item4.text": {
       "group": "Warehouse Services Management",
@@ -1263,7 +1352,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "about.heading": {
       "group": "Banner band",
@@ -1278,7 +1368,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "اقتباس"
     },
     "footer.slogan": {
       "group": "Banner band",
@@ -1293,7 +1384,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "المصدر"
     },
     "stats.eyebrow": {
       "group": "By the numbers",
@@ -1309,7 +1401,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "سطر تمهيدي"
     },
     "stats.title": {
       "group": "By the numbers",
@@ -1325,7 +1418,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "stats.value1": {
       "group": "By the numbers",
@@ -1341,7 +1435,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "تعليق"
     },
     "stats.value2": {
       "group": "By the numbers",
@@ -1357,7 +1452,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "تعليق"
     },
     "stats.value3": {
       "group": "By the numbers",
@@ -1374,7 +1470,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "تعليق"
     },
     "stats.value4": {
       "group": "By the numbers",
@@ -1390,7 +1487,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "تعليق"
     },
     "clients.eyebrow": {
       "group": "Our partners",
@@ -1405,7 +1503,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "سطر تمهيدي"
     },
     "clients.title": {
       "group": "Our partners",
@@ -1420,7 +1519,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "clients.text": {
       "group": "Our partners",
@@ -1435,7 +1535,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "team.eyebrow": {
       "group": "Who we work with",
@@ -1450,7 +1551,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "سطر تمهيدي"
     },
     "team.title": {
       "group": "Who we work with",
@@ -1465,7 +1567,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "team.text": {
       "group": "Who we work with",
@@ -1480,7 +1583,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "team.role1": {
       "group": "Who we work with",
@@ -1495,7 +1599,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "team.desc1": {
       "group": "Who we work with",
@@ -1510,7 +1615,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "team.role2": {
       "group": "Who we work with",
@@ -1525,7 +1631,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "team.desc2": {
       "group": "Who we work with",
@@ -1540,7 +1647,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "team.role3": {
       "group": "Who we work with",
@@ -1555,7 +1663,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "team.desc3": {
       "group": "Who we work with",
@@ -1570,7 +1679,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "team.role4": {
       "group": "Who we work with",
@@ -1585,7 +1695,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "team.desc4": {
       "group": "Who we work with",
@@ -1600,7 +1711,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "team.role5": {
       "group": "Who we work with",
@@ -1615,7 +1727,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "team.desc5": {
       "group": "Who we work with",
@@ -1630,7 +1743,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "team.role6": {
       "group": "Who we work with",
@@ -1645,7 +1759,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "team.desc6": {
       "group": "Who we work with",
@@ -1660,7 +1775,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "team.role7": {
       "group": "Who we work with",
@@ -1675,7 +1791,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "team.desc7": {
       "group": "Who we work with",
@@ -1690,7 +1807,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "team.role8": {
       "group": "Who we work with",
@@ -1705,7 +1823,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "team.desc8": {
       "group": "Who we work with",
@@ -1720,7 +1839,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "faq.eyebrow": {
       "group": "Frequently asked",
@@ -1736,7 +1856,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "سطر تمهيدي"
     },
     "faq.title": {
       "group": "Frequently asked",
@@ -1752,7 +1873,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "faq.q1": {
       "group": "Frequently asked",
@@ -1768,7 +1890,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "سؤال"
     },
     "faq.a1": {
       "group": "Frequently asked",
@@ -1784,7 +1907,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "جواب"
     },
     "faq.q2": {
       "group": "Frequently asked",
@@ -1800,7 +1924,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "سؤال"
     },
     "faq.a2": {
       "group": "Frequently asked",
@@ -1816,7 +1941,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "جواب"
     },
     "faq.q3": {
       "group": "Frequently asked",
@@ -1832,7 +1958,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "سؤال"
     },
     "faq.a3": {
       "group": "Frequently asked",
@@ -1848,7 +1975,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "جواب"
     },
     "faq.q4": {
       "group": "Frequently asked",
@@ -1864,7 +1992,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "سؤال"
     },
     "faq.a4": {
       "group": "Frequently asked",
@@ -1880,7 +2009,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "جواب"
     },
     "contact.eyebrow": {
       "group": "Banner band",
@@ -1899,7 +2029,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "سطر تمهيدي"
     },
     "cta.title": {
       "group": "Banner band",
@@ -1918,7 +2049,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "اقتباس"
     },
     "cta.text": {
       "group": "Banner band",
@@ -1937,7 +2069,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "cta.button": {
       "group": "Banner band",
@@ -1956,7 +2089,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "زر"
     },
     "footer.about": {
       "group": "site:footer",
@@ -1975,7 +2109,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "footer.linksTitle": {
       "group": "site:footer",
@@ -1994,7 +2129,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "footer.servicesTitle": {
       "group": "site:footer",
@@ -2013,7 +2149,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "footer.contactTitle": {
       "group": "site:footer",
@@ -2032,7 +2169,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "contact.address": {
       "group": "site:footer",
@@ -2051,7 +2189,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "رابط"
     },
     "contact.phone": {
       "group": "site:footer",
@@ -2069,7 +2208,8 @@ window.ING_ADMIN_FIELDS = {
       "href": "tel:+962799723777",
       "langs": [
         "en"
-      ]
+      ],
+      "labelAr": "رابط"
     },
     "contact.email": {
       "group": "site:footer",
@@ -2087,7 +2227,8 @@ window.ING_ADMIN_FIELDS = {
       "href": "mailto:info@ing-logistics.com",
       "langs": [
         "en"
-      ]
+      ],
+      "labelAr": "رابط"
     },
     "contact.hours": {
       "group": "site:footer",
@@ -2106,7 +2247,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "نص"
     },
     "footer.copyright": {
       "group": "site:footer",
@@ -2125,7 +2267,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "نص"
     },
     "footer.backToTop": {
       "group": "site:footer",
@@ -2144,7 +2287,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "رابط"
     },
     "about.eyebrow": {
       "group": "Page banner",
@@ -2158,7 +2302,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "سطر تمهيدي"
     },
     "about.title": {
       "group": "Page banner",
@@ -2172,7 +2317,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "breadcrumb.home": {
       "group": "Page banner",
@@ -2190,7 +2336,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "رابط"
     },
     "pageServices.eyebrow": {
       "group": "Page banner",
@@ -2204,7 +2351,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "سطر تمهيدي"
     },
     "pageServices.title": {
       "group": "Page banner",
@@ -2218,7 +2366,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "pageClients.eyebrow": {
       "group": "Page banner",
@@ -2232,7 +2381,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "سطر تمهيدي"
     },
     "pageClients.title": {
       "group": "Page banner",
@@ -2246,7 +2396,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "clients.c1": {
       "group": "Client grid",
@@ -2260,7 +2411,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "اسم العميل"
     },
     "clients.c2": {
       "group": "Client grid",
@@ -2274,7 +2426,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "اسم العميل"
     },
     "clients.c3": {
       "group": "Client grid",
@@ -2288,7 +2441,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "اسم العميل"
     },
     "clients.c4": {
       "group": "Client grid",
@@ -2302,7 +2456,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "اسم العميل"
     },
     "clients.c5": {
       "group": "Client grid",
@@ -2316,7 +2471,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "اسم العميل"
     },
     "clients.c6": {
       "group": "Client grid",
@@ -2330,7 +2486,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "اسم العميل"
     },
     "clients.c7": {
       "group": "Client grid",
@@ -2344,7 +2501,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "اسم العميل"
     },
     "clients.c8": {
       "group": "Client grid",
@@ -2358,7 +2516,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "اسم العميل"
     },
     "pageTeam.eyebrow": {
       "group": "Page banner",
@@ -2372,7 +2531,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "سطر تمهيدي"
     },
     "pageTeam.title": {
       "group": "Page banner",
@@ -2386,7 +2546,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "pageContact.eyebrow": {
       "group": "Page banner",
@@ -2400,7 +2561,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "سطر تمهيدي"
     },
     "pageContact.title": {
       "group": "Page banner",
@@ -2414,7 +2576,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "contact.title": {
       "group": "Get in touch",
@@ -2428,7 +2591,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "عنوان"
     },
     "contact.text": {
       "group": "Get in touch",
@@ -2442,7 +2606,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "contact.formName": {
       "group": "Get in touch",
@@ -2456,7 +2621,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "نص"
     },
     "contact.formEmail": {
       "group": "Get in touch",
@@ -2470,7 +2636,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "نص"
     },
     "contact.formPhone": {
       "group": "Get in touch",
@@ -2484,7 +2651,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "نص"
     },
     "contact.formService": {
       "group": "Get in touch",
@@ -2498,7 +2666,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "نص"
     },
     "contact.selectPlaceholder": {
       "group": "Get in touch",
@@ -2512,7 +2681,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "خيار في القائمة"
     },
     "contact.service.warehouse": {
       "group": "Get in touch",
@@ -2526,7 +2696,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "خيار في القائمة"
     },
     "contact.service.delivery": {
       "group": "Get in touch",
@@ -2540,7 +2711,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "خيار في القائمة"
     },
     "contact.service.track": {
       "group": "Get in touch",
@@ -2554,7 +2726,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "خيار في القائمة"
     },
     "contact.service.offices": {
       "group": "Get in touch",
@@ -2568,7 +2741,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "خيار في القائمة"
     },
     "contact.formMessage": {
       "group": "Get in touch",
@@ -2582,7 +2756,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "نص"
     },
     "contact.formSubmit": {
       "group": "Get in touch",
@@ -2596,7 +2771,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "زر"
     },
     "contact.formNote": {
       "group": "Get in touch",
@@ -2610,7 +2786,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "فقرة"
     },
     "contact.addressLabel": {
       "group": "Get in touch",
@@ -2624,7 +2801,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "الاسم"
     },
     "contact.phoneLabel": {
       "group": "Get in touch",
@@ -2638,7 +2816,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "الاسم"
     },
     "contact.emailLabel": {
       "group": "Get in touch",
@@ -2652,7 +2831,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "الاسم"
     },
     "contact.hoursLabel": {
       "group": "Get in touch",
@@ -2666,7 +2846,8 @@ window.ING_ADMIN_FIELDS = {
       "langs": [
         "en",
         "ar"
-      ]
+      ],
+      "labelAr": "الاسم"
     }
   },
   "images": {
@@ -2681,7 +2862,8 @@ window.ING_ADMIN_FIELDS = {
         "get-in-touch.html"
       ],
       "label": "Logo light",
-      "default": "assets/logo/ing-logo-light.png"
+      "default": "assets/logo/ing-logo-light.png",
+      "labelAr": "الشعار الفاتح"
     },
     "logo.header.dark": {
       "group": "site:header",
@@ -2694,7 +2876,8 @@ window.ING_ADMIN_FIELDS = {
         "get-in-touch.html"
       ],
       "label": "Logo dark",
-      "default": "assets/logo/ing-logo-dark.png"
+      "default": "assets/logo/ing-logo-dark.png",
+      "labelAr": "الشعار الغامق"
     },
     "home.hero1": {
       "group": "Hero slider",
@@ -2702,7 +2885,8 @@ window.ING_ADMIN_FIELDS = {
         "index.html"
       ],
       "label": "Slide 1 - Background photo",
-      "default": "assets/img/slide-1.jpg"
+      "default": "assets/img/slide-1.jpg",
+      "labelAr": "شريحة 1 - صورة خلفية"
     },
     "home.hero2": {
       "group": "Hero slider",
@@ -2710,7 +2894,8 @@ window.ING_ADMIN_FIELDS = {
         "index.html"
       ],
       "label": "Slide 2 - Background photo",
-      "default": "assets/img/slide-2.jpg"
+      "default": "assets/img/slide-2.jpg",
+      "labelAr": "شريحة 2 - صورة خلفية"
     },
     "home.hero3": {
       "group": "Hero slider",
@@ -2718,7 +2903,8 @@ window.ING_ADMIN_FIELDS = {
         "index.html"
       ],
       "label": "Slide 3 - Background photo",
-      "default": "assets/img/slide-3.jpg"
+      "default": "assets/img/slide-3.jpg",
+      "labelAr": "شريحة 3 - صورة خلفية"
     },
     "home.story": {
       "group": "Get to know us",
@@ -2726,7 +2912,8 @@ window.ING_ADMIN_FIELDS = {
         "index.html"
       ],
       "label": "Photo - Home",
-      "default": "assets/img/story.jpg"
+      "default": "assets/img/story.jpg",
+      "labelAr": "صورة - الرئيسية"
     },
     "home.values": {
       "group": "Our Values",
@@ -2734,7 +2921,8 @@ window.ING_ADMIN_FIELDS = {
         "index.html"
       ],
       "label": "Photo - Home",
-      "default": "assets/img/values.jpg"
+      "default": "assets/img/values.jpg",
+      "labelAr": "صورة - الرئيسية"
     },
     "band.quote": {
       "group": "Banner band",
@@ -2743,7 +2931,8 @@ window.ING_ADMIN_FIELDS = {
         "our-services.html"
       ],
       "label": "Background photo - Home, Our Services",
-      "default": "assets/img/slide-4.jpg"
+      "default": "assets/img/slide-4.jpg",
+      "labelAr": "صورة خلفية - الرئيسية، خدماتنا"
     },
     "home.clients": {
       "group": "Our partners",
@@ -2751,7 +2940,8 @@ window.ING_ADMIN_FIELDS = {
         "index.html"
       ],
       "label": "Photo - Home",
-      "default": "assets/img/services-intro.jpg"
+      "default": "assets/img/services-intro.jpg",
+      "labelAr": "صورة - الرئيسية"
     },
     "team.m1.photo": {
       "group": "Who we work with",
@@ -2760,7 +2950,8 @@ window.ING_ADMIN_FIELDS = {
         "our-team.html"
       ],
       "label": "Photo - Executive management",
-      "default": ""
+      "default": "",
+      "labelAr": "صورة - الاداره التنفيذيه"
     },
     "team.m2.photo": {
       "group": "Who we work with",
@@ -2769,7 +2960,8 @@ window.ING_ADMIN_FIELDS = {
         "our-team.html"
       ],
       "label": "Photo - Operations management",
-      "default": ""
+      "default": "",
+      "labelAr": "صورة - اداره العمليات"
     },
     "team.m3.photo": {
       "group": "Who we work with",
@@ -2778,7 +2970,8 @@ window.ING_ADMIN_FIELDS = {
         "our-team.html"
       ],
       "label": "Photo - Warehouse management",
-      "default": ""
+      "default": "",
+      "labelAr": "صورة - اداره المستودعات"
     },
     "team.m4.photo": {
       "group": "Who we work with",
@@ -2787,7 +2980,8 @@ window.ING_ADMIN_FIELDS = {
         "our-team.html"
       ],
       "label": "Photo - Customer service",
-      "default": ""
+      "default": "",
+      "labelAr": "صورة - خدمه العملاء"
     },
     "team.m5.photo": {
       "group": "Who we work with",
@@ -2796,7 +2990,8 @@ window.ING_ADMIN_FIELDS = {
         "our-team.html"
       ],
       "label": "Photo - Transport fleet",
-      "default": ""
+      "default": "",
+      "labelAr": "صورة - اسطول النقل"
     },
     "team.m6.photo": {
       "group": "Who we work with",
@@ -2805,7 +3000,8 @@ window.ING_ADMIN_FIELDS = {
         "our-team.html"
       ],
       "label": "Photo - Information technology",
-      "default": ""
+      "default": "",
+      "labelAr": "صورة - تقنيه المعلومات"
     },
     "team.m7.photo": {
       "group": "Who we work with",
@@ -2814,7 +3010,8 @@ window.ING_ADMIN_FIELDS = {
         "our-team.html"
       ],
       "label": "Photo - Quality and safety",
-      "default": ""
+      "default": "",
+      "labelAr": "صورة - الجوده والسلامه"
     },
     "team.m8.photo": {
       "group": "Who we work with",
@@ -2823,7 +3020,8 @@ window.ING_ADMIN_FIELDS = {
         "our-team.html"
       ],
       "label": "Photo - Business development",
-      "default": ""
+      "default": "",
+      "labelAr": "صورة - تطوير الاعمال"
     },
     "band.cta": {
       "group": "Banner band",
@@ -2836,7 +3034,8 @@ window.ING_ADMIN_FIELDS = {
         "get-in-touch.html"
       ],
       "label": "Background photo - every page",
-      "default": "assets/img/cta.jpg"
+      "default": "assets/img/cta.jpg",
+      "labelAr": "صورة خلفية - كل الصفحات"
     },
     "logo.footer": {
       "group": "site:footer",
@@ -2849,7 +3048,8 @@ window.ING_ADMIN_FIELDS = {
         "get-in-touch.html"
       ],
       "label": "Footer logo",
-      "default": "assets/logo/ing-logo-light.png"
+      "default": "assets/logo/ing-logo-light.png",
+      "labelAr": "شعار التذييل"
     },
     "about.pagehead": {
       "group": "Page banner",
@@ -2857,7 +3057,8 @@ window.ING_ADMIN_FIELDS = {
         "about-us.html"
       ],
       "label": "Background photo - About Us",
-      "default": "assets/img/services-hero.jpg"
+      "default": "assets/img/services-hero.jpg",
+      "labelAr": "صورة خلفية - من نحن"
     },
     "story.photo": {
       "group": "Get to know us",
@@ -2865,7 +3066,8 @@ window.ING_ADMIN_FIELDS = {
         "about-us.html"
       ],
       "label": "Photo - About Us",
-      "default": "assets/img/story.jpg"
+      "default": "assets/img/story.jpg",
+      "labelAr": "صورة - من نحن"
     },
     "values.photo": {
       "group": "Our Values",
@@ -2874,7 +3076,8 @@ window.ING_ADMIN_FIELDS = {
         "our-team.html"
       ],
       "label": "Photo - About Us, Our Team",
-      "default": "assets/img/values.jpg"
+      "default": "assets/img/values.jpg",
+      "labelAr": "صورة - من نحن، فريقنا"
     },
     "services.pagehead": {
       "group": "Page banner",
@@ -2882,7 +3085,8 @@ window.ING_ADMIN_FIELDS = {
         "our-services.html"
       ],
       "label": "Background photo - Our Services",
-      "default": "assets/img/services-intro.jpg"
+      "default": "assets/img/services-intro.jpg",
+      "labelAr": "صورة خلفية - خدماتنا"
     },
     "services.photo": {
       "group": "What we do",
@@ -2890,7 +3094,8 @@ window.ING_ADMIN_FIELDS = {
         "our-services.html"
       ],
       "label": "Photo - Our Services",
-      "default": "assets/img/services-hero.jpg"
+      "default": "assets/img/services-hero.jpg",
+      "labelAr": "صورة - خدماتنا"
     },
     "clients.pagehead": {
       "group": "Page banner",
@@ -2898,7 +3103,8 @@ window.ING_ADMIN_FIELDS = {
         "our-clients.html"
       ],
       "label": "Background photo - Our Clients",
-      "default": "assets/img/slide-2.jpg"
+      "default": "assets/img/slide-2.jpg",
+      "labelAr": "صورة خلفية - عملاؤنا"
     },
     "clients.photo": {
       "group": "Our partners",
@@ -2906,7 +3112,8 @@ window.ING_ADMIN_FIELDS = {
         "our-clients.html"
       ],
       "label": "Photo - Our Clients",
-      "default": "assets/img/services-intro.jpg"
+      "default": "assets/img/services-intro.jpg",
+      "labelAr": "صورة - عملاؤنا"
     },
     "team.pagehead": {
       "group": "Page banner",
@@ -2914,7 +3121,8 @@ window.ING_ADMIN_FIELDS = {
         "our-team.html"
       ],
       "label": "Background photo - Our Team",
-      "default": "assets/img/slide-3.jpg"
+      "default": "assets/img/slide-3.jpg",
+      "labelAr": "صورة خلفية - فريقنا"
     },
     "contact.pagehead": {
       "group": "Page banner",
@@ -2922,7 +3130,8 @@ window.ING_ADMIN_FIELDS = {
         "get-in-touch.html"
       ],
       "label": "Background photo - Contact",
-      "default": "assets/img/cta.jpg"
+      "default": "assets/img/cta.jpg",
+      "labelAr": "صورة خلفية - اتصل بنا"
     }
   },
   "numbers": {
@@ -2935,7 +3144,8 @@ window.ING_ADMIN_FIELDS = {
       ],
       "label": "Warehouses",
       "value": "12",
-      "suffix": "+"
+      "suffix": "+",
+      "labelAr": "المستودعات"
     },
     "stats.n2": {
       "group": "By the numbers",
@@ -2946,7 +3156,8 @@ window.ING_ADMIN_FIELDS = {
       ],
       "label": "Transport fleet",
       "value": "85",
-      "suffix": "+"
+      "suffix": "+",
+      "labelAr": "اسطول النقل"
     },
     "stats.n3": {
       "group": "By the numbers",
@@ -2957,7 +3168,8 @@ window.ING_ADMIN_FIELDS = {
       ],
       "label": "Team members",
       "value": "240",
-      "suffix": "+"
+      "suffix": "+",
+      "labelAr": "فريق العمل"
     },
     "stats.n4": {
       "group": "By the numbers",
@@ -2968,7 +3180,8 @@ window.ING_ADMIN_FIELDS = {
       ],
       "label": "Accuracy rate",
       "value": "99",
-      "suffix": "%"
+      "suffix": "%",
+      "labelAr": "نسبه الدقه"
     }
   },
   "members": {
@@ -2986,7 +3199,8 @@ window.ING_ADMIN_FIELDS = {
           "photo": "team.m1.photo",
           "initials": "EX",
           "role": "team.role1",
-          "desc": "team.desc1"
+          "desc": "team.desc1",
+          "labelAr": "الاداره التنفيذيه"
         },
         {
           "id": "team.m2",
@@ -2994,7 +3208,8 @@ window.ING_ADMIN_FIELDS = {
           "photo": "team.m2.photo",
           "initials": "OP",
           "role": "team.role2",
-          "desc": "team.desc2"
+          "desc": "team.desc2",
+          "labelAr": "اداره العمليات"
         },
         {
           "id": "team.m3",
@@ -3002,7 +3217,8 @@ window.ING_ADMIN_FIELDS = {
           "photo": "team.m3.photo",
           "initials": "WH",
           "role": "team.role3",
-          "desc": "team.desc3"
+          "desc": "team.desc3",
+          "labelAr": "اداره المستودعات"
         },
         {
           "id": "team.m4",
@@ -3010,7 +3226,8 @@ window.ING_ADMIN_FIELDS = {
           "photo": "team.m4.photo",
           "initials": "CS",
           "role": "team.role4",
-          "desc": "team.desc4"
+          "desc": "team.desc4",
+          "labelAr": "خدمه العملاء"
         },
         {
           "id": "team.m5",
@@ -3018,7 +3235,8 @@ window.ING_ADMIN_FIELDS = {
           "photo": "team.m5.photo",
           "initials": "FL",
           "role": "team.role5",
-          "desc": "team.desc5"
+          "desc": "team.desc5",
+          "labelAr": "اسطول النقل"
         },
         {
           "id": "team.m6",
@@ -3026,7 +3244,8 @@ window.ING_ADMIN_FIELDS = {
           "photo": "team.m6.photo",
           "initials": "IT",
           "role": "team.role6",
-          "desc": "team.desc6"
+          "desc": "team.desc6",
+          "labelAr": "تقنيه المعلومات"
         },
         {
           "id": "team.m7",
@@ -3034,7 +3253,8 @@ window.ING_ADMIN_FIELDS = {
           "photo": "team.m7.photo",
           "initials": "QS",
           "role": "team.role7",
-          "desc": "team.desc7"
+          "desc": "team.desc7",
+          "labelAr": "الجوده والسلامه"
         },
         {
           "id": "team.m8",
@@ -3042,9 +3262,11 @@ window.ING_ADMIN_FIELDS = {
           "photo": "team.m8.photo",
           "initials": "BD",
           "role": "team.role8",
-          "desc": "team.desc8"
+          "desc": "team.desc8",
+          "labelAr": "تطوير الاعمال"
         }
-      ]
+      ],
+      "labelAr": "فريقنا"
     }
   }
 };

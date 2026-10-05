@@ -43,6 +43,7 @@ assets/
         content.js           published edits (empty until an admin pushes some)
         content-apply.js     applies content.js to a page, before main.js
         admin-fields.js      generated list of everything the admin can edit
+        admin-i18n.js        Arabic for the admin screen itself
         admin.js             sign-in, editing, draft and push
         draft-store.js       unpublished photos, in IndexedDB
         main.js              slider, sticky header, nav, accordion, form, counters
@@ -287,6 +288,21 @@ Sign in with the user name `ing-logistics` and the admin password. What can be c
 | **Links** | the phone number, e-mail address, map link and button targets that sit alongside the text |
 | **Numbers** | the four statistics in the "By the numbers" band |
 | **Team members** | remove a member, bring one back, add a new one, and give each one a photo, a role and a description (see below) |
+
+### Arabic
+
+The screen has its own **EN / ع** switch, in the sign-in card and in the top bar, and
+remembers the choice in this browser. In Arabic the whole screen is translated and mirrors
+to right-to-left, headings and labels included: the section names and member roles come
+from the site's own Arabic, the rest from `assets/js/admin-i18n.js`.
+
+Choosing Arabic also switches the site **preview** to Arabic, so what you see beside the
+fields is what an Arabic visitor gets. The preview has the site's own language toggle if
+you want to look at the other one.
+
+English is the default and anything not yet translated falls back to the English it was
+written as, so a missing phrase shows as English rather than as a blank. Messages that come
+back from the publish function (a refused push, for example) are in English.
 
 ### How saving works
 
