@@ -13,15 +13,9 @@
    ========================================================================== */
 window.ING_CONTENT = {
   "version": 1,
-  "updated": "2026-10-05T09:25:26.760Z",
-  "text": {
-    "slide1.eyebrow": {
-      "en": "TEST - pushing from admin"
-    }
-  },
+  "updated": "",
+  "text": {},
   "hrefs": {},
   "numbers": {},
-  "images": {
-    "home.hero1": "assets/img/uploads/home-hero1-d09c4d7a.jpg"
-  }
+  "images": {}
 };
