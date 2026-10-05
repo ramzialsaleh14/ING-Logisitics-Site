@@ -23,30 +23,12 @@
    ========================================================================== */
 window.ING_CONTENT = {
   "version": 1,
-  "updated": "2026-10-05T13:00:00.000Z",
-  "publishes": [
-    "2026-10-05T12:32:53.729Z"
-  ],
-  "text": {
-    "team.new9.role": {
-      "en": "Fleet mechanics",
-      "ar": "ميكانيكا الأسطول"
-    },
-    "team.new9.desc": {
-      "en": "Keeping every vehicle road ready.",
-      "ar": "الحفاظ على جاهزية كل مركبة."
-    }
-  },
+  "updated": "",
+  "publishes": [],
+  "text": {},
   "hrefs": {},
   "numbers": {},
   "images": {},
-  "hidden": [
-    "team.m3"
-  ],
-  "added": [
-    {
-      "id": "team.new9",
-      "initials": "FM"
-    }
-  ]
+  "hidden": [],
+  "added": []
 };
