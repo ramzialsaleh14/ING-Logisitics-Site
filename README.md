@@ -321,8 +321,8 @@ be put back by uploading it again.
 The team cards are marked in the markup (`data-cmember`, one per member) in both places
 they appear — the home page and the team page — so the screen can offer them as a list:
 
-* **Photo** — each member has one. It fills the round badge on the card and the initials
-  (`EX`, `OP`, …) come back when there is no photo, so a card never looks empty.
+* **Photo** — each member can have one, and it fills the round badge on the card. The
+  initials (`EX`, `OP`, …) come back when there is no photo, so a card never looks empty.
 * **Remove this member** — takes the card off both pages. Nothing is deleted: the member
   stays in the list marked *Removed* with a **Bring this member back** button, and the site
   only changes when the next push goes out.
