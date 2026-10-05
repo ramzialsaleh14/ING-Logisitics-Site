@@ -41,6 +41,7 @@
   var currentPage = (MANIFEST.pages[0] || {}).file || "index.html";
   var answerDialog = null;      // resolves the open confirm/notice dialog
   var previewTimer = null;
+  var quota = null;             // { used, limit, remaining, resetAt } from the publish function
 
   /* -------------------------------------------------------------- storage -- */
 
@@ -265,6 +266,7 @@
       renderFields();
       renderPreviewTabs();
       saveDraft();
+      refreshQuota();
     });
   }
 
@@ -739,6 +741,55 @@
     if (resolve) resolve(answer);
   }
 
+  /* ------------------------------------------------------------ allowance -- */
+
+  /* How many pushes are left today, straight from the publish function - it is
+     the only place that can see the whole picture, so it is the only place
+     that decides. This just shows what it says. */
+  function refreshQuota() {
+    var auth = session();
+    if (!auth) return Promise.resolve();
+    return api({ action: "status", user: auth.user, password: auth.password })
+      .then(function (result) { applyQuota(result.quota); })
+      .catch(function () { applyQuota(null); });   // not connected: the push attempt will explain
+  }
+
+  function applyQuota(next) {
+    quota = next || null;
+    renderQuota();
+  }
+
+  function whenText(iso) {
+    var when = new Date(iso);
+    if (isNaN(when.getTime())) return iso;
+    return when.toLocaleString([], { weekday: "short", hour: "2-digit", minute: "2-digit" });
+  }
+
+  function renderQuota() {
+    var badge = $("#quota");
+    var button = $("#publish");
+    if (!quota) {
+      badge.hidden = true;
+      button.disabled = false;
+      button.removeAttribute("title");
+      return;
+    }
+
+    badge.hidden = false;
+    badge.classList.toggle("is-empty", quota.remaining <= 0);
+    if (quota.remaining > 0) {
+      badge.textContent = quota.remaining === 1 ? "1 push left today" : quota.remaining + " pushes left today";
+      button.disabled = false;
+      button.title = "This screen can push changes " + quota.limit + " times a day.";
+    } else {
+      badge.textContent = "No pushes left today"
+        + (quota.resetAt ? " \u00b7 next " + whenText(quota.resetAt) : "");
+      button.disabled = true;
+      button.title = "Changes can be pushed " + quota.limit
+        + " times a day, and that allowance is used up.";
+    }
+  }
+
   /* --------------------------------------------------------------- pushing -- */
 
   function api(payload) {
@@ -755,7 +806,10 @@
             + "\u201cPublishing changes\u201d section of README.md.");
         }
         if (!response.ok || !body.ok) {
-          throw new Error(body.error || ("The publish function refused the request (HTTP " + response.status + ")."));
+          var refused = new Error(body.error
+            || ("The publish function refused the request (HTTP " + response.status + ")."));
+          if (body.quota) refused.quota = body.quota;
+          throw refused;
         }
         return body;
       });
@@ -832,6 +886,15 @@
   }
 
   function publish() {
+    if (quota && quota.remaining <= 0) {
+      notice("No pushes left today",
+        "Changes can be pushed " + quota.limit + " times a day, and that allowance is used up."
+        + (quota.resetAt ? " The next push becomes available " + escapeHtml(whenText(quota.resetAt)) + "." : "")
+        + "<br><br>Nothing is lost \u2014 your draft stays saved in this browser, and you can push it later.",
+        "Close");
+      return;
+    }
+
     var count = changeCount();
     if (!count) {
       notice("Nothing to push", "Change something first, or use \u201cDiscard draft\u201d to clear the draft.", "Close");
@@ -890,6 +953,7 @@
           baseline = content;
           window.ING_CONTENT = content;
           writeJSON(window.localStorage, BASELINE_KEY, content);
+          applyQuota(result.quota);
           return discardDraft().then(function () {
             renderFields();
             renderPreview();
@@ -905,13 +969,14 @@
         });
     }).catch(function (problem) {
       saveDraft();
+      applyQuota(problem.quota);
       setState("Nothing was pushed", "is-error");
       notice("The changes were not pushed",
         escapeHtml(problem.message)
         + "<br><br>Your draft is still saved in this browser \u2014 fix the problem and press \u201cPush changes\u201d again.",
         "Close");
     }).then(function () {
-      $("#publish").disabled = false;
+      renderQuota();
     });
   }
 

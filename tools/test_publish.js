@@ -51,6 +51,53 @@ const githubAccepts = () => {
     : { status: 404, body: { message: "Not Found" } });
 };
 
+/* A GitHub that keeps content.js between calls, so the log of pushes builds up
+   exactly as it does in the repository. */
+let stored = null;
+const githubWithMemory = (times) => {
+  let revision = 0;
+  stored = { sha: "sha-0", text: "" };
+  const start = (list) => {
+    stored.text = "/* header */\nwindow.ING_CONTENT = " + JSON.stringify({
+      version: 1, updated: "2026-10-05T08:00:00.000Z", publishes: list || [],
+      text: {}, hrefs: {}, numbers: {}, images: {},
+    }) + ";\n";
+  };
+  start(times);
+  reply = (url, options) => {
+    if (options.method === "PUT") {
+      revision += 1;
+      stored = {
+        sha: "sha-" + revision,
+        text: Buffer.from(JSON.parse(options.body).content, "base64").toString("utf8"),
+      };
+      return { status: 201, body: { commit: { html_url: "https://github.com/commit/abc" } } };
+    }
+    if (/contents\/assets\/js\/content\.js/.test(url)) {
+      return {
+        status: 200,
+        body: { sha: stored.sha, content: Buffer.from(stored.text, "utf8").toString("base64") },
+      };
+    }
+    return { status: 404, body: { message: "Not Found" } };
+  };
+};
+
+const ago = (ms) => new Date(Date.now() - ms).toISOString();
+const HOUR = 60 * 60 * 1000;
+
+/* The file as it was actually written, so the assertions read what a browser
+   would load rather than a copy of the source text. */
+const writtenContent = () => {
+  try {
+    const scope = {};
+    new Function("window", stored.text)(scope);
+    return scope.ING_CONTENT;
+  } catch (e) {
+    return {}; // a file that does not parse: the checks below will say so
+  }
+};
+
 const content = (extra) => Object.assign({
   updated: "2026-10-05T08:00:00.000Z",
   text: { "story.title": { en: "Our Story", ar: "\u0642\u0635\u062a\u0646\u0627" } },
@@ -159,6 +206,92 @@ async function run() {
   check("a photo that is not base64 -> 400", response.statusCode === 400, response);
   response = await handler(event(Object.assign({ action: "image", base64: "AAAA" }, auth)));
   check("a photo with no path -> 400", response.statusCode === 400, response);
+
+  /* ------------------------------------------------------- push allowance */
+  const push = () => handler(event(Object.assign({ action: "content", content: content() }, auth)));
+  const status = () => handler(event(Object.assign({ action: "status" }, auth)));
+  const photo = () => handler(event(Object.assign({
+    action: "image", path: PHOTO, base64: Buffer.from("pretend jpeg bytes").toString("base64"),
+  }, auth)));
+
+  githubWithMemory([]);
+  response = await status();
+  check("status reports the allowance without changing anything",
+    response.statusCode === 200 && JSON.parse(response.body).quota.remaining === 2, response);
+
+  response = await push();
+  let quota = JSON.parse(response.body).quota;
+  check("a push uses one of the two", quota.remaining === 1 && quota.used === 1, response.body);
+  check("a push is not refused while the allowance lasts", response.statusCode === 200, response);
+  check("the push time is written into content.js",
+    writtenContent().version === 1
+    && (writtenContent().publishes || []).length === 1
+    && !isNaN(Date.parse(writtenContent().publishes[0])),
+    writtenContent().publishes);
+
+  response = await push();
+  quota = JSON.parse(response.body).quota;
+  check("the second push is the last one", quota.remaining === 0 && quota.used === 2, response.body);
+  check("the answer says when the next push opens up",
+    typeof quota.resetAt === "string" && !isNaN(Date.parse(quota.resetAt)), quota);
+  check("content.js carries both pushes",
+    (writtenContent().publishes || []).length === 2, writtenContent().publishes);
+
+  response = await status();
+  check("status now reports nothing left",
+    response.statusCode === 200 && JSON.parse(response.body).quota.remaining === 0, response);
+
+  response = await push();
+  check("a third push -> 429", response.statusCode === 429, response);
+  check("the refusal carries the allowance for the screen",
+    JSON.parse(response.body).quota.remaining === 0, response.body);
+  response = await photo();
+  check("a photo is refused once the allowance is spent", response.statusCode === 429, response);
+
+  const before = calls.length;
+  githubWithMemory([ago(25 * HOUR), ago(25 * HOUR)]);
+  response = await push();
+  check("pushes older than 24 hours do not count",
+    response.statusCode === 200 && JSON.parse(response.body).quota.remaining === 1, response);
+  check("aged-out times are kept as history but do not count",
+    (writtenContent().publishes || []).length === 3, writtenContent().publishes);
+
+  githubWithMemory(Array.from({ length: 25 }, () => ago(30 * HOUR)));
+  response = await push();
+  check("the log is capped so it cannot grow without limit",
+    response.statusCode === 200 && writtenContent().publishes.length === 20,
+    writtenContent().publishes.length);
+
+  githubWithMemory([ago(2 * HOUR), ago(2 * HOUR)]);
+  response = await push();
+  check("a fresh pair of pushes -> 429", response.statusCode === 429, response);
+  check("the wait is counted from the older of the two",
+    Date.parse(JSON.parse(response.body).quota.resetAt) > Date.now() + 21 * HOUR, response.body);
+
+  process.env.PUBLISH_LIMIT = "1";
+  githubWithMemory([ago(2 * HOUR)]);
+  response = await push();
+  check("PUBLISH_LIMIT changes the allowance", response.statusCode === 429, response);
+  githubWithMemory([]);
+  response = await push();
+  check("PUBLISH_LIMIT allows a push when nothing is logged",
+    response.statusCode === 200 && JSON.parse(response.body).quota.limit === 1, response);
+  process.env.PUBLISH_LIMIT = "not a number";
+  githubWithMemory([]);
+  response = await status();
+  check("a nonsense PUBLISH_LIMIT falls back to two",
+    JSON.parse(response.body).quota.limit === 2, response);
+  delete process.env.PUBLISH_LIMIT;
+
+  githubWithMemory(["not a date"]);
+  calls = [];
+  response = await status();
+  check("a damaged push log does not lock the owner out",
+    response.statusCode === 200 && JSON.parse(response.body).quota.remaining === 2, response);
+  check("reading the log writes nothing", calls.every(call => call.method !== "PUT"), calls);
+
+  response = await handler(event({ action: "status", user: USER, password: "wrong" }));
+  check("status is behind the password too", response.statusCode === 401, response);
 
   /* ------------------------------------------------------------ GitHub */
   const realFetch = global.fetch;

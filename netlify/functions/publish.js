@@ -31,6 +31,24 @@ const MAX_BASE64 = 4 * 1024 * 1024;
 const MAX_TEXT = 4000;
 const MAX_HREF = 2000;
 
+/* How many times a day the admin screen may push changes.
+
+   Functions have no storage of their own, so the count of recent pushes is
+   kept in content.js and rewritten in the same commit as the change it
+   belongs to - the count and the content can never drift apart, and no extra
+   commit (or build) is needed to record it. PUBLISH_LIMIT overrides the
+   default of two, and the window is a rolling 24 hours, so a burst either
+   side of midnight cannot be used to push four times. */
+const LIMIT_WINDOW_MS = 24 * 60 * 60 * 1000;
+const PUBLISH_LOG_FIELD = "publishes";
+const PUBLISH_LOG_MAX = 20;
+const CONTENT_COMMIT_MESSAGE = "Update site content from the admin screen";
+
+function publishLimit() {
+  const configured = Number(process.env.PUBLISH_LIMIT);
+  return Number.isInteger(configured) && configured > 0 ? configured : 2;
+}
+
 const CONTENT_HEADER = `/* ==========================================================================
    Published site content - the changes saved from the admin screen.
 
@@ -38,6 +56,9 @@ const CONTENT_HEADER = `/* =====================================================
    hrefs   { "<i18n key>": "tel:+962..." }
    numbers { "<counter key>": { "value": "12", "suffix": "+" } }
    images  { "<image key>": "assets/img/uploads/some-photo.jpg" }
+
+   publishes is the list of recent push times, used to enforce the daily
+   limit on the admin screen. It is trimmed to the most recent few.
 
    Written by netlify/functions/publish.js when an admin presses "Push
    changes". Anything not listed here falls back to the English copy in the
@@ -47,9 +68,10 @@ const CONTENT_HEADER = `/* =====================================================
 `;
 
 class Refused extends Error {
-  constructor(status, message) {
+  constructor(status, message, quota) {
     super(message);
     this.status = status;
+    this.quota = quota;
   }
 }
 
@@ -115,13 +137,13 @@ function describe(result) {
   return "HTTP " + result.status;
 }
 
-async function githubRequest(config, path, options) {
+async function apiRequest(config, apiPath, options) {
   if (typeof fetch !== "function") {
     throw new Refused(500, "This function needs Node.js 18 or newer, and the runtime it is running on has "
       + "no fetch(). Set NODE_VERSION to 20 in Netlify's environment variables.");
   }
   const settings = options || {};
-  const response = await fetch(`${API}/repos/${config.repo}/contents/${path}`, {
+  const response = await fetch(API + "/repos/" + config.repo + apiPath, {
     method: settings.method || "GET",
     headers: Object.assign({
       Authorization: "Bearer " + config.token,
@@ -138,7 +160,7 @@ async function githubRequest(config, path, options) {
 }
 
 async function fileSha(config, path) {
-  const result = await githubRequest(config, `${path}?ref=${encodeURIComponent(config.branch)}`);
+  const result = await apiRequest(config, `/contents/${path}?ref=${encodeURIComponent(config.branch)}`);
   if (result.status === 404) return null;
   if (!result.ok) throw new Refused(502, "GitHub could not read " + path + ": " + describe(result));
   return result.body.sha;
@@ -146,14 +168,93 @@ async function fileSha(config, path) {
 
 const COMMITTER = { name: "ING Logistics admin", email: "admin@ing-logistics.com" };
 
-async function commit(config, path, base64, message) {
-  const sha = await fileSha(config, path);
+async function writeFile(config, path, base64, message, sha) {
   const body = { message: message, content: base64, branch: config.branch, committer: COMMITTER };
   if (sha) body.sha = sha;
-
-  const result = await githubRequest(config, path, { method: "PUT", body: JSON.stringify(body) });
+  const result = await apiRequest(config, `/contents/${path}`, { method: "PUT", body: JSON.stringify(body) });
   if (!result.ok) throw new Refused(502, "GitHub refused to save " + path + ": " + describe(result));
   return result.body.commit && result.body.commit.html_url;
+}
+
+async function commit(config, path, base64, message) {
+  return writeFile(config, path, base64, message, await fileSha(config, path));
+}
+
+/* ------------------------------------------------------------- push limit -- */
+
+/* The published content file, with the timestamps of recent pushes it carries. */
+async function publishedFile(config) {
+  const result = await apiRequest(config, `/contents/${CONTENT_PATH}?ref=${encodeURIComponent(config.branch)}`);
+  if (result.status === 404) return { sha: null, times: [] };
+  if (!result.ok) throw new Refused(502, "GitHub could not read " + CONTENT_PATH + ": " + describe(result));
+  const text = result.body && result.body.content
+    ? Buffer.from(result.body.content, "base64").toString("utf8")
+    : "";
+  return { sha: result.body.sha, times: publishTimes(text) };
+}
+
+function publishTimes(text) {
+  if (!text) return [];
+  const marker = "window.ING_CONTENT = ";
+  const start = text.indexOf(marker);
+  if (start === -1) return [];
+  let published;
+  try {
+    published = JSON.parse(text.slice(start + marker.length).replace(/;\s*$/, ""));
+  } catch (e) {
+    return []; // hand-edited file: carry on rather than block the owner out
+  }
+  const times = published && published[PUBLISH_LOG_FIELD];
+  return Array.isArray(times) ? times.filter(function (time) { return typeof time === "string"; }) : [];
+}
+
+/* The oldest timestamp is what frees the next push, so it is carried along to
+   work out when a used-up allowance opens again. */
+function quotaFrom(times, now) {
+  const recent = times
+    .map(function (time) { return Date.parse(time); })
+    .filter(function (at) { return !isNaN(at) && now - at < LIMIT_WINDOW_MS; });
+  const limit = publishLimit();
+  const remaining = Math.max(0, limit - recent.length);
+  const oldest = recent.length ? Math.min.apply(null, recent) : null;
+  return {
+    used: recent.length,
+    limit: limit,
+    remaining: remaining,
+    resetAt: remaining === 0 && oldest !== null ? new Date(oldest + LIMIT_WINDOW_MS).toISOString() : null,
+    oldest: oldest,
+    times: times,
+  };
+}
+
+function publicQuota(state) {
+  return { used: state.used, limit: state.limit, remaining: state.remaining, resetAt: state.resetAt };
+}
+
+function quotaAfterPublish(state, at) {
+  const used = state.used + 1;
+  const limit = state.limit;
+  const oldest = state.oldest === null ? at : state.oldest;
+  return {
+    used: used,
+    limit: limit,
+    remaining: Math.max(0, limit - used),
+    resetAt: limit - used <= 0 ? new Date(oldest + LIMIT_WINDOW_MS).toISOString() : null,
+    oldest: oldest,
+    times: state.times,
+  };
+}
+
+async function currentQuota(config) {
+  return quotaFrom((await publishedFile(config)).times, Date.now());
+}
+
+function requireQuota(state) {
+  if (state.remaining > 0) return state;
+  throw new Refused(429,
+    "Changes can be pushed " + state.limit + " times per day from this screen, and that has been used."
+    + (state.resetAt ? " The next push becomes available at " + state.resetAt + " UTC." : ""),
+    publicQuota(state));
 }
 
 /* ------------------------------------------------------------- validation -- */
@@ -246,11 +347,26 @@ async function saveImage(config, body) {
   return { ok: true, path: path, commit: commitUrl };
 }
 
-async function saveContent(config, body) {
+async function saveContent(config, body, state, file) {
   const content = cleanContent(body.content);
-  const base64 = Buffer.from(serialise(content), "utf8").toString("base64");
-  const commitUrl = await commit(config, CONTENT_PATH, base64, "Update site content from the admin screen");
-  return { ok: true, commit: commitUrl, updated: content.updated };
+  const now = new Date();
+  const published = {
+    version: 1,
+    updated: content.updated,
+    [PUBLISH_LOG_FIELD]: file.times.concat(now.toISOString()).slice(-PUBLISH_LOG_MAX),
+    text: content.text,
+    hrefs: content.hrefs,
+    numbers: content.numbers,
+    images: content.images,
+  };
+  const base64 = Buffer.from(serialise(published), "utf8").toString("base64");
+  const commitUrl = await writeFile(config, CONTENT_PATH, base64, CONTENT_COMMIT_MESSAGE, file.sha);
+  return {
+    ok: true,
+    commit: commitUrl,
+    updated: content.updated,
+    quota: publicQuota(quotaAfterPublish(state, now.getTime())),
+  };
 }
 
 exports.handler = async function (event) {
@@ -267,17 +383,28 @@ exports.handler = async function (event) {
     authorise(event, body);
     const config = github();
 
+    if (body.action === "status") {
+      return reply(200, { ok: true, quota: publicQuota(await currentQuota(config)) });
+    }
+
+    // Every write is checked against the daily allowance first, so a photo that
+    // could never be published is never uploaded.
+    const file = await publishedFile(config);
+    const state = requireQuota(quotaFrom(file.times, Date.now()));
+
     let result;
     if (body.action === "image") result = await saveImage(config, body);
-    else if (body.action === "content") result = await saveContent(config, body);
+    else if (body.action === "content") result = await saveContent(config, body, state, file);
     else throw new Refused(400, "Unknown action.");
 
     return reply(200, result);
   } catch (problem) {
     const known = problem instanceof Refused;
-    return reply(known ? problem.status : 500, {
+    const failure = {
       ok: false,
       error: known ? problem.message : "Something went wrong talking to GitHub. Please try again.",
-    });
+    };
+    if (known && problem.quota) failure.quota = problem.quota;
+    return reply(known ? problem.status : 500, failure);
   }
 };

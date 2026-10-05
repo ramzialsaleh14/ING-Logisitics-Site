@@ -100,6 +100,16 @@ body { background: var(--soft); }
 .bar__state.is-ok { color: #9fe0b0; }
 .bar__state.is-error { color: #ffb3ab; }
 
+.bar__quota {
+  padding: 5px 11px;
+  background: rgba(255, 255, 255, .14);
+  border-radius: 20px;
+  color: rgba(255, 255, 255, .9);
+  font-size: 13px;
+  white-space: nowrap;
+}
+.bar__quota.is-empty { background: rgba(192, 57, 43, .38); color: #ffd9d4; }
+
 .bar__btn {
   padding: 9px 14px;
   background: transparent;

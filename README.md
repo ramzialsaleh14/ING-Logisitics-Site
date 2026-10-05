@@ -210,7 +210,7 @@ Build and validation (no network needed):
 | `verify.py` | loads every page in Chromium, fails on console errors/broken requests, screenshots EN + AR + mobile |
 | `check_layout.py` | asserts geometry, palette, fonts and zero horizontal overflow in both directions |
 | `check_content.py` | asserts i18n key coverage, no dead links, no missing assets, sane headings |
-| `test_publish.js` | exercises `netlify/functions/publish.js` against a mocked GitHub: credentials, validation, and the files it commits (`node tools/test_publish.js`) |
+| `test_publish.js` | exercises `netlify/functions/publish.js` against a mocked GitHub: credentials, validation, the daily push limit, and the files it commits (`node tools/test_publish.js`) |
 | `build_dist.py` | assembles `dist/`, the deployable subset (seven pages + `assets/`) |
 
 Validation scripts expect the site to be served on `127.0.0.1:8765`:
@@ -315,6 +315,25 @@ EN/AR toggle keeps working — text changed only in English keeps its existing A
 that field is filled in too. Superseded photo files stay in the repository, so a photo can
 be put back by uploading it again.
 
+### The two-pushes-a-day limit
+
+Changes can be pushed **twice in any rolling 24 hours**. The screen shows how many are
+left next to the buttons, disables **Push changes** once they are used up and says when the
+next one becomes available; a draft is never thrown away by the limit, so anything written
+after the last push simply waits.
+
+That is deliberate: rebuilding the site on every keystroke is wasteful and hard to undo.
+One push counts as one press of **Push changes**, no matter how many photos travel with it.
+
+The limit is enforced by the publish function, not by the screen, so it cannot be bypassed
+from a browser. Functions have no storage of their own, so the times of recent pushes are
+written into `assets/js/content.js` as `publishes` — in the same commit as the change they
+belong to, which keeps the count and the content in step and costs no extra build. Only
+the last 20 times are kept; older ones are ignored when the allowance is counted.
+
+To allow more, add a `PUBLISH_LIMIT` environment variable in Netlify (for example `4`) and
+redeploy. Hand-editing or emptying the `publishes` list also clears the count.
+
 ### Connecting publishing
 
 Drafts and preview work with no setup. **Push changes** needs the repository connected and
@@ -329,6 +348,7 @@ three environment variables:
    | `ADMIN_PASSWORD` | the admin password (required) |
    | `GITHUB_TOKEN` | a fine-grained personal access token for this repository with **Contents: read and write** (required) |
    | `ADMIN_USER` | defaults to `ing-logistics` |
+   | `PUBLISH_LIMIT` | pushes allowed per rolling 24 hours, defaults to `2` |
    | `GITHUB_REPO` | defaults to `ramzialsaleh14/ING-Logisitics-Site` |
    | `GITHUB_BRANCH` | defaults to `main` |
 3. **Redeploy** so the function picks them up.
