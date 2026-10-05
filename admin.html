@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Private editing screen for the ING Logistics website. Not linked from the site.">
+<title>Website admin — ING Logistics</title>
+<link rel="icon" href="assets/logo/favicon.png" type="image/png">
+<link rel="stylesheet" href="assets/css/fonts-sarabun.css">
+<link rel="stylesheet" href="assets/css/fonts-cairo.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body>
+
+<!-- ============================== SIGN IN ============================== -->
+<section class="gate" id="gate">
+  <form class="gate__card" id="signin" autocomplete="on">
+    <img class="gate__logo" src="assets/logo/ing-logo-dark.png" alt="ING Logistics" width="389" height="160">
+    <h1 class="gate__title">Website admin</h1>
+    <p class="gate__lead">Sign in to change the text and photos on the site.</p>
+
+    <label class="gate__field">
+      <span>User name</span>
+      <input type="text" name="user" id="user" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+    </label>
+    <label class="gate__field">
+      <span>Password</span>
+      <input type="password" name="password" id="password" autocomplete="current-password" required>
+    </label>
+
+    <p class="gate__error" id="signin-error" role="alert" hidden></p>
+    <button class="gate__submit" type="submit">Sign in</button>
+    <a class="gate__back" href="index.html">Back to the website</a>
+  </form>
+</section>
+
+<!-- ============================= DASHBOARD ============================= -->
+<div class="dash" id="dash" hidden>
+
+  <header class="bar">
+    <span class="bar__brand">ING Logistics — admin</span>
+    <span class="bar__where" id="group-title"></span>
+    <span class="bar__spacer"></span>
+    <span class="bar__state" id="state" role="status" aria-live="polite"></span>
+    <button class="bar__btn" type="button" id="preview-toggle">Preview</button>
+    <button class="bar__btn" type="button" id="discard">Discard draft</button>
+    <button class="bar__btn bar__btn--go" type="button" id="publish">Push changes</button>
+    <button class="bar__btn bar__btn--quiet" type="button" id="signout">Sign out</button>
+  </header>
+
+  <div class="dash__body">
+    <nav class="side" id="groups" aria-label="Parts of the site"></nav>
+
+    <main class="fields" id="fields" aria-live="polite"></main>
+
+    <aside class="preview" id="preview" hidden>
+      <div class="preview__tabs" id="preview-tabs"></div>
+      <div class="preview__frame">
+        <iframe id="preview-frame" title="Preview of the website" loading="lazy"></iframe>
+      </div>
+    </aside>
+  </div>
+
+</div>
+
+<div class="notice" id="notice" role="alert" hidden>
+  <div class="notice__card">
+    <h2 class="notice__title" id="notice-title"></h2>
+    <p class="notice__text" id="notice-text"></p>
+    <div class="notice__actions">
+      <button class="bar__btn" type="button" id="notice-cancel">Cancel</button>
+      <button class="bar__btn bar__btn--go" type="button" id="notice-ok">Continue</button>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/draft-store.js"></script>
+<script src="assets/js/content.js"></script>
+<script src="assets/js/admin-fields.js"></script>
+<script src="assets/js/admin.js"></script>
+</body>
+</html>

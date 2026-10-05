@@ -56,7 +56,7 @@ def set_active(header, href):
 
 def pagehead(page):
     return """
-  <section class="page-head" style="background-image:url('%(bg)s')">
+  <section class="page-head" data-cimg="%(cimg)s" style="background-image:url('%(bg)s')">
     <div class="page-head__inner container">
       <span class="eyebrow" data-i18n="%(eyebrow)s">%(eyebrow_en)s</span>
       <h1 class="page-head__title" data-i18n="%(title_key)s">%(h1)s</h1>
@@ -98,7 +98,7 @@ HEAD = """<!DOCTYPE html>
 # shared section fragments
 # --------------------------------------------------------------------------
 CTA = """
-  <section class="band" style="background-image:url('assets/img/cta.jpg')">
+  <section class="band" data-cimg="band.cta" style="background-image:url('assets/img/cta.jpg')">
     <div class="band__inner container" data-reveal>
       <span class="eyebrow eyebrow--plain" data-i18n="contact.eyebrow">Get in touch</span>
       <blockquote data-i18n="cta.title" style="font-size:64px">Thank you</blockquote>
@@ -116,19 +116,19 @@ STATS = """
       </div>
       <div class="stats">
         <div class="stat" data-reveal>
-          <div class="stat__value"><span data-count-to="12"></span><span>+</span></div>
+          <div class="stat__value"><span data-count-to="12" data-cnum="stats.n1"></span><span data-cnum-suffix="stats.n1">+</span></div>
           <div class="stat__label" data-i18n="stats.value1">Warehouses</div>
         </div>
         <div class="stat" data-reveal data-reveal-delay="90">
-          <div class="stat__value"><span data-count-to="85"></span><span>+</span></div>
+          <div class="stat__value"><span data-count-to="85" data-cnum="stats.n2"></span><span data-cnum-suffix="stats.n2">+</span></div>
           <div class="stat__label" data-i18n="stats.value2">Transport fleet</div>
         </div>
         <div class="stat" data-reveal data-reveal-delay="180">
-          <div class="stat__value"><span data-count-to="240"></span><span>+</span></div>
+          <div class="stat__value"><span data-count-to="240" data-cnum="stats.n3"></span><span data-cnum-suffix="stats.n3">+</span></div>
           <div class="stat__label" data-i18n="stats.value3">Team members</div>
         </div>
         <div class="stat" data-reveal data-reveal-delay="270">
-          <div class="stat__value"><span data-count-to="99"></span><span>%</span></div>
+          <div class="stat__value"><span data-count-to="99" data-cnum="stats.n4"></span><span data-cnum-suffix="stats.n4">%</span></div>
           <div class="stat__label" data-i18n="stats.value4">Accuracy rate</div>
         </div>
       </div>
@@ -166,7 +166,7 @@ VALUES = """
     <div class="container">
       <div class="split">
         <div class="split__media" data-reveal>
-          <img src="assets/img/values.jpg" alt="Warehouse operations at ING Logistics" width="1920" height="1177" loading="lazy">
+          <img data-cimg="values.photo" src="assets/img/values.jpg" alt="Warehouse operations at ING Logistics" width="1920" height="1177" loading="lazy">
         </div>
         <div class="split__body" data-reveal data-reveal-delay="120">
           <div class="section-head">
@@ -206,7 +206,7 @@ STORIES = """
     <div class="container">
       <div class="split split--reverse">
         <div class="split__media split__media--offset" data-reveal>
-          <img src="assets/img/story.jpg" alt="ING Logistics operations" width="1400" height="1400" loading="lazy">
+          <img data-cimg="story.photo" src="assets/img/story.jpg" alt="ING Logistics operations" width="1400" height="1400" loading="lazy">
         </div>
         <div class="split__body" data-reveal data-reveal-delay="120">
           <div class="section-head">
@@ -266,6 +266,7 @@ PAGES = [
         title="About Us — ING Logistics",
         description="The story, mission, vision and values behind ING Logistics: honest, professional and safe logistics services.",
         bg="assets/img/services-hero.jpg",
+        cimg="about.pagehead",
         eyebrow="about.eyebrow", eyebrow_en="Who we are",
         title_key="about.title", h1="About Us",
         body=STORIES + MISSION_VISION + VALUES + STATS + CTA,
@@ -276,6 +277,7 @@ PAGES = [
         title="Our Services — ING Logistics",
         description="Warehouse services management, delivery and distribution, track and trace, and versatile workspaces from ING Logistics.",
         bg="assets/img/services-intro.jpg",
+        cimg="services.pagehead",
         eyebrow="pageServices.eyebrow", eyebrow_en="What we do",
         title_key="pageServices.title", h1="Our Services",
         body="""
@@ -289,7 +291,7 @@ PAGES = [
 
       <div class="split" style="margin-top:20px">
         <div class="split__media" data-reveal>
-          <img src="assets/img/services-hero.jpg" alt="ING Logistics fleet and warehouse" width="1920" height="1280" loading="lazy">
+          <img data-cimg="services.photo" src="assets/img/services-hero.jpg" alt="ING Logistics fleet and warehouse" width="1920" height="1280" loading="lazy">
         </div>
         <div class="split__body" data-reveal data-reveal-delay="120">
           <h3 data-i18n="warehouse.title">Warehouse Services Management</h3>
@@ -335,7 +337,7 @@ PAGES = [
     </div>
   </section>
 
-  <section class="band" style="background-image:url('assets/img/slide-4.jpg')">
+  <section class="band" data-cimg="band.quote" style="background-image:url('assets/img/slide-4.jpg')">
     <div class="band__inner container" data-reveal>
       <blockquote data-i18n="about.heading">Modern logistics solutions for trading companies</blockquote>
       <cite data-i18n="footer.slogan">To be an ideal, safe and professional logistics environment.</cite>
@@ -349,6 +351,7 @@ PAGES = [
         title="Our Clients — ING Logistics",
         description="The partners ING Logistics serves: trading companies, wholesalers, retailers, hypermarkets, businesspeople and entrepreneurs.",
         bg="assets/img/slide-2.jpg",
+        cimg="clients.pagehead",
         eyebrow="pageClients.eyebrow", eyebrow_en="Our partners",
         title_key="pageClients.title", h1="Our Clients",
         body="""
@@ -356,7 +359,7 @@ PAGES = [
     <div class="container">
       <div class="split">
         <div class="split__media" data-reveal>
-          <img src="assets/img/services-intro.jpg" alt="ING Logistics distribution operations" width="1600" height="1068" loading="lazy">
+          <img data-cimg="clients.photo" src="assets/img/services-intro.jpg" alt="ING Logistics distribution operations" width="1600" height="1068" loading="lazy">
         </div>
         <div class="split__body" data-reveal data-reveal-delay="120">
           <div class="section-head">
@@ -391,6 +394,7 @@ PAGES = [
         title="Our Team — ING Logistics",
         description="The strong, professional team behind ING Logistics: ambition, expertise and in-depth logistics experience.",
         bg="assets/img/slide-3.jpg",
+        cimg="team.pagehead",
         eyebrow="pageTeam.eyebrow", eyebrow_en="Who we work with",
         title_key="pageTeam.title", h1="Our Team",
         body="""
@@ -462,6 +466,7 @@ PAGES = [
         title="Contact — ING Logistics",
         description="Contact ING Logistics about warehousing, delivery and distribution, track and trace, or workspaces.",
         bg="assets/img/cta.jpg",
+        cimg="contact.pagehead",
         eyebrow="pageContact.eyebrow", eyebrow_en="Get in touch",
         title_key="pageContact.title", h1="Contact",
         body="""
@@ -528,14 +533,14 @@ PAGES = [
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg>
               </div>
               <div><strong data-i18n="contact.phoneLabel">Phone</strong>
-              <a href="tel:+962799723777" dir="ltr">0799723777</a></div>
+              <a href="tel:+962799723777" dir="ltr" data-ctext="contact.phone">0799723777</a></div>
             </li>
             <li>
               <div class="card__icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
               </div>
               <div><strong data-i18n="contact.emailLabel">Email</strong>
-              <a href="mailto:info@ing-logistics.com" dir="ltr">info@ing-logistics.com</a></div>
+              <a href="mailto:info@ing-logistics.com" dir="ltr" data-ctext="contact.email">info@ing-logistics.com</a></div>
             </li>
             <li>
               <div class="card__icon">

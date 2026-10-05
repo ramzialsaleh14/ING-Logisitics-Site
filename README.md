@@ -28,19 +28,29 @@ python -m http.server 8765 --bind 127.0.0.1   # then open http://127.0.0.1:8765/
 | `our-clients.html` | Who ING serves |
 | `our-team.html` | Team functions and the values behind them |
 | `get-in-touch.html` | Contact details and an enquiry form, FAQ |
+| `admin.html` | The editing screen (see [Editing the site](#editing-the-site-admin-screen)) — not linked from anywhere and marked `noindex` |
 
 ## Layout
 
 ```
+admin.html                   the editing screen - unlinked, noindex
 assets/
   css/  style.css            design system, components, responsive + RTL
+        admin.css            sign-in gate and the editing dashboard
         fonts-sarabun.css    self-hosted Sarabun (Latin)
         fonts-cairo.css      self-hosted Cairo (Arabic)
   js/   i18n.js              Arabic strings, keyed by data-i18n
+        content.js           published edits (empty until an admin pushes some)
+        content-apply.js     applies content.js to a page, before main.js
+        admin-fields.js      generated list of everything the admin can edit
+        admin.js             sign-in, editing, draft and push
+        draft-store.js       unpublished photos, in IndexedDB
         main.js              slider, sticky header, nav, accordion, form, counters
   img/  hero slides + brand photography
   logo/ ing-logo-{dark,light}.png, ing-mark.png, favicon.png
   fonts/                    woff2 files
+netlify/
+  functions/publish.js       verifies the admin and commits edits to GitHub
 tools/                       capture, extraction and validation scripts (see below)
 ```
 
@@ -113,6 +123,12 @@ logical properties (`margin-inline`, `inset-inline`, …) so no second RTL sheet
 The choice is remembered in `localStorage`.
 
 To edit copy: change the English in the HTML, then update the matching key in `i18n.js`.
+Once the site is live, the [admin screen](#editing-the-site-admin-screen) does this
+without touching the files.
+
+Text that reads the same in both languages — the phone number and e-mail address — carries
+`data-ctext` instead of `data-i18n`, so it is never "translated" and never shows as
+untranslated English in Arabic mode.
 
 ---
 
@@ -190,16 +206,19 @@ Build and validation (no network needed):
 | Script | Purpose |
 | --- | --- |
 | `build_pages.py` | regenerates the five inner pages from the header/footer shell in `index.html` |
+| `build_admin_manifest.py` | regenerates `assets/js/admin-fields.js`, the admin screen's field list (`--check` verifies it is current) |
 | `verify.py` | loads every page in Chromium, fails on console errors/broken requests, screenshots EN + AR + mobile |
 | `check_layout.py` | asserts geometry, palette, fonts and zero horizontal overflow in both directions |
 | `check_content.py` | asserts i18n key coverage, no dead links, no missing assets, sane headings |
-| `build_dist.py` | assembles `dist/`, the deployable subset (six pages + `assets/`) |
+| `test_publish.js` | exercises `netlify/functions/publish.js` against a mocked GitHub: credentials, validation, and the files it commits (`node tools/test_publish.js`) |
+| `build_dist.py` | assembles `dist/`, the deployable subset (seven pages + `assets/`) |
 
 Validation scripts expect the site to be served on `127.0.0.1:8765`:
 
 ```powershell
 python -m http.server 8765 --bind 127.0.0.1   # in one shell
 python tools/verify.py; python tools/check_layout.py; python tools/check_content.py
+node tools/test_publish.js                    # no server needed
 ```
 
 Requirements: Python 3 with `pymupdf`, `pillow`, `numpy`, `beautifulsoup4`, `lxml`,
@@ -225,16 +244,128 @@ npx netlify-cli@26 deploy --dir dist --prod --no-build --message "…"
 `.netlify/` is gitignored, so a fresh clone needs the `link` step once before it can
 deploy.
 
-`build_dist.py` copies only the six pages and `assets/` into `dist/`, so the capture
+`build_dist.py` copies only the seven pages and `assets/` into `dist/`, so the capture
 scripts in `tools/`, the screenshots in `.verify/` and this README are never uploaded —
-they 404 on the live site. `netlify.toml` records the same publish directory plus
-long-lived caching for the 45 woff2 files; everything else keeps Netlify's revalidating
-default, which matters while the photography and stylesheets are still being iterated on.
+they 404 on the live site. `netlify/functions/` is outside `dist/` on purpose: Netlify
+bundles functions from the repository, not from the publish directory. `netlify.toml`
+records the same publish directory, the functions directory (Node 20), long-lived caching
+for the 45 woff2 files and a `noindex` header for `admin.html`; everything else keeps
+Netlify's revalidating default, which matters while the photography and stylesheets are
+still being iterated on.
 
 The `command` in `netlify.toml` runs `build_dist.py`, but only so that a Git-connected
 build would produce the same output. The site has no real build step, so CLI deploys pass
 `--no-build`. `netlify-cli` 26.x is the line to use here: 27.x requires Node 22 and this
 machine runs Node 20.
+
+---
+
+## Editing the site (admin screen)
+
+`admin.html` is the editing screen. It is deliberately **not linked from anywhere**, and
+carries `noindex, nofollow` plus an `X-Robots-Tag` header, so it is only reachable by
+typing its address:
+
+```
+https://ing-logistics.com/admin.html
+```
+
+Sign in with the user name `ing-logistics` and the admin password. What can be changed:
+
+| | |
+| --- | --- |
+| **Every page** | header and footer: navigation labels, the "Track Your Order" panel, quick links, service links, contact details, copyright line |
+| **Text** | every heading, paragraph, quote, FAQ question and answer, form label, menu option, button and link on the six pages, in English and Arabic |
+| **Photos** | the 20 places a photo appears: the three hero slides, the story / values / clients photos, the five page banners, the two banner bands and the three logos |
+| **Links** | the phone number, e-mail address, map link and button targets that sit alongside the text |
+| **Numbers** | the four statistics in the "By the numbers" band |
+
+### How saving works
+
+1. Every keystroke is kept in the browser as a **draft** (`localStorage`, with new photos
+   in IndexedDB), so closing the tab does not lose work. The live site does not change yet.
+2. **Preview** shows the site inside the screen with the draft applied. The draft is only
+   ever rendered on URLs carrying `?preview=draft`, so visitors never see it.
+3. **Push changes** sends the draft to the repository through a Netlify function. Netlify
+   then rebuilds, and the change is live about a minute later. The draft is cleared once
+   the push succeeds.
+4. **Discard draft** throws the unpublished changes away.
+
+Serve the screen over `http://localhost` or `https://` while working on it: signing in uses
+the browser's crypto API, which browsers only expose in a secure context.
+
+### What a push writes
+
+| File | Contents |
+| --- | --- |
+| `assets/js/content.js` | every published override, as `{ key: { en, ar } }` — an empty file means the site renders exactly as written in the markup and `i18n.js` |
+| `assets/img/uploads/<key>-<hash>.<ext>` | one file per new photo, already shrunk to at most 1920px wide (PNGs stay PNG so the logos keep their transparency) |
+
+`assets/js/content-apply.js` loads on every page before `main.js` and rewrites the
+elements carrying the matching `data-i18n`, `data-ctext`, `data-cimg` or `data-cnum`
+attribute. Arabic overrides are merged into the dictionary `main.js` already reads, so the
+EN/AR toggle keeps working — text changed only in English keeps its existing Arabic until
+that field is filled in too. Superseded photo files stay in the repository, so a photo can
+be put back by uploading it again.
+
+### Connecting publishing
+
+Drafts and preview work with no setup. **Push changes** needs the repository connected and
+three environment variables:
+
+1. **Connect the repository** — Site configuration → Build & deploy → Link repository, so
+   a commit triggers a rebuild.
+2. **Add the function's variables** — Site configuration → Environment variables:
+
+   | Variable | Value |
+   | --- | --- |
+   | `ADMIN_PASSWORD` | the admin password (required) |
+   | `GITHUB_TOKEN` | a fine-grained personal access token for this repository with **Contents: read and write** (required) |
+   | `ADMIN_USER` | defaults to `ing-logistics` |
+   | `GITHUB_REPO` | defaults to `ramzialsaleh14/ING-Logisitics-Site` |
+   | `GITHUB_BRANCH` | defaults to `main` |
+3. **Redeploy** so the function picks them up.
+
+Until then, **Push changes** reports that publishing is not connected and the draft stays in
+the browser, so nothing is lost.
+
+### Changing the credentials
+
+Only the password's SHA-256 is in the repository (in `assets/js/admin.js`); the plaintext
+lives in Netlify's `ADMIN_PASSWORD`. To change it, set the new password in Netlify and
+replace the hash:
+
+```powershell
+node -e "console.log(require('crypto').createHash('sha256').update(process.argv[1],'utf8').digest('hex'))" "the new password"
+```
+
+### How safe is it?
+
+The browser check only decides who sees the dashboard — anyone can read the JavaScript, so
+it protects nothing by itself. The real check is `netlify/functions/publish.js`, which
+verifies the same credentials on **every** request (constant-time comparison), refuses
+plain-http and cross-origin calls, validates everything it is asked to write (allowed
+keys, allowed image paths inside `assets/`, no scripts in the text, size limits) and only
+then asks GitHub to commit, with a token that never reaches the browser. Use a long random
+password, and treat the admin address as a convenience rather than a secret.
+
+### After changing a page's markup
+
+`assets/js/admin-fields.js` is **generated** from the pages, so adding or renaming a
+`data-i18n` / `data-cimg` / `data-cnum` attribute is not enough:
+
+```powershell
+python tools/build_admin_manifest.py            # regenerate
+python tools/build_admin_manifest.py --check    # fail if it is out of date
+```
+
+### Not editable from the screen
+
+* The page `<title>` and meta description — per-page SEO metadata whose Arabic is shared
+  across pages in `i18n.js`.
+* Anything structural: page order, section layout, colours, fonts, the decorative
+  numbering ("01 / 02 / 03"), the team-card initials and the hero slide count.
+* The contact form still has no backend (see [Known limitations](#known-limitations)).
 
 ---
 
@@ -247,7 +378,8 @@ machine runs Node 20.
   8:00 AM – 5:00 PM) and the location — linked to the company's coordinates
   `32.514226, 35.942958` on Google Maps — are the company's real details. The e-mail
   address, the social links and the statistic figures (`data-count-to`) are still
-  placeholders.
+  placeholders. All of these, the social links aside, can be corrected from the
+  [admin screen](#editing-the-site-admin-screen) without touching the code.
 * Social links in the footer are `#` placeholders.
 * Team members are shown as functions (executive, operations, warehouse, …) because the
   brochure has no named staff photos.

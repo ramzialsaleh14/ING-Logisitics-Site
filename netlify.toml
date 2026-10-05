@@ -10,6 +10,18 @@
   command = "python3 tools/build_dist.py"
   publish = "dist"
 
+# The admin screen's "Push changes" button calls the publish function, which
+# verifies the admin credentials and commits to GitHub. See README.md.
+[functions]
+  directory = "netlify/functions"
+  node_version = "20"
+
+# The admin screen is deliberately unlinked and must never be indexed.
+[[headers]]
+  for = "/admin.html"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
 # The 45 woff2 files never change in place (the font builders write new
 # numbered files), so they are safe to cache indefinitely and expensively to
 # re-fetch. Everything else keeps Netlify's revalidating default, which
