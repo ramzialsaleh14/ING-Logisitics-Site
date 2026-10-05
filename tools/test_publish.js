@@ -161,6 +161,13 @@ async function run() {
   check("a photo with no path -> 400", response.statusCode === 400, response);
 
   /* ------------------------------------------------------------ GitHub */
+  const realFetch = global.fetch;
+  delete global.fetch;
+  response = await handler(event(Object.assign({ action: "content", content: content() }, auth)));
+  check("a runtime without fetch() says what to do",
+    response.statusCode === 500 && /Node\.js 18/.test(response.body), response);
+  global.fetch = realFetch;
+
   reply = () => ({ status: 401, body: { message: "Bad credentials" } });
   response = await handler(event(Object.assign({ action: "content", content: content() }, auth)));
   check("GitHub's refusal is passed on",

@@ -116,6 +116,10 @@ function describe(result) {
 }
 
 async function githubRequest(config, path, options) {
+  if (typeof fetch !== "function") {
+    throw new Refused(500, "This function needs Node.js 18 or newer, and the runtime it is running on has "
+      + "no fetch(). Set NODE_VERSION to 20 in Netlify's environment variables.");
+  }
   const settings = options || {};
   const response = await fetch(`${API}/repos/${config.repo}/contents/${path}`, {
     method: settings.method || "GET",

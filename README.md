@@ -251,10 +251,14 @@ bundles functions from the repository, not from the publish directory. `netlify.
 records the same publish directory, the functions directory, long-lived caching for the
 45 woff2 files and a `noindex` header for `admin.html`; everything else keeps Netlify's
 revalidating default, which matters while the photography and stylesheets are still being
-iterated on. The Node version comes from `.node-version` (20) rather than from
-`netlify.toml`: the publish function needs Node 18+ for `fetch`, and `[functions]
-node_version` is an unrelated setting that must be a table, so a string there fails the
-build.
+iterated on.
+
+The Node version is deliberately **not** pinned. `[functions] node_version` is not the
+setting it looks like — it must be a table, so a string there fails the whole build at the
+config stage — and the build image already ships a Node new enough for the publish
+function (it needs 18+ for `fetch`). If a pin is ever wanted, use the Netlify UI's
+dependency management or a `NODE_VERSION` variable, or a `.node-version` file written with
+LF line endings (a CRLF one is not read as a version).
 
 The `command` in `netlify.toml` runs `build_dist.py`, but only so that a Git-connected
 build would produce the same output. The site has no real build step, so CLI deploys pass
