@@ -13,9 +13,14 @@
 
    Environment variables (Site configuration -> Environment variables):
 
-     ADMIN_PASSWORD   required. The same password the admin signs in with.
+     ADMIN_PASSWORD   required. The password the admin signs in with.
      GITHUB_TOKEN     required. Fine-grained PAT with "Contents: read/write".
      ADMIN_USER       defaults to "ing-logistics".
+     ADMIN_USERS      optional. Further sign-ins as "user:password" pairs,
+                      comma separated, for example
+                      "ramzialsaleh14:858542,someone-else:another-password".
+                      Only the first colon in an entry separates the two, so a
+                      password may contain a colon - but not a comma.
      GITHUB_REPO      defaults to "ramzialsaleh14/ING-Logisitics-Site".
      GITHUB_BRANCH    defaults to "main".
    ========================================================================== */
@@ -104,15 +109,37 @@ function sameSecret(given, expected) {
   return crypto.timingSafeEqual(a, b);
 }
 
+/* The sign-ins this function accepts: ADMIN_USER / ADMIN_PASSWORD, then any
+   extra pair listed in ADMIN_USERS. Entries with no password, or with no
+   colon, are left out rather than refused, so one mistyped pair does not lock
+   the configured accounts out. */
+function adminAccounts() {
+  const list = [{ user: process.env.ADMIN_USER || "ing-logistics", password: process.env.ADMIN_PASSWORD }];
+  String(process.env.ADMIN_USERS || "").split(",").forEach(function (pair) {
+    const at = pair.indexOf(":");
+    if (at !== -1) list.push({ user: pair.slice(0, at).trim(), password: pair.slice(at + 1) });
+  });
+  return list.filter(function (account) { return account.user && account.password; });
+}
+
 function authorise(event, body) {
-  const user = process.env.ADMIN_USER || "ing-logistics";
-  const password = process.env.ADMIN_PASSWORD;
-  if (!password) {
+  const accounts = adminAccounts();
+  if (!accounts.length) {
     throw new Refused(500, "Publishing is not set up yet: add ADMIN_PASSWORD in Netlify's environment "
       + "variables (and GITHUB_TOKEN), then redeploy. See README.md.");
   }
-  if (typeof body.user !== "string" || typeof body.password !== "string"
-      || !sameSecret(body.user, user) || !sameSecret(body.password, password)) {
+  const given = {
+    user: typeof body.user === "string" ? body.user : "",
+    password: typeof body.password === "string" ? body.password : "",
+  };
+  /* Every account is compared, and both halves of each, so neither the answer
+     nor the time it took says which sign-in came closest. */
+  const matched = accounts.reduce(function (found, account) {
+    const okUser = sameSecret(given.user, account.user);
+    const okPassword = sameSecret(given.password, account.password);
+    return found || (okUser && okPassword);
+  }, false);
+  if (!matched) {
     throw new Refused(401, "Those admin credentials were not accepted.");
   }
 

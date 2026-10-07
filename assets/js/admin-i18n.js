@@ -138,7 +138,6 @@
     "Changes pushed": "تم نشر التغييرات",
     "The website is rebuilding now and usually updates within a minute.":
       "الموقع قيد إعادة البناء الآن، ويُحدَّث عادة خلال دقيقة.",
-    "See the commit": "عرض التغيير في GitHub",
     "The changes were not pushed": "لم تُنشر التغييرات",
     "Your draft is still saved in this browser — fix the problem and press “Push changes” again.":
       "لا تزال مسودتك محفوظة في هذا المتصفح — أصلح المشكلة ثم اضغط «نشر التغييرات» مرة أخرى.",

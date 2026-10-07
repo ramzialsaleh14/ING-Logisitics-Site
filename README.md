@@ -324,7 +324,8 @@ typing its address:
 https://ing-logistics.com/admin.html
 ```
 
-Sign in with the user name `ing-logistics` and the admin password. What can be changed:
+Sign in with the user name `ing-logistics` and the admin password, or with the second
+account `ramzialsaleh14` — see [Accounts](#accounts). What can be changed:
 
 | | |
 | --- | --- |
@@ -444,6 +445,7 @@ three environment variables:
    | `ADMIN_PASSWORD` | the admin password (required) |
    | `GITHUB_TOKEN` | a fine-grained personal access token for this repository with **Contents: read and write** (required) |
    | `ADMIN_USER` | defaults to `ing-logistics` |
+   | `ADMIN_USERS` | further sign-ins as `user:password` pairs, comma separated — see [Accounts](#accounts) |
    | `PUBLISH_LIMIT` | pushes allowed per rolling 24 hours, defaults to `2` |
    | `GITHUB_REPO` | defaults to `ramzialsaleh14/ING-Logisitics-Site` |
    | `GITHUB_BRANCH` | defaults to `main` |
@@ -452,25 +454,53 @@ three environment variables:
 Until then, **Push changes** reports that publishing is not connected and the draft stays in
 the browser, so nothing is lost.
 
+### Accounts
+
+Two sign-ins are set up. Each one exists in **two** places, and both have to agree:
+
+| | `assets/js/admin.js` (`ADMIN_ACCOUNTS`) | Netlify environment |
+| --- | --- | --- |
+| `ing-logistics` | SHA-256 of the password | `ADMIN_PASSWORD` (and `ADMIN_USER`) |
+| `ramzialsaleh14` | SHA-256 of `858542` | `ADMIN_USERS=ramzialsaleh14:858542` |
+
+The page's copy is a hash, so it only opens the dashboard; the environment copy is the one
+that authorises a push. Get the pair in Netlify wrong and the sign-in still works but
+**Push changes** answers *"Those admin credentials were not accepted"* — the account has to
+be in `ADMIN_USERS` (or be the `ADMIN_USER`/`ADMIN_PASSWORD` pair) for a push to go through.
+
 ### Changing the credentials
 
 Only the password's SHA-256 is in the repository (in `assets/js/admin.js`); the plaintext
-lives in Netlify's `ADMIN_PASSWORD`. To change it, set the new password in Netlify and
-replace the hash:
+lives in Netlify's environment. To change one, set the new password in Netlify and replace
+the hash in `ADMIN_ACCOUNTS`:
 
 ```powershell
 node -e "console.log(require('crypto').createHash('sha256').update(process.argv[1],'utf8').digest('hex'))" "the new password"
 ```
 
+To add an account: append `{ user: "…", sha256: "…" }` to `ADMIN_ACCOUNTS` in
+`assets/js/admin.js`, and add `user:password` to `ADMIN_USERS` in Netlify's environment
+variables (comma separated for more than one; the first colon in an entry separates the
+two, so a password may contain a colon but not a comma). `tools/test_publish.js` covers the
+`ADMIN_USERS` paths — a wrong password, a padded user name, a password with a colon in it
+and a malformed entry that is skipped rather than fatal.
+
 ### How safe is it?
 
 The browser check only decides who sees the dashboard — anyone can read the JavaScript, so
 it protects nothing by itself. The real check is `netlify/functions/publish.js`, which
-verifies the same credentials on **every** request (constant-time comparison), refuses
+verifies the same accounts on **every** request (every account is compared, both halves of
+each, in constant time, so the timing says nothing), refuses
 plain-http and cross-origin calls, validates everything it is asked to write (allowed
 keys, allowed image paths inside `assets/`, no scripts in the text, size limits) and only
 then asks GitHub to commit, with a token that never reaches the browser. Use a long random
 password, and treat the admin address as a convenience rather than a secret.
+
+Worth knowing for the second account: `858542` is six digits, and a six-digit password's
+SHA-256 — the only form of it in this repository — can be worked out by brute force in
+seconds, so anyone who reads `admin.js` can get into the dashboard with it. That still
+does not let them push (the environment's `ADMIN_USERS` is what authorises that), but a
+longer password would close the gap. Change it in both places if you would rather.
 
 ### After changing a page's markup
 

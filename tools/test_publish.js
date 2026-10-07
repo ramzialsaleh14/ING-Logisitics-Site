@@ -351,6 +351,43 @@ async function run() {
   response = await handler(event({ action: "status", user: USER, password: "wrong" }));
   check("status is behind the password too", response.statusCode === 401, response);
 
+  /* ----------------------------------------------- further sign-ins (ADMIN_USERS) */
+  const as = (user, password) => handler(event(
+    Object.assign({ action: "content", content: content() }, { user: user, password: password })));
+
+  process.env.ADMIN_USERS = "ramzialsaleh14:858542,helper:second-password";
+  githubWithMemory([]);
+  response = await as("ramzialsaleh14", "858542");
+  check("an ADMIN_USERS sign-in can push", response.statusCode === 200, response);
+  response = await as("ing-logistics", PASSWORD);
+  check("ADMIN_USERS leaves the main sign-in alone", response.statusCode === 200, response);
+  githubWithMemory([]);
+  response = await as("helper", "second-password");
+  check("a second ADMIN_USERS sign-in is accepted", response.statusCode === 200, response);
+  response = await as("ramzialsaleh14", "85854");
+  check("a wrong password for an extra sign-in -> 401", response.statusCode === 401, response);
+  response = await as("ramzialsaleh14 ", "858542");
+  check("a padded user name is not the same user -> 401", response.statusCode === 401, response);
+  response = await as("someone", "second-password");
+  check("another user's password is not enough -> 401", response.statusCode === 401, response);
+
+  process.env.ADMIN_USERS = "ramzialsaleh14:with:colons,nonsense,helper:";
+  githubWithMemory([]);
+  response = await as("ramzialsaleh14", "with:colons");
+  check("a password may contain a colon", response.statusCode === 200, response);
+  response = await as(USER, PASSWORD);
+  check("a malformed entry is skipped, not fatal", response.statusCode === 200, response);
+
+  githubWithMemory([]);
+  delete process.env.ADMIN_PASSWORD;
+  process.env.ADMIN_USERS = "ramzialsaleh14:858542";
+  response = await as("ramzialsaleh14", "858542");
+  check("ADMIN_USERS works without ADMIN_PASSWORD", response.statusCode === 200, response);
+  delete process.env.ADMIN_USERS;
+  response = await as("ramzialsaleh14", "858542");
+  check("with no accounts configured at all -> 500", response.statusCode === 500, response);
+  process.env.ADMIN_PASSWORD = PASSWORD;
+
   /* ------------------------------------------------------------ GitHub */
   const realFetch = global.fetch;
   delete global.fetch;

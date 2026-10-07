@@ -12,13 +12,17 @@
   "use strict";
 
   /* ------------------------------------------------------------------------
-     The password is stored only as its SHA-256, so the plaintext is not in
-     this repository. The same credentials are enforced server-side by the
-     publish function (ADMIN_PASSWORD), and that check is what protects the
-     site - this gate only decides who sees the dashboard.
+     Passwords are stored only as their SHA-256, so no plaintext is in this
+     repository. The same accounts are enforced server-side by the publish
+     function (ADMIN_USER / ADMIN_PASSWORD, plus the extra pairs in
+     ADMIN_USERS), and that check is what protects the site - this gate only
+     decides who sees the dashboard. Add an account in both places at once, or
+     the new sign-in will open the dashboard and then be refused on push.
      ------------------------------------------------------------------------ */
-  var ADMIN_USER = "ing-logistics";
-  var ADMIN_SHA256 = "80c063e7a251c840f80e84ef7f2d53b51c3625031e8670f760620f4bfd609086";
+  var ADMIN_ACCOUNTS = [
+    { user: "ing-logistics", sha256: "80c063e7a251c840f80e84ef7f2d53b51c3625031e8670f760620f4bfd609086" },
+    { user: "ramzialsaleh14", sha256: "51260f0d9d5fdcc286a12b0ee5587ca62e9b79c561d7ba8b9d95511e2a5c9f78" }
+  ];
 
   var PUBLISH_URL = "/.netlify/functions/publish";
   var DRAFT_KEY = "ing-admin-draft";
@@ -513,7 +517,10 @@
     button.textContent = t("Checking\u2026");
 
     sha256Hex(password).then(function (hash) {
-      if (user !== ADMIN_USER || hash !== ADMIN_SHA256) {
+      var known = ADMIN_ACCOUNTS.some(function (account) {
+        return account.user === user && account.sha256 === hash;
+      });
+      if (!known) {
         throw new Error(t("That user name or password is not correct."));
       }
       writeJSON(window.sessionStorage, SESSION_KEY, { user: user, password: password, at: Date.now() });
@@ -1440,11 +1447,7 @@
             saveDraft();
             setState(t("Pushed · the site updates in about a minute"), "is-ok");
             return notice(t("Changes pushed"),
-              t("The website is rebuilding now and usually updates within a minute.")
-              + " " + (result.commit
-                ? '<a href="' + escapeHtml(result.commit) + '" target="_blank" rel="noopener">'
-                  + t("See the commit") + "</a>."
-                : ""),
+              t("The website is rebuilding now and usually updates within a minute."),
               t("Close"));
           });
         });
