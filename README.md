@@ -24,7 +24,7 @@ python -m http.server 8765 --bind 127.0.0.1   # then open http://127.0.0.1:8765/
 | --- | --- |
 | `index.html` | Hero slider, story, services, values, mission & vision, warehouse services, stats, clients, team, FAQ, closing CTA |
 | `about-us.html` | Our Story, Mission, Vision, Values, capability stats |
-| `our-services.html` | Warehouse Services Management, Delivery & Distribution, Track & Trace, Offices, FAQ |
+| `our-services.html` | Why ING Logistics, Warehouse Services Management, value-added operations, strategic location, TECHNOLOGY & WMS, service scope, service packages, Delivery & Distribution (coming soon), service rates, terms & conditions, Track & Trace, Offices, FAQ |
 | `our-clients.html` | Who ING serves |
 | `our-team.html` | Team functions and the values behind them |
 | `get-in-touch.html` | Contact details and an enquiry form, FAQ |
@@ -159,6 +159,52 @@ all nine site photos (`slide-1…4.jpg`, `story.jpg`, `values.jpg`, `services-he
 Application" photographs (p25-28), and the logo is re-cut from the guideline vectors.
 See [Brand refresh](#brand-refresh-oct-2026) and `tools/build_images.py`.
 
+### Warehousing services proposal (Oct 2026)
+
+`proposal.pptx` — the client's *WAREHOUSING SERVICES PROPOSAL* (16 slides, 16:9) — is the second
+content source. `our-services.html` now carries all of it and supersedes the brochure wherever
+the two disagree:
+
+| Deck slide | Section on the site |
+| --- | --- |
+| 1 | The closing band (strapline, "Thank you for your partnership", contact button) |
+| 2 | Why ING Logistics (4 cards) |
+| 3 | Strategic location |
+| 4 | ING digital hub / TECHNOLOGY & WMS (4 items) |
+| 5 | Warehouse Services Management (5 items) |
+| 6 | Value-added warehouse operations (6 cards + other add-value options) |
+| 7 | Service scope (Core warehousing / Fulfillment / Value-added services) |
+| 8–10 | Service packages (Essential, Fulfillment, Managed 3PL) |
+| 11–13 | Commercial offer — storage, handling and system rate tables + commercial rules |
+| 14 | Delivery & Distribution — coming soon |
+| 15 | Service agreement guidelines (terms & conditions) |
+| 16 | Reliability / Efficiency / Technology in the closing band |
+
+The four deck photographs are cut into `assets/img/`: `services-warehouse.jpg` (slide 5),
+`services-wms.jpg` (slide 4), `services-location.jpg` (slide 3) and `services-delivery.jpg`
+(slide 14); the six 170 px operation thumbnails from slide 6 become the `add-*.jpg` card
+images. `index.html`'s Warehouse Services Management cards were updated to the same five
+services so the two pages do not contradict each other, and the Arabic for the shared keys
+in `i18n.js` follows.
+
+Two deliberate departures from the deck:
+
+* **Typos corrected** — "ING DITAL HUB" → *ING digital hub*, "ONG SOON" → *Coming soon*,
+  "per worker/Dey" → *per worker / day*, "invoive" → *invoice*, and the duplicated "Standard
+  pallet position" rows keep one description but their own rate basis.
+* **Unfilled rates read "On request"** — the deck's rate columns are blank (standard rows) or
+  "TBD" (oversized rows), so no price is invented. Every amount is its own field and sits in
+  its own cell next to the charging basis it is charged in (*/ pallet / month*, *per carton*,
+  …), so the 41 rate cells across the four tables can be filled in one at a time from
+  `admin.html` without touching the markup. `tools/build_admin_manifest.py` labels those cells
+  *Rate*, *Charging basis*, *Row heading*, *Table title* and so on, which is what makes them
+  tellable apart on the editing screen.
+
+The deck's cover names **Al-Wateen Warehousing and Logistics Company**, the registered name
+of the same company that trades as ING Logistics. It is the footer's legal line
+(`footer.legalName`), marked `data-ctext` so it reads the same in both languages, and is
+editable from the admin screen like every other piece of text.
+
 ### Faithfulness notes
 
 The Arabic in the PDF is stored as *Arabic Presentation Forms-B* (pre-shaped glyphs).
@@ -207,7 +253,7 @@ Build and validation (no network needed):
 | Script | Purpose |
 | --- | --- |
 | `build_pages.py` | regenerates the five inner pages from the header/footer shell in `index.html` |
-| `build_admin_manifest.py` | regenerates `assets/js/admin-fields.js`, the admin screen's field list (`--check` verifies it is current) |
+| `build_admin_manifest.py` | regenerates `assets/js/admin-fields.js`, the admin screen's field list (`--check` verifies it is current). A field's type comes from its class (`rates__amount` → *Rate*, `rates__basis` → *Charging basis*, …) and plain text is stored unescaped, so the screen shows "Packing & repacking" rather than "Packing &amp; repacking" |
 | `verify.py` | loads every page in Chromium, fails on console errors/broken requests, screenshots EN + AR + mobile |
 | `check_layout.py` | asserts geometry, palette, fonts and zero horizontal overflow in both directions |
 | `check_content.py` | asserts i18n key coverage, no dead links, no missing assets, sane headings |
@@ -282,10 +328,11 @@ Sign in with the user name `ing-logistics` and the admin password. What can be c
 
 | | |
 | --- | --- |
-| **Every page** | header and footer: navigation labels, the "Track Your Order" panel, quick links, service links, contact details, copyright line |
+| **Every page** | header and footer: navigation labels, the "Track Your Order" panel, quick links, service links, contact details, the legal name and the copyright line |
 | **Text** | every heading, paragraph, quote, FAQ question and answer, form label, menu option, button and link on the six pages, in English and Arabic |
-| **Photos** | the 28 places a photo appears: the three hero slides, the story / values / clients photos, the five page banners, the two banner bands, the three logos and the eight team members |
+| **Photos** | the 37 places a photo appears: the three hero slides, the story / values / clients photos, the five page banners, the two banner bands, the three logos, the eight team members, and the nine proposal photos on `our-services.html` (the warehouse, WMS, location and delivery section photos plus the six value-added operation thumbnails) |
 | **Links** | the phone number, e-mail address, map link and button targets that sit alongside the text |
+| **Rates** | the four rate tables on `our-services.html` (storage, handling, system & account, planned launch): each amount, the charging basis beside it, and the row and column headings are separate fields, ready to be filled in whenever the numbers are settled |
 | **Numbers** | the four statistics in the "By the numbers" band |
 | **Team members** | remove a member, bring one back, add a new one, and give each one a photo, a role and a description (see below) |
 

@@ -245,15 +245,686 @@ def faq_section():
         </div>""" % (i, q, i, a)
         for i, (q, a) in enumerate([
             ("What services does ING provide?",
-             "ING provides warehouse services management, loading and unloading, sorting and grouping, packaging, follow-up on damaged goods and returns, as well as delivery and distribution, track and trace, and various offices for work."),
+             "ING provides warehouse services management — receiving and dispatch, unloading, storage and put-away, inventory control and quality control — plus value-added operations such as order picking, packing, labeling and palletizing, track and trace, and various offices for work."),
             ("Can I track my shipment?",
              "Yes. ING provides a track and trace service that lets customers follow the status of their order from receipt through to delivery."),
             ("Who are ING's clients?",
              "We serve trading companies, wholesalers, retailers and hypermarkets, businesspeople and entrepreneurs, and the company selects its clients with great care and consideration."),
             ("How do I start working with you?",
              "Get in touch using the contact details below and our team will review your requirements and propose the right logistics solution."),
+            ("What is the difference between the service packages?",
+             "Essential covers secure storage and inventory control. Fulfillment adds order processing, picking and standard packing. Managed 3PL adds dedicated capacity, an account manager, an enhanced SLA, same-day handling and ERP or API integration. Value-added services are charged according to the activity and scope agreed."),
+            ("When does the delivery and distribution service launch?",
+             "We are preparing to launch our own delivery and distribution fleet, operating directly from our Irbid facility with coverage across Jordan. The published launch rates are indicative until the service goes live."),
         ], 1)
     )
+
+
+# --------------------------------------------------------------------------
+# our-services.html - the warehousing services proposal (client deck, Oct 2026)
+#
+# The deck's sections are laid out with the components the rest of the site
+# already uses (cards, splits, value lists, bands) plus four small additions in
+# style.css: .checklist / .dot-list, .scope, .package, .addon, .chip, .badge
+# and .rates__table.
+# --------------------------------------------------------------------------
+TICK = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
+        'aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>')
+
+
+def value_items(pairs, indent=12):
+    """value-list rows, from (<key>) title / text pairs."""
+    pad = " " * indent
+    return "\n".join(
+        '%s<li>%s<div><strong data-i18n="%s">%s</strong><span data-i18n="%s">%s</span></div></li>'
+        % (pad, TICK, kt, tt, kx, tx) for kt, tt, kx, tx in pairs)
+
+
+def checklist(prefix, texts, indent=12):
+    """ticked list rows, keyed <prefix>.1 .2 .3 ..."""
+    pad = " " * indent
+    return "\n".join('%s<li>%s<span data-i18n="%s.%d">%s</span></li>'
+                     % (pad, TICK, prefix, i, t) for i, t in enumerate(texts, 1))
+
+
+def dot_list(prefix, texts, indent=12):
+    """plain bulleted rows, keyed <prefix>.1 .2 .3 ..."""
+    pad = " " * indent
+    return "\n".join('%s<li><span data-i18n="%s.%d">%s</span></li>'
+                     % (pad, prefix, i, t) for i, t in enumerate(texts, 1))
+
+
+def chips(prefix, texts, indent=10):
+    """pill row, keyed <prefix>.1 .2 .3 ..."""
+    pad = " " * indent
+    return "\n".join('%s<span class="chip" data-i18n="%s.%d">%s</span>'
+                     % (pad, prefix, i, t) for i, t in enumerate(texts, 1))
+
+
+def span(key, text, cls=""):
+    """A keyed <span>. The class is what names the field in the admin screen -
+    see CLASS_ROLES in tools/build_admin_manifest.py - so every rate cell says
+    whether it holds a rate, a charging basis or a heading."""
+    return '<span%s data-i18n="%s">%s</span>' % (
+        ' class="%s"' % cls if cls else "", key, text)
+
+
+def td_raw(html, cls=""):
+    """A table cell whose content is built from keyed spans."""
+    return '<td%s>%s</td>' % (' class="%s"' % cls if cls else "", html)
+
+
+def amount(rate_key, basis_key, basis_text):
+    """A rate cell: the amount the admin will eventually type, then the unit it
+    is charged in. Both are separately editable."""
+    return (span(rate_key, "On request", "rates__amount")
+            + " " + span(basis_key, basis_text, "rates__basis"))
+
+
+def col_th(key, text, cls="rates__head"):
+    return '<th scope="col"%s data-i18n="%s">%s</th>' % (
+        ' class="%s"' % cls if cls else "", key, text)
+
+
+def row_th(key, text, cls="rates__row"):
+    return '<th scope="row"%s data-i18n="%s">%s</th>' % (
+        ' class="%s"' % cls if cls else "", key, text)
+
+
+def td(key, text, cls=""):
+    return '<td%s data-i18n="%s">%s</td>' % (
+        ' class="%s"' % cls if cls else "", key, text)
+
+
+def rates_table(caption_key, caption, head, rows, indent=6):
+    """A bordered, horizontally scrollable rate table."""
+    pad = " " * indent
+    body = "\n".join('%s        <tr>%s</tr>' % (pad, "".join(cells)) for cells in rows)
+    head_html = ""
+    if head:
+        head_html = ('%s      <thead>\n%s        <tr>%s</tr>\n%s      </thead>\n'
+                     % (pad, pad, "".join(head), pad))
+    return (
+        '%s<div class="table-wrap" data-reveal>\n'
+        '%s  <table class="rates__table">\n'
+        '%s    <caption class="rates__title" data-i18n="%s">%s</caption>\n'
+        '%s%s    <tbody>\n%s\n%s    </tbody>\n'
+        '%s  </table>\n'
+        '%s</div>' % (pad, pad, pad, caption_key, caption, pad, head_html, body, pad, pad, pad)
+    )
+
+
+WHY = """
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow" data-i18n="why.eyebrow">Company introduction</span>
+        <h2 data-i18n="why.title">Why ING Logistics</h2>
+      </div>
+      <div class="cards" data-reveal>
+        <article class="card">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+              <path d="M12 2l2.6 6.2 6.7.5-5.1 4.4 1.5 6.5L12 16.1 6.3 19.6l1.5-6.5L2.7 8.7l6.7-.5z"/>
+            </svg>
+          </div>
+          <h3 data-i18n="why.c1.title">Innovative provider</h3>
+          <p data-i18n="why.c1.text">A specialized logistics provider offering innovative and modern professional solutions for the global market, ensuring efficiency in every step.</p>
+        </article>
+        <article class="card" data-reveal data-reveal-delay="90">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 2.6 15.4 0 18M12 3c-2.6 2.6-2.6 15.4 0 18"/>
+            </svg>
+          </div>
+          <h3 data-i18n="why.c2.title">Smart logistics</h3>
+          <p data-i18n="why.c2.text">Making trade smooth and easy by keeping up with global changes and connecting logistics across the region.</p>
+        </article>
+        <article class="card" data-reveal data-reveal-delay="180">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+              <path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>
+            </svg>
+          </div>
+          <h3 data-i18n="why.c3.title">Strategic growth</h3>
+          <p data-i18n="why.c3.text">A growth-oriented organization focused on redefining logistics standards and premier warehousing solutions by August 2026.</p>
+        </article>
+        <article class="card" data-reveal data-reveal-delay="270">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+              <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.6"/>
+            </svg>
+          </div>
+          <h3 data-i18n="why.c4.title">Strategic hub</h3>
+          <p data-i18n="why.c4.text">Primely located at Irbid – Baghdad Street, opposite the Trucks City, Jordan, serving as a vital regional gateway.</p>
+        </article>
+      </div>
+    </div>
+  </section>"""
+
+WAREHOUSE = """
+  <section class="section section--soft" id="warehouse">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow" data-i18n="services.eyebrow">What we do</span>
+        <h2 data-i18n="services.title">Our Services</h2>
+        <p data-i18n="services.text">Providing logistical support for trading companies to maintain their sustainability, facilitate the flow of goods between suppliers and markets to final consumers, and prevent the supply chain from stopping or being obstructed.</p>
+      </div>
+
+      <div class="split" style="margin-top:20px">
+        <div class="split__media" data-reveal>
+          <img class="photo-warehouse" data-cimg="services.photo" src="assets/img/services-warehouse.jpg" alt="ING Logistics warehouse operations" width="1672" height="941" loading="lazy">
+        </div>
+        <div class="split__body" data-reveal data-reveal-delay="120">
+          <h3 data-i18n="warehouse.title">Warehouse Services Management</h3>
+          <p data-i18n="warehouse.text">We run warehouse services to a high standard with a dedicated team and equipped space, so your goods arrive safely and on time.</p>
+          <ul class="value-list">
+%s
+          </ul>
+          <p class="table-note" data-i18n="warehouse.strap">Quality driven logistics.</p>
+        </div>
+      </div>
+
+      <div class="feature" id="track" data-reveal style="margin-top:60px">
+        <div class="feature__num">01</div>
+        <div class="feature__body">
+          <h3 data-i18n="track.title">Track and Trace</h3>
+          <p data-i18n="track.text">This service allows our customers to track the status of their order from receipt to delivery.</p>
+        </div>
+      </div>
+      <div class="feature" id="offices" data-reveal>
+        <div class="feature__num">02</div>
+        <div class="feature__body">
+          <h3 data-i18n="offices.title">Various Offices for Work</h3>
+          <p data-i18n="offices.text">It offers administrative offices, meeting spaces and training halls furnished with all the necessary equipment, in a range of sizes to serve the company's customers, businesspeople and entrepreneurs.</p>
+        </div>
+      </div>
+    </div>
+  </section>""" % value_items([
+    ("warehouse.item1.title", "Receiving &amp; dispatch",
+     "warehouse.item1.text", "Controlled inbound and outbound flow from arrival through dispatch."),
+    ("warehouse.item2.title", "Receiving &amp; unloading",
+     "warehouse.item2.text", "Offloading, receiving, counting and controlled inbound material flow."),
+    ("warehouse.item3.title", "Storage &amp; put-away",
+     "warehouse.item3.text", "Systematic placement and organization to improve space utilization and retrieval."),
+    ("warehouse.item4.title", "Inventory control",
+     "warehouse.item4.text", "WMS-based transaction control, stock visibility, reporting and inventory records."),
+    ("warehouse.item5.title", "Quality &amp; dispatch control",
+     "warehouse.item5.text", "Outbound staging, loading, dispatch and quality checks for accurate order release."),
+])
+
+ADDONS = """
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow" data-i18n="addon.eyebrow">Efficiency redefined</span>
+        <h2 data-i18n="addon.title">Value-added warehouse operations</h2>
+      </div>
+      <div class="addons" data-reveal>
+%s
+      </div>
+      <div data-reveal style="margin-top:44px">
+        <span class="package__label" data-i18n="addon.more.title">Other add-value options</span>
+        <div class="chips chips--tight">
+%s
+        </div>
+      </div>
+    </div>
+  </section>""" % (
+    "\n".join(
+        '        <article class="addon">\n'
+        '          <div class="addon__media"><img class="photo-%s" data-cimg="addon.%d.photo"'
+        ' src="assets/img/%s" alt="%s" width="220" height="220" loading="lazy"></div>\n'
+        '          <h3 data-i18n="addon.%d.title">%s</h3>\n'
+        '        </article>' % (slug, i, path, alt, i, title)
+        for i, (slug, path, alt, title) in enumerate([
+            ("order-picking", "add-order-picking.jpg", "Order picking", "Order picking"),
+            ("packing", "add-packing.jpg", "Packing and repacking", "Packing &amp; repacking"),
+            ("labeling", "add-labeling.jpg", "Labeling", "Labeling"),
+            ("palletizing", "add-palletizing.jpg", "Palletizing and wrapping", "Palletizing &amp; wrapping"),
+            ("returns", "add-returns.jpg", "Returns handling", "Returns &amp; reverse"),
+            ("weighing", "add-weighing.jpg", "Weighing and sampling", "Weighing &amp; sampling"),
+        ], 1)),
+    chips("addon.more", [
+        "Kitting / assembly", "Cash on delivery", "Collection",
+        "Wooden pallets", "Handling at site", "Overtime",
+    ]),
+)
+
+LOCATION = """
+  <section class="section">
+    <div class="container">
+      <div class="split">
+        <div class="split__media" data-reveal>
+          <img class="photo-location" data-cimg="location.photo" src="assets/img/services-location.jpg" alt="The ING Logistics facility at Irbid – Baghdad Street" width="878" height="960" loading="lazy">
+        </div>
+        <div class="split__body" data-reveal data-reveal-delay="120">
+          <div class="section-head">
+            <span class="eyebrow" data-i18n="location.eyebrow">Strategic location</span>
+            <h2 data-i18n="location.title">Strategic hub.</h2>
+          </div>
+          <p data-i18n="location.text">ING Logistics operates modern facilities situated on main highways for optimal accessibility and global logistics reach.</p>
+          <p><strong data-i18n="location.address">Irbid – Baghdad Street, opposite the Trucks City, Jordan.</strong></p>
+          <div class="chips">
+%s
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>""" % chips("location.c", [
+    "Highway connectivity", "Trucking hub", "Trade corridor", "Heavy access",
+], indent=12)
+
+TECHNOLOGY = """
+  <section class="section section--soft">
+    <div class="container">
+      <div class="split split--reverse">
+        <div class="split__media" data-reveal>
+          <img class="photo-technology" data-cimg="tech.photo" src="assets/img/services-wms.jpg" alt="Hand-held scanning on the ING Logistics warehouse management system" width="1281" height="1228" loading="lazy">
+        </div>
+        <div class="split__body" data-reveal data-reveal-delay="120">
+          <div class="section-head">
+            <span class="eyebrow" data-i18n="tech.eyebrow">ING digital hub</span>
+            <h2 data-i18n="tech.title">Latest technology — warehouse management system</h2>
+          </div>
+          <ul class="value-list">
+%s
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>""" % value_items([
+    ("tech.item1.title", "Hand-helds",
+     "tech.item1.text", "ING Logistics utilizes advanced hand-held devices for precise transaction capturing within our state-of-the-art WMS infrastructure."),
+    ("tech.item2.title", "Online portal",
+     "tech.item2.text", "Secure ING Logistics portal providing real-time inventory visibility and customizable reporting for all stakeholders."),
+    ("tech.item3.title", "Tailored control",
+     "tech.item3.text", "We offer tailored billing, quality control, and expiry tracking specific to your unique industry requirements and needs."),
+    ("tech.item4.title", "ERP integration capability",
+     "tech.item4.text", "Full integration capabilities with existing ERP systems to ensure seamless operations and prevent supply chain obstruction."),
+])
+
+SCOPE = """
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow" data-i18n="scope.eyebrow">Service scope</span>
+        <h2 data-i18n="scope.title">Clear separation between core warehousing, fulfillment and value-added services</h2>
+      </div>
+      <div class="scope-grid" data-reveal>
+        <article class="scope">
+          <h3 data-i18n="scope.core.title">Core warehousing</h3>
+          <ul class="checklist">
+%s
+          </ul>
+          <p class="scope__focus" data-i18n="scope.core.focus">Essential focus: storage and inventory control.</p>
+        </article>
+        <article class="scope">
+          <h3 data-i18n="scope.fulfil.title">Fulfillment</h3>
+          <ul class="checklist">
+%s
+          </ul>
+          <p class="scope__focus" data-i18n="scope.fulfil.focus">Fulfillment: picking and standard packing are included; additional volume or special handling is chargeable.</p>
+        </article>
+        <article class="scope">
+          <h3 data-i18n="scope.va.title">Value-added services</h3>
+          <ul class="checklist">
+%s
+          </ul>
+          <p class="scope__focus" data-i18n="scope.va.focus">Charged according to activity and scope.</p>
+        </article>
+      </div>
+      <p class="table-note" data-i18n="scope.footnote">* Fulfillment and managed 3PL inclusions are subject to the agreed monthly order volume and SLA.</p>
+    </div>
+  </section>""" % (
+    checklist("scope.core.i", [
+        "Receiving administration &amp; documentation",
+        "Basic quantity check",
+        "Put-away &amp; storage management",
+        "Inventory management",
+        "Standard reporting",
+        "Physical inbound handling — charged per pallet",
+        "Order picking — chargeable add-on",
+    ], indent=12),
+    checklist("scope.fulfil.i", [
+        "Everything in Essential",
+        "Order processing",
+        "Order picking*",
+        "Standard packing*",
+        "Staging &amp; dispatch preparation",
+        "Priority order processing",
+        "Fulfillment KPI reporting",
+    ], indent=12),
+    checklist("scope.va.i", [
+        "Labeling / relabeling",
+        "Repacking / co-packing",
+        "Kitting / assembly",
+        "Palletizing &amp; wrapping",
+        "Returns / reverse logistics",
+        "Weighing / sampling",
+        "Collection",
+        "Site handling",
+        "Overtime",
+    ], indent=12),
+)
+
+PACKAGES = """
+  <section class="section section--soft">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow" data-i18n="packages.eyebrow">Our services</span>
+        <h2 data-i18n="packages.title">Service packages</h2>
+      </div>
+      <div class="packages" data-reveal>
+        <article class="package">
+          <div class="package__num">01</div>
+          <h3 class="package__title" data-i18n="pkg1.title">Essential</h3>
+          <span class="package__subtitle" data-i18n="pkg1.subtitle">Storage &amp; inventory</span>
+          <ul class="checklist">
+%s
+          </ul>
+          <div class="package__block">
+            <span class="package__label" data-i18n="pkg1.addons.title">Add-ons / charged separately</span>
+            <ul class="dot-list">
+%s
+            </ul>
+          </div>
+          <p class="package__note" data-i18n="pkg1.note">WMS / portal access is priced separately.</p>
+        </article>
+        <article class="package">
+          <div class="package__num">02</div>
+          <h3 class="package__title" data-i18n="pkg2.title">Fulfillment</h3>
+          <span class="package__subtitle" data-i18n="pkg2.subtitle">Storage + order fulfillment</span>
+          <ul class="checklist">
+%s
+          </ul>
+          <div class="package__block">
+            <span class="package__label" data-i18n="pkg2.addons.title">Optional add-ons</span>
+            <ul class="dot-list">
+%s
+            </ul>
+          </div>
+          <p class="package__note" data-i18n="pkg2.note">Picking, standard packing and same-day handling sit within the agreed monthly volume and SLA.</p>
+        </article>
+        <article class="package">
+          <div class="package__num">03</div>
+          <h3 class="package__title" data-i18n="pkg3.title">Managed 3PL</h3>
+          <span class="package__subtitle" data-i18n="pkg3.subtitle">End-to-end logistics management</span>
+          <ul class="checklist">
+%s
+          </ul>
+        </article>
+      </div>
+      <p class="package__footnote text-center" data-i18n="packages.footnote">* Same-day handling is subject to the agreed volume, SLA and operating scope.</p>
+    </div>
+  </section>""" % (
+    checklist("pkg1.i", [
+        "Receiving administration",
+        "Receiving documentation",
+        "Basic quantity check",
+        "Put-away &amp; storage management",
+        "Inventory management",
+        "Standard inventory / WMS reporting*",
+        "Standard customer support",
+    ], indent=12),
+    dot_list("pkg1.addon", [
+        "Physical inbound handling",
+        "Pallet / case / piece picking",
+        "Packing / repacking",
+        "Labeling",
+        "Kitting",
+        "Returns",
+    ], indent=14),
+    checklist("pkg2.i", [
+        "Everything in Essential",
+        "Order picking*",
+        "Standard packing*",
+        "Order processing",
+        "Staging &amp; dispatch preparation",
+        "Priority order processing",
+        "Fulfillment KPI reporting",
+        "Standard customer support",
+    ], indent=12),
+    dot_list("pkg2.addon", [
+        "Customized packaging",
+        "Labeling",
+        "Kitting / assembly",
+        "Returns / reverse logistics",
+        "Special handling",
+        "Overtime",
+    ], indent=14),
+    checklist("pkg3.i", [
+        "Everything in Fulfillment",
+        "Dedicated storage capacity",
+        "Dedicated account manager",
+        "Enhanced SLA",
+        "Priority order handling",
+        "Same-day handling",
+        "Customized KPI dashboard",
+        "Customized reporting",
+        "ERP / API integration",
+        "Customized SOPs",
+        "Enhanced inventory control",
+        "Scheduled cycle counting",
+    ], indent=12),
+)
+
+DELIVERY_SOON = """
+  <section class="section" id="delivery">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow" data-i18n="soon.eyebrow">Delivery &amp; distribution</span>
+        <h2 data-i18n="soon.title">Coming soon</h2>
+        <span class="badge" data-i18n="soon.badge">Launching soon</span>
+      </div>
+      <div class="wide-media" data-reveal>
+        <img class="photo-delivery" data-cimg="delivery.photo" src="assets/img/services-delivery.jpg" alt="The delivery and distribution fleet ING Logistics is preparing to launch" width="1600" height="639" loading="lazy">
+      </div>
+      <div class="split">
+        <div class="split__body" data-reveal>
+          <p data-i18n="soon.text1">ING Logistics will soon launch its own dedicated delivery and distribution fleet.</p>
+          <p data-i18n="soon.text2">Operating directly from our Irbid facility, we are preparing to bridge the gap between supply and demand with a professional logistics network.</p>
+          <span class="package__label" data-i18n="soon.scope.title">Service scope</span>
+          <div class="chips chips--tight">
+%s
+          </div>
+        </div>
+        <div class="split__body" data-reveal data-reveal-delay="120">
+%s
+        </div>
+      </div>
+    </div>
+  </section>""" % (
+    chips("soon.scope", [
+        "Direct delivery from suppliers to wholesalers",
+        "Specialized routes for retail &amp; hypermarkets",
+        "Comprehensive coverage across Jordan",
+    ], indent=12),
+    rates_table(
+        "soon.rates.title", "Planned launch rates — indicative only", [],
+        [
+            [td("soon.rates.r1", "Irbid city and surroundings"),
+             td_raw(amount("soon.rates.r1.rate", "soon.rates.basis", "/ trip"))],
+            [td("soon.rates.r2", "Northern governorates"),
+             td_raw(amount("soon.rates.r2.rate", "soon.rates.basis", "/ trip"))],
+            [td("soon.rates.r3", "Amman / Zarqa"),
+             td_raw(amount("soon.rates.r3.rate", "soon.rates.basis", "/ trip"))],
+            [td("soon.rates.r4", "Southern governorates / Aqaba"),
+             td_raw(amount("soon.rates.r4.rate", "soon.rates.basis", "/ trip"))],
+            [td("soon.rates.r5", "Dedicated truck (monthly)"),
+             td_raw(span("soon.rates.r5.rate", "On request", "rates__amount"))],
+        ],
+        indent=10,
+    ),
+)
+
+RATES = """
+  <section class="section section--soft">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow" data-i18n="rates.eyebrow">Commercial offer</span>
+        <h2 data-i18n="rates.title">Service rates</h2>
+        <p data-i18n="rates.lead">Rates for storage, handling and system access. All prices are quoted in Jordanian Dinar and remain indicative until a site survey and volume assessment are completed.</p>
+      </div>
+%s
+      <p class="table-note" data-i18n="rates.handling.note">Handling services are charged based on the activity and unit handled. Package inclusions apply only to the services specifically listed as included.</p>
+%s
+      <p class="table-note" data-i18n="rates.system.note">WMS / portal access is priced separately from physical warehouse operations.</p>
+%s
+      <div class="terms" data-reveal style="margin-top:56px">
+        <div class="term">
+          <h3 data-i18n="rates.rule1.title">WMS / portal access</h3>
+          <p data-i18n="rates.rule1.text">Not included in the package price unless explicitly stated in the commercial agreement.</p>
+        </div>
+        <div class="term">
+          <h3 data-i18n="rates.rule2.title">ERP / API integration</h3>
+          <p data-i18n="rates.rule2.text">Quoted separately according to the technical scope.</p>
+        </div>
+        <div class="term">
+          <h3 data-i18n="rates.rule3.title">Picking services</h3>
+          <p data-i18n="rates.rule3.text">Charged according to the applicable package scope, handling unit and agreed rates.</p>
+        </div>
+        <div class="term">
+          <h3 data-i18n="rates.rule4.title">Additional services &amp; volumes</h3>
+          <p data-i18n="rates.rule4.text">Services outside the agreed package scope or volume may be charged separately.</p>
+        </div>
+      </div>
+    </div>
+  </section>""" % (
+    rates_table(
+        "rates.storage.title", "Storage rates",
+        [col_th("rates.storage.col1", "Storage description (monthly)"),
+         col_th("rates.storage.col2", "Rate (JOD)")],
+        [
+            [row_th("rates.storage.std", "Standard pallet position (1.20 × 1.00 m, up to 1.75 m high, up to 1,150 kg)"),
+             td_raw(amount("rates.storage.r1.rate", "rates.storage.month.basis", "/ pallet / month"))],
+            [row_th("rates.storage.std", "Standard pallet position (1.20 × 1.00 m, up to 1.75 m high, up to 1,150 kg)"),
+             td_raw(amount("rates.storage.r2.rate", "rates.storage.week.basis", "/ pallet / week"))],
+            [row_th("rates.storage.over", "Oversized / non-standard pallet (price based on pallet dimensions and required storage space)"),
+             td_raw(amount("rates.storage.r3.rate", "rates.storage.month.basis", "/ pallet / month"))],
+            [row_th("rates.storage.over", "Oversized / non-standard pallet (price based on pallet dimensions and required storage space)"),
+             td_raw(amount("rates.storage.r4.rate", "rates.storage.week.basis", "/ pallet / week"))],
+        ],
+    ),
+    rates_table(
+        "rates.handling.title", "Handling &amp; value-added services rates",
+        [col_th("rates.handling.col1", "Service"),
+         col_th("rates.handling.col2", "Standard pallet"),
+         col_th("rates.handling.col3", "Oversized pallet"),
+         col_th("rates.handling.col4", "Charging basis")],
+        [
+            [row_th("rates.handling.r%d" % i, service),
+             td_raw(span("rates.handling.r%d.std" % i, "On request", "rates__amount")),
+             td_raw(span("rates.handling.r%d.over" % i, "On request", "rates__amount")),
+             td(basis_key, basis_text, "rates__basis")]
+            for i, (service, basis_key, basis_text) in enumerate([
+                ("Inbound handling (pallet): unloading + scanning + put-away",
+                 "rates.basis.pallet", "per pallet"),
+                ("Inbound handling (loose): unloading + scanning + put-away",
+                 "rates.basis.pallet", "per pallet"),
+                ("Outbound handling (pallet): staging + loading + dispatch preparation",
+                 "rates.basis.pallet", "per pallet"),
+                ("Outbound handling (loose): staging + loading + dispatch preparation",
+                 "rates.basis.pallet", "per pallet"),
+                ("Pallet picking — full pallet", "rates.basis.pallet", "per pallet"),
+                ("Carton / case picking", "rates.basis.carton", "per carton"),
+                ("Piece picking", "rates.basis.orderLine", "per piece / order line"),
+                ("Labeling / relabeling", "rates.basis.unit", "per unit"),
+                ("Repacking / co-packing", "rates.basis.carton", "per carton"),
+                ("Shrink-wrapping", "rates.basis.pallet", "per pallet"),
+                ("Stretch wrapping", "rates.basis.pallet", "per pallet"),
+                ("Kitting / repackaging", "rates.basis.piece", "per piece"),
+                ("Handling at site", "rates.basis.workerDay", "per worker / day"),
+                ("Overtime after working hours", "rates.basis.workerHour", "per worker / hour"),
+            ], 1)
+        ],
+    ),
+    rates_table(
+        "rates.system.title", "System &amp; account services",
+        [col_th("rates.system.col1", "Service"),
+         col_th("rates.system.col2", "Description"),
+         col_th("rates.system.col3", "Rate")],
+        [
+            [row_th("rates.system.r1", "WMS access &amp; customer portal"),
+             td("rates.system.r1.desc", "Up to 5 users per client", "rates__desc"),
+             td_raw(amount("rates.system.r1.rate", "rates.system.r1.basis", "/ client / month"))],
+            [row_th("rates.system.r2", "Additional portal user"),
+             td("rates.system.r2.desc", "Additional user above the included 5", "rates__desc"),
+             td_raw(amount("rates.system.r2.rate", "rates.system.r2.basis", "/ user / month"))],
+            [row_th("rates.system.r3", "ERP / API integration"),
+             td("rates.system.r3.desc", "System integration with client ERP / systems", "rates__desc"),
+             td_raw(span("rates.system.r3.rate", "Quoted separately", "rates__amount"))],
+            [row_th("rates.system.r4", "Physical stock count / cycle count"),
+             td("rates.system.r4.desc", "Scheduled inventory count service", "rates__desc"),
+             td_raw(span("rates.system.r4.rate", "Quoted / agreed by scope", "rates__amount"))],
+        ],
+    ),
+)
+
+TERMS = """
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow" data-i18n="terms.eyebrow">Service agreement guidelines</span>
+        <h2 data-i18n="terms.title">Terms &amp; conditions</h2>
+      </div>
+      <div class="terms" data-reveal>
+        <div class="term">
+          <h3 data-i18n="terms.t1.title">Pricing &amp; currency</h3>
+          <p data-i18n="terms.t1.text">Prices are quoted in Jordanian Dinar (JOD) and exclude sales tax. This is an indicative offer, valid for 30 days from the date of issue.</p>
+        </div>
+        <div class="term">
+          <h3 data-i18n="terms.t2.title">Billing &amp; payment</h3>
+          <p data-i18n="terms.t2.text">Payment is due within 15 days of receiving the invoice.</p>
+        </div>
+        <div class="term">
+          <h3 data-i18n="terms.t3.title">Operational hours</h3>
+          <p data-i18n="terms.t3.text">Standard hours: Saturday to Thursday, 08:00–17:00. Work outside these hours or on holidays is charged at overtime rates.</p>
+        </div>
+        <div class="term">
+          <h3 data-i18n="terms.t4.title">Inbound notice</h3>
+          <p data-i18n="terms.t4.text">Clients must provide detailed inbound shipment information at least 24 hours prior to vehicle arrival.</p>
+        </div>
+        <div class="term">
+          <h3 data-i18n="terms.t5.title">Contract term</h3>
+          <p data-i18n="terms.t5.text">Minimum contract term of 6 months, renewable. Valid subject to a final site survey and volume assessment.</p>
+        </div>
+        <div class="term">
+          <h3 data-i18n="terms.t6.title">Restricted goods</h3>
+          <p data-i18n="terms.t6.text">Hazardous, flammable, perishable and temperature-sensitive goods are not accepted without prior written approval.</p>
+        </div>
+        <div class="term">
+          <h3 data-i18n="terms.t7.title">Termination</h3>
+          <p data-i18n="terms.t7.text">Either party may terminate with 30 days' written notice. All stock must be cleared before the account is closed and reconciled.</p>
+        </div>
+        <div class="term">
+          <h3 data-i18n="terms.t8.title">Survey &amp; confirmation</h3>
+          <p data-i18n="terms.t8.text">All rates remain indicative until a formal volume assessment and site survey are completed by ING Logistics.</p>
+        </div>
+      </div>
+    </div>
+  </section>"""
+
+QUOTE_BAND = """
+  <section class="band" data-cimg="band.quote" style="background-image:url('assets/img/slide-4.jpg')">
+    <div class="band__inner container" data-reveal>
+      <blockquote data-i18n="about.heading">Modern logistics solutions for trading companies</blockquote>
+      <cite data-i18n="footer.slogan">To be an ideal, safe and professional logistics environment.</cite>
+    </div>
+  </section>"""
+
+CLOSING = """
+  <section class="band" data-cimg="band.cta" style="background-image:url('assets/img/cta.jpg')">
+    <div class="band__inner container" data-reveal>
+      <span class="eyebrow eyebrow--plain" data-i18n="closing.eyebrow">Smarter logistics, stronger business</span>
+      <blockquote data-i18n="closing.title" style="font-size:56px">Thank you for your partnership</blockquote>
+      <p class="lead" style="color:rgba(255,255,255,.82);max-width:640px;margin:0 auto 32px" data-i18n="closing.text">Contact ING Logistics to improve your logistics operations.</p>
+      <div class="chips" style="justify-content:center;margin-bottom:36px">
+%s
+      </div>
+      <a class="btn" href="get-in-touch.html" data-i18n="cta.button">Start with us</a>
+    </div>
+  </section>""" % chips("closing.value", ["Reliability", "Efficiency", "Technology"], indent=8)
 
 
 # --------------------------------------------------------------------------
@@ -275,75 +946,13 @@ PAGES = [
         file="our-services.html",
         nav="our-services.html",
         title="Our Services — ING Logistics",
-        description="Warehouse services management, delivery and distribution, track and trace, and versatile workspaces from ING Logistics.",
+        description="Warehouse services management, value-added warehouse operations, WMS technology, service packages and rates, track and trace, and versatile workspaces from ING Logistics.",
         bg="assets/img/services-intro.jpg",
         cimg="services.pagehead",
         eyebrow="pageServices.eyebrow", eyebrow_en="What we do",
         title_key="pageServices.title", h1="Our Services",
-        body="""
-  <section class="section">
-    <div class="container">
-      <div class="section-head section-head--center" data-reveal>
-        <span class="eyebrow" data-i18n="services.eyebrow">What we do</span>
-        <h2 data-i18n="services.title">Our Services</h2>
-        <p data-i18n="services.text">Providing logistical support for trading companies to maintain their sustainability, facilitate the flow of goods between suppliers and markets to final consumers, and prevent the supply chain from stopping or being obstructed.</p>
-      </div>
-
-      <div class="split" style="margin-top:20px">
-        <div class="split__media" data-reveal>
-          <img data-cimg="services.photo" src="assets/img/services-hero.jpg" alt="ING Logistics fleet and warehouse" width="1920" height="1280" loading="lazy">
-        </div>
-        <div class="split__body" data-reveal data-reveal-delay="120">
-          <h3 data-i18n="warehouse.title">Warehouse Services Management</h3>
-          <p data-i18n="warehouse.text">We run warehouse services to a high standard with a dedicated team and equipped space, so your goods arrive safely and on time.</p>
-          <ul class="value-list">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><div><strong data-i18n="warehouse.item1.title">Upload and download</strong><span data-i18n="warehouse.item1.text">Dedicated loading and unloading teams working to full safety standards.</span></div></li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><div><strong data-i18n="warehouse.item2.title">Sorting and grouping</strong><span data-i18n="warehouse.item2.text">Accurate sorting and consolidation of shipments by destination and requirements.</span></div></li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><div><strong data-i18n="warehouse.item3.title">Packaging</strong><span data-i18n="warehouse.item3.text">Professional packing and packaging that keeps goods intact until delivery.</span></div></li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><div><strong data-i18n="warehouse.item4.title">Follow up on damaged goods and returns</strong><span data-i18n="warehouse.item4.text">Close follow-up and efficient handling of damaged goods and returns.</span></div></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--soft" id="warehouse">
-    <div class="container">
-      <div class="section-head" data-reveal>
-        <span class="eyebrow" data-i18n="warehouse.eyebrow">Warehouse Services Management</span>
-        <h2 data-i18n="services.title">Our Services</h2>
-      </div>
-      <div class="feature" id="delivery" data-reveal>
-        <div class="feature__num">01</div>
-        <div class="feature__body">
-          <h3 data-i18n="delivery.title">Delivery and Distribution</h3>
-          <p data-i18n="delivery.text">Provides support and assistance to trading companies by delivering products from suppliers to wholesalers, retailers and hypermarkets.</p>
-        </div>
-      </div>
-      <div class="feature" id="track" data-reveal>
-        <div class="feature__num">02</div>
-        <div class="feature__body">
-          <h3 data-i18n="track.title">Track and Trace</h3>
-          <p data-i18n="track.text">This service allows our customers to track the status of their order from receipt to delivery.</p>
-        </div>
-      </div>
-      <div class="feature" id="offices" data-reveal>
-        <div class="feature__num">03</div>
-        <div class="feature__body">
-          <h3 data-i18n="offices.title">Various Offices for Work</h3>
-          <p data-i18n="offices.text">It offers administrative offices, meeting spaces and training halls furnished with all the necessary equipment, in a range of sizes to serve the company's customers, businesspeople and entrepreneurs.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="band" data-cimg="band.quote" style="background-image:url('assets/img/slide-4.jpg')">
-    <div class="band__inner container" data-reveal>
-      <blockquote data-i18n="about.heading">Modern logistics solutions for trading companies</blockquote>
-      <cite data-i18n="footer.slogan">To be an ideal, safe and professional logistics environment.</cite>
-    </div>
-  </section>
-""" + faq_section() + CTA,
+        body=(WHY + WAREHOUSE + ADDONS + QUOTE_BAND + LOCATION + TECHNOLOGY + SCOPE
+              + PACKAGES + DELIVERY_SOON + RATES + TERMS + faq_section() + CLOSING),
     ),
     dict(
         file="our-clients.html",

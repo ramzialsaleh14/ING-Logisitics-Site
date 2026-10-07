@@ -50,10 +50,28 @@ AR_LABELS = {
     "Intro text": "نص تمهيدي",
     "Question": "سؤال",
     "Answer": "جواب",
+    # what a table cell is
+    "Legal name": "الاسم القانوني",
+    "Table title": "عنوان الجدول",
+    "Column heading": "عنوان عمود",
+    "Row heading": "عنوان صف",
+    "Description": "الوصف",
+    "Rate": "السعر",
+    "Charging basis": "اساس الاحتساب",
     # what a photo is
     "Photo": "صورة",
     "Background photo": "صورة خلفية",
     "Member photo": "صورة العضو",
+    "Photo warehouse": "صورة المستودع",
+    "Photo location": "صورة الموقع",
+    "Photo technology": "صورة التقنيه",
+    "Photo delivery": "صورة التوصيل",
+    "Photo order picking": "صورة التقاط الطلبات",
+    "Photo packing": "صورة التعبئه",
+    "Photo labeling": "صورة الملصقات",
+    "Photo palletizing": "صورة التشكيل على المنصات",
+    "Photo returns": "صورة المرتجعات",
+    "Photo weighing": "صورة الوزن والعينات",
     "Footer logo": "شعار التذييل",
     "Logo light": "الشعار الفاتح",
     "Logo dark": "الشعار الغامق",
@@ -82,6 +100,13 @@ ROLES = {
 # classes that name the thing better than the tag does
 CLASS_ROLES = {
     "eyebrow": "Eyebrow",
+    "rates__title": "Table title",
+    "rates__head": "Column heading",
+    "rates__row": "Row heading",
+    "rates__desc": "Description",
+    "rates__amount": "Rate",
+    "rates__basis": "Charging basis",
+    "footer__legal": "Legal name",
     "nav__link": "Navigation link",
     "link-more": "Link",
     "btn": "Button",
@@ -241,6 +266,12 @@ def text_value(el, attr):
         return (el.get("placeholder") or "").strip()
     if attr == "data-i18n-aria":
         return (el.get("aria-label") or "").strip()
+    # An element that is only text keeps its characters as written, so the admin
+    # screen shows "Packing & repacking" rather than "Packing &amp; repacking".
+    # Elements that carry markup of their own (a nested tag, a <br>) keep their
+    # HTML so the edit still round-trips.
+    if not el.find(True):
+        return el.get_text().strip()
     return el.decode_contents().strip()
 
 

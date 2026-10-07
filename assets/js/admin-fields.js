@@ -114,8 +114,7 @@ window.ING_ADMIN_FIELDS = {
       "id": "Warehouse Services Management",
       "label": "Warehouse Services Management",
       "where": [
-        "index.html",
-        "our-services.html"
+        "index.html"
       ],
       "labelAr": "اداره الخدمات المستودعيه"
     },
@@ -181,6 +180,78 @@ window.ING_ADMIN_FIELDS = {
         "get-in-touch.html"
       ],
       "labelAr": "بانر الصفحة"
+    },
+    {
+      "id": "Company introduction",
+      "label": "Company introduction",
+      "where": [
+        "our-services.html"
+      ],
+      "labelAr": "تعريف بالشركه"
+    },
+    {
+      "id": "Efficiency redefined",
+      "label": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "labelAr": "كفاءه باعلى المعايير"
+    },
+    {
+      "id": "Strategic location",
+      "label": "Strategic location",
+      "where": [
+        "our-services.html"
+      ],
+      "labelAr": "موقع استراتيجي"
+    },
+    {
+      "id": "ING digital hub",
+      "label": "ING digital hub",
+      "where": [
+        "our-services.html"
+      ],
+      "labelAr": "مركز ING الرقمي"
+    },
+    {
+      "id": "Service scope",
+      "label": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "labelAr": "نطاق الخدمه"
+    },
+    {
+      "id": "Our services",
+      "label": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "labelAr": "خدماتنا"
+    },
+    {
+      "id": "Delivery & distribution",
+      "label": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "labelAr": "التوصيل والتوزيع"
+    },
+    {
+      "id": "Commercial offer",
+      "label": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "labelAr": "العرض التجاري"
+    },
+    {
+      "id": "Service agreement guidelines",
+      "label": "Service agreement guidelines",
+      "where": [
+        "our-services.html"
+      ],
+      "labelAr": "ارشادات اتفاقيه الخدمه"
     },
     {
       "id": "Client grid",
@@ -875,8 +946,7 @@ window.ING_ADMIN_FIELDS = {
     "delivery.text": {
       "group": "What we do",
       "where": [
-        "index.html",
-        "our-services.html"
+        "index.html"
       ],
       "label": "Paragraph",
       "en": "Provides support and assistance to trading companies by delivering products from suppliers to wholesalers, retailers and hypermarkets.",
@@ -1214,8 +1284,7 @@ window.ING_ADMIN_FIELDS = {
     "warehouse.eyebrow": {
       "group": "Warehouse Services Management",
       "where": [
-        "index.html",
-        "our-services.html"
+        "index.html"
       ],
       "label": "Eyebrow",
       "en": "Warehouse Services Management",
@@ -1234,8 +1303,8 @@ window.ING_ADMIN_FIELDS = {
         "our-services.html"
       ],
       "label": "Heading",
-      "en": "Upload and download",
-      "ar": "التحميل والتنزيل",
+      "en": "Receiving & dispatch",
+      "ar": "الاستلام والارسال",
       "href": "",
       "langs": [
         "en",
@@ -1250,8 +1319,8 @@ window.ING_ADMIN_FIELDS = {
         "our-services.html"
       ],
       "label": "Paragraph",
-      "en": "Dedicated loading and unloading teams working to full safety standards.",
-      "ar": "فرق متخصصه للتحميل والتنزيل مع الالتزام الكامل بمعايير السلامه.",
+      "en": "Controlled inbound and outbound flow from arrival through dispatch.",
+      "ar": "تدفق مراقب للبضائع الوارده والصادره من الوصول حتى الارسال.",
       "href": "",
       "langs": [
         "en",
@@ -1266,8 +1335,8 @@ window.ING_ADMIN_FIELDS = {
         "our-services.html"
       ],
       "label": "Heading",
-      "en": "Sorting and grouping",
-      "ar": "الفرز والتجميع",
+      "en": "Receiving & unloading",
+      "ar": "الاستلام والتنزيل",
       "href": "",
       "langs": [
         "en",
@@ -1282,8 +1351,8 @@ window.ING_ADMIN_FIELDS = {
         "our-services.html"
       ],
       "label": "Paragraph",
-      "en": "Accurate sorting and consolidation of shipments by destination and requirements.",
-      "ar": "فرز وتجميع دقيق للشحنات حسب الوجهه والمتطلبات.",
+      "en": "Offloading, receiving, counting and controlled inbound material flow.",
+      "ar": "تنزيل البضائع واستلامها وعدها وضبط تدفق المواد الوارده.",
       "href": "",
       "langs": [
         "en",
@@ -1298,8 +1367,8 @@ window.ING_ADMIN_FIELDS = {
         "our-services.html"
       ],
       "label": "Heading",
-      "en": "Packaging",
-      "ar": "التعبئه والتغليف",
+      "en": "Storage & put-away",
+      "ar": "التخزين والترتيب",
       "href": "",
       "langs": [
         "en",
@@ -1314,8 +1383,8 @@ window.ING_ADMIN_FIELDS = {
         "our-services.html"
       ],
       "label": "Paragraph",
-      "en": "Professional packing and packaging that keeps goods intact until delivery.",
-      "ar": "تعبئه وتغليف احترافي يحافظ على سلامة البضائع حتى التسليم.",
+      "en": "Systematic placement and organization to improve space utilization and retrieval.",
+      "ar": "توزيع وتنظيم منهجي للمواقع لتحسين استغلال المساحه وسهوله الاسترجاع.",
       "href": "",
       "langs": [
         "en",
@@ -1330,8 +1399,8 @@ window.ING_ADMIN_FIELDS = {
         "our-services.html"
       ],
       "label": "Heading",
-      "en": "Follow up on damaged goods and returns",
-      "ar": "متابعة البضائع التالفه والمرتجعات",
+      "en": "Inventory control",
+      "ar": "ضبط المخزون",
       "href": "",
       "langs": [
         "en",
@@ -1346,8 +1415,40 @@ window.ING_ADMIN_FIELDS = {
         "our-services.html"
       ],
       "label": "Paragraph",
-      "en": "Close follow-up and efficient handling of damaged goods and returns.",
-      "ar": "متابعة دقيقه للبضائع التالفه والمرتجعات وادارتها بكفاءه.",
+      "en": "WMS-based transaction control, stock visibility, reporting and inventory records.",
+      "ar": "ضبط المعاملات عبر نظام ادارة المستودعات، ووضوح المخزون، والتقارير، وسجلات المخزون.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "warehouse.item5.title": {
+      "group": "Warehouse Services Management",
+      "where": [
+        "index.html",
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Quality & dispatch control",
+      "ar": "ضبط الجوده والارسال",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "warehouse.item5.text": {
+      "group": "Warehouse Services Management",
+      "where": [
+        "index.html",
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Outbound staging, loading, dispatch and quality checks for accurate order release.",
+      "ar": "تهيئه البضائع الصادره وتحميلها وارسالها وفحص الجوده لضمان دقه التسليم.",
       "href": "",
       "langs": [
         "en",
@@ -1901,8 +2002,8 @@ window.ING_ADMIN_FIELDS = {
         "get-in-touch.html"
       ],
       "label": "Answer",
-      "en": "ING provides warehouse services management, loading and unloading, sorting and grouping, packaging, follow-up on damaged goods and returns, as well as delivery and distribution, track and trace, and various offices for work.",
-      "ar": "تقدم ING اداره الخدمات المستودعيه والتحميل والتنزيل والفرز والتجميع والتعبئه والتغليف ومتابعه البضائع التالفه والمرتجعات، بالاضافه الى التوصيل والتوزيع والتتبع والتعقب وتوفير مكاتب متنوعه للعمل.",
+      "en": "ING provides warehouse services management — receiving and dispatch, unloading, storage and put-away, inventory control and quality control — plus value-added operations such as order picking, packing, labeling and palletizing, track and trace, and various offices for work.",
+      "ar": "تقدم ING اداره الخدمات المستودعيه — الاستلام والارسال والتنزيل والتخزين والترتيب وضبط المخزون وضبط الجوده — اضافة الى العمليات ذات القيمه المضافه كالتقاط الطلبات والتعبئه ووضع الملصقات والتشكيل على المنصات، والتتبع والتعقب، ومكاتب متنوعه للعمل.",
       "href": "",
       "langs": [
         "en",
@@ -2012,12 +2113,79 @@ window.ING_ADMIN_FIELDS = {
       ],
       "labelAr": "جواب"
     },
+    "faq.q5": {
+      "group": "Frequently asked",
+      "where": [
+        "index.html",
+        "our-services.html",
+        "get-in-touch.html"
+      ],
+      "label": "Question",
+      "en": "What is the difference between the service packages?",
+      "ar": "ما الفرق بين باقات الخدمه؟",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "سؤال"
+    },
+    "faq.a5": {
+      "group": "Frequently asked",
+      "where": [
+        "index.html",
+        "our-services.html",
+        "get-in-touch.html"
+      ],
+      "label": "Answer",
+      "en": "Essential covers secure storage and inventory control. Fulfillment adds order processing, picking and standard packing. Managed 3PL adds dedicated capacity, an account manager, an enhanced SLA, same-day handling and ERP or API integration. Value-added services are charged according to the activity and scope agreed.",
+      "ar": "تشمل الباقه الاساسيه التخزين الآمن وضبط المخزون. وتضيف باقه التنفيذ معالجه الطلبات والتقاطها والتعبئه القياسيه. وتضيف باقه اداره 3PL سعه تخزين مخصصه ومدير حساب واتفاقيه مستوى خدمه معززه والمناوله في اليوم نفسه والتكامل مع ERP او API. اما الخدمات ذات القيمه المضافه فتحتسب حسب النشاط والنطاق المتفق عليه.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "جواب"
+    },
+    "faq.q6": {
+      "group": "Frequently asked",
+      "where": [
+        "index.html",
+        "our-services.html",
+        "get-in-touch.html"
+      ],
+      "label": "Question",
+      "en": "When does the delivery and distribution service launch?",
+      "ar": "متى تطلق خدمه التوصيل والتوزيع؟",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "سؤال"
+    },
+    "faq.a6": {
+      "group": "Frequently asked",
+      "where": [
+        "index.html",
+        "our-services.html",
+        "get-in-touch.html"
+      ],
+      "label": "Answer",
+      "en": "We are preparing to launch our own delivery and distribution fleet, operating directly from our Irbid facility with coverage across Jordan. The published launch rates are indicative until the service goes live.",
+      "ar": "نستعد لاطلاق اسطول التوصيل والتوزيع الخاص بنا، ليعمل مباشره من مرفقنا في اربد مع تغطيه شامله في جميع انحاء الاردن. وتبقى اسعار الاطلاق المنشوره استرشاديه حتى اطلاق الخدمه.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "جواب"
+    },
     "contact.eyebrow": {
       "group": "Banner band",
       "where": [
         "index.html",
         "about-us.html",
-        "our-services.html",
         "our-clients.html",
         "our-team.html",
         "get-in-touch.html"
@@ -2037,7 +2205,6 @@ window.ING_ADMIN_FIELDS = {
       "where": [
         "index.html",
         "about-us.html",
-        "our-services.html",
         "our-clients.html",
         "our-team.html",
         "get-in-touch.html"
@@ -2057,7 +2224,6 @@ window.ING_ADMIN_FIELDS = {
       "where": [
         "index.html",
         "about-us.html",
-        "our-services.html",
         "our-clients.html",
         "our-team.html",
         "get-in-touch.html"
@@ -2250,6 +2416,25 @@ window.ING_ADMIN_FIELDS = {
       ],
       "labelAr": "نص"
     },
+    "footer.legalName": {
+      "group": "site:footer",
+      "where": [
+        "index.html",
+        "about-us.html",
+        "our-services.html",
+        "our-clients.html",
+        "our-team.html",
+        "get-in-touch.html"
+      ],
+      "label": "Legal name",
+      "en": "Al-Wateen Warehousing and Logistics Company",
+      "ar": "",
+      "href": "",
+      "langs": [
+        "en"
+      ],
+      "labelAr": "الاسم القانوني"
+    },
     "footer.copyright": {
       "group": "site:footer",
       "where": [
@@ -2368,6 +2553,4041 @@ window.ING_ADMIN_FIELDS = {
         "ar"
       ],
       "labelAr": "عنوان"
+    },
+    "why.eyebrow": {
+      "group": "Company introduction",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Eyebrow",
+      "en": "Company introduction",
+      "ar": "تعريف بالشركه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "سطر تمهيدي"
+    },
+    "why.title": {
+      "group": "Company introduction",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Why ING Logistics",
+      "ar": "لماذا ING للخدمات اللوجستيه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "why.c1.title": {
+      "group": "Company introduction",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Innovative provider",
+      "ar": "مزود مبتكر",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "why.c1.text": {
+      "group": "Company introduction",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "A specialized logistics provider offering innovative and modern professional solutions for the global market, ensuring efficiency in every step.",
+      "ar": "شركه لوجستيه متخصصه تقدم حلولا عصريه ومبتكره واحترافيه للسوق العالمي، بما يضمن الكفاءه في كل خطوه.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "why.c2.title": {
+      "group": "Company introduction",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Smart logistics",
+      "ar": "لوجستيات ذكيه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "why.c2.text": {
+      "group": "Company introduction",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Making trade smooth and easy by keeping up with global changes and connecting logistics across the region.",
+      "ar": "تسهيل التجاره ومواكبه المتغيرات العالميه وربط الخدمات اللوجستيه في المنطقه.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "why.c3.title": {
+      "group": "Company introduction",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Strategic growth",
+      "ar": "نمو استراتيجي",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "why.c3.text": {
+      "group": "Company introduction",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "A growth-oriented organization focused on redefining logistics standards and premier warehousing solutions by August 2026.",
+      "ar": "مؤسسه تركز على النمو واعاده تعريف معايير الخدمات اللوجستيه وحلول التخزين الرائده بحلول اب 2026.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "why.c4.title": {
+      "group": "Company introduction",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Strategic hub",
+      "ar": "مركز استراتيجي",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "why.c4.text": {
+      "group": "Company introduction",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Primely located at Irbid – Baghdad Street, opposite the Trucks City, Jordan, serving as a vital regional gateway.",
+      "ar": "موقع متميز في اربد – شارع بغداد مقابل مدينه الشاحنات في الاردن، ليكون بوابه اقليميه حيويه.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "warehouse.strap": {
+      "group": "What we do",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Quality driven logistics.",
+      "ar": "لوجستيات تقودها الجوده.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "addon.eyebrow": {
+      "group": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Eyebrow",
+      "en": "Efficiency redefined",
+      "ar": "كفاءه باعلى المعايير",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "سطر تمهيدي"
+    },
+    "addon.title": {
+      "group": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Value-added warehouse operations",
+      "ar": "عمليات مستودعيه ذات قيمه مضافه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "addon.1.title": {
+      "group": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Order picking",
+      "ar": "التقاط الطلبات",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "addon.2.title": {
+      "group": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Packing & repacking",
+      "ar": "التعبئه واعاده التعبئه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "addon.3.title": {
+      "group": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Labeling",
+      "ar": "وضع الملصقات",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "addon.4.title": {
+      "group": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Palletizing & wrapping",
+      "ar": "التشكيل على المنصات والتغليف",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "addon.5.title": {
+      "group": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Returns & reverse",
+      "ar": "المرتجعات واللوجستيات العكسيه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "addon.6.title": {
+      "group": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Weighing & sampling",
+      "ar": "الوزن والعينات",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "addon.more.title": {
+      "group": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Other add-value options",
+      "ar": "خيارات اضافيه اخرى",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "addon.more.1": {
+      "group": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Kitting / assembly",
+      "ar": "التجميع / التركيب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "addon.more.2": {
+      "group": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Cash on delivery",
+      "ar": "الدفع عند التسليم",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "addon.more.3": {
+      "group": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Collection",
+      "ar": "التحصيل",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "addon.more.4": {
+      "group": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Wooden pallets",
+      "ar": "منصات خشبيه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "addon.more.5": {
+      "group": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Handling at site",
+      "ar": "المناوله في الموقع",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "addon.more.6": {
+      "group": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Overtime",
+      "ar": "العمل الاضافي",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "location.eyebrow": {
+      "group": "Strategic location",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Eyebrow",
+      "en": "Strategic location",
+      "ar": "موقع استراتيجي",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "سطر تمهيدي"
+    },
+    "location.title": {
+      "group": "Strategic location",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Strategic hub.",
+      "ar": "مركز استراتيجي.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "location.text": {
+      "group": "Strategic location",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "ING Logistics operates modern facilities situated on main highways for optimal accessibility and global logistics reach.",
+      "ar": "تدير ING مرافق حديثه تقع على الطرق الرئيسيه لتحقيق افضل سهوله وصول ومدى لوجستي عالمي.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "location.address": {
+      "group": "Strategic location",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Name",
+      "en": "Irbid – Baghdad Street, opposite the Trucks City, Jordan.",
+      "ar": "اربد – شارع بغداد، مقابل مدينه الشاحنات، الاردن.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "الاسم"
+    },
+    "location.c.1": {
+      "group": "Strategic location",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Highway connectivity",
+      "ar": "اتصال بالطرق الرئيسيه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "location.c.2": {
+      "group": "Strategic location",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Trucking hub",
+      "ar": "مركز الشاحنات",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "location.c.3": {
+      "group": "Strategic location",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Trade corridor",
+      "ar": "ممر تجاري",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "location.c.4": {
+      "group": "Strategic location",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Heavy access",
+      "ar": "دخول للمركبات الثقيله",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "tech.eyebrow": {
+      "group": "ING digital hub",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Eyebrow",
+      "en": "ING digital hub",
+      "ar": "مركز ING الرقمي",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "سطر تمهيدي"
+    },
+    "tech.title": {
+      "group": "ING digital hub",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Latest technology — warehouse management system",
+      "ar": "احدث التقنيات — نظام ادارة المستودعات",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "tech.item1.title": {
+      "group": "ING digital hub",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Name",
+      "en": "Hand-helds",
+      "ar": "الاجهزه الكفيه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "الاسم"
+    },
+    "tech.item1.text": {
+      "group": "ING digital hub",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "ING Logistics utilizes advanced hand-held devices for precise transaction capturing within our state-of-the-art WMS infrastructure.",
+      "ar": "تستخدم ING اجهزه كفيه متطوره لتسجيل المعاملات بدقه ضمن بنيه متطوره لنظام ادارة المستودعات.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "tech.item2.title": {
+      "group": "ING digital hub",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Name",
+      "en": "Online portal",
+      "ar": "البوابه الالكترونيه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "الاسم"
+    },
+    "tech.item2.text": {
+      "group": "ING digital hub",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Secure ING Logistics portal providing real-time inventory visibility and customizable reporting for all stakeholders.",
+      "ar": "بوابه ING الآمنه توفر رؤيه فوريه للمخزون وتقارير قابله للتخصيص لجميع المعنيين.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "tech.item3.title": {
+      "group": "ING digital hub",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Name",
+      "en": "Tailored control",
+      "ar": "تحكم مخصص",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "الاسم"
+    },
+    "tech.item3.text": {
+      "group": "ING digital hub",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "We offer tailored billing, quality control, and expiry tracking specific to your unique industry requirements and needs.",
+      "ar": "نقدم فوتره مخصصه وضبطا للجوده وتتبعا لتواريخ الصلاحيه بما يناسب متطلبات قطاعكم.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "tech.item4.title": {
+      "group": "ING digital hub",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Name",
+      "en": "ERP integration capability",
+      "ar": "قابليه التكامل مع انظمه ERP",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "الاسم"
+    },
+    "tech.item4.text": {
+      "group": "ING digital hub",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Full integration capabilities with existing ERP systems to ensure seamless operations and prevent supply chain obstruction.",
+      "ar": "قدرات تكامل كامله مع انظمه ERP الحاليه لضمان عمليات سلسه ومنع تعطل سلسله التوريد.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.eyebrow": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Eyebrow",
+      "en": "Service scope",
+      "ar": "نطاق الخدمه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "سطر تمهيدي"
+    },
+    "scope.title": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Clear separation between core warehousing, fulfillment and value-added services",
+      "ar": "فصل واضح بين التخزين الاساسي والتنفيذ والخدمات ذات القيمه المضافه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "scope.core.title": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Core warehousing",
+      "ar": "التخزين الاساسي",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "scope.core.i.1": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Receiving administration & documentation",
+      "ar": "اداره الاستلام والتوثيق",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.core.i.2": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Basic quantity check",
+      "ar": "فحص الكميات الاساسي",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.core.i.3": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Put-away & storage management",
+      "ar": "اداره الترتيب والتخزين",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.core.i.4": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Inventory management",
+      "ar": "اداره المخزون",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.core.i.5": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Standard reporting",
+      "ar": "تقارير قياسيه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.core.i.6": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Physical inbound handling — charged per pallet",
+      "ar": "المناوله الفعليه للوارد — تحتسب لكل منصه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.core.i.7": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Order picking — chargeable add-on",
+      "ar": "التقاط الطلبات — خدمه اضافيه بمقابل",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.core.focus": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Essential focus: storage and inventory control.",
+      "ar": "التركيز الاساسي: التخزين وضبط المخزون.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "scope.fulfil.title": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Fulfillment",
+      "ar": "التنفيذ",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "scope.fulfil.i.1": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Everything in Essential",
+      "ar": "كل ما في الباقه الاساسيه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.fulfil.i.2": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Order processing",
+      "ar": "معالجه الطلبات",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.fulfil.i.3": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Order picking*",
+      "ar": "التقاط الطلبات*",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.fulfil.i.4": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Standard packing*",
+      "ar": "التعبئه القياسيه*",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.fulfil.i.5": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Staging & dispatch preparation",
+      "ar": "التهيئه والتحضير للارسال",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.fulfil.i.6": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Priority order processing",
+      "ar": "معالجه الطلبات ذات الاولويه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.fulfil.i.7": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Fulfillment KPI reporting",
+      "ar": "تقارير مؤشرات اداء التنفيذ",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.fulfil.focus": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Fulfillment: picking and standard packing are included; additional volume or special handling is chargeable.",
+      "ar": "التنفيذ: التقاط الطلبات والتعبئه القياسيه مشمولان؛ واي كميات اضافيه او مناوله خاصه تكون بمقابل.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "scope.va.title": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Value-added services",
+      "ar": "الخدمات ذات القيمه المضافه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "scope.va.i.1": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Labeling / relabeling",
+      "ar": "وضع الملصقات / اعاده وضعها",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.va.i.2": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Repacking / co-packing",
+      "ar": "اعاده التعبئه / التعبئه المشتركه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.va.i.3": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Kitting / assembly",
+      "ar": "التجميع / التركيب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.va.i.4": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Palletizing & wrapping",
+      "ar": "التشكيل على المنصات والتغليف",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.va.i.5": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Returns / reverse logistics",
+      "ar": "المرتجعات / اللوجستيات العكسيه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.va.i.6": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Weighing / sampling",
+      "ar": "الوزن / العينات",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.va.i.7": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Collection",
+      "ar": "التحصيل",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.va.i.8": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Site handling",
+      "ar": "المناوله في الموقع",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.va.i.9": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Overtime",
+      "ar": "العمل الاضافي",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "scope.va.focus": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Charged according to activity and scope.",
+      "ar": "تحتسب حسب النشاط والنطاق.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "scope.footnote": {
+      "group": "Service scope",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "* Fulfillment and managed 3PL inclusions are subject to the agreed monthly order volume and SLA.",
+      "ar": "* تخضع شموليات باقه التنفيذ وباقه اداره 3PL لحجم الطلبات الشهري المتفق عليه واتفاقيه مستوى الخدمه.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "packages.eyebrow": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Eyebrow",
+      "en": "Our services",
+      "ar": "خدماتنا",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "سطر تمهيدي"
+    },
+    "packages.title": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Service packages",
+      "ar": "باقات الخدمه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "pkg1.title": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Essential",
+      "ar": "الاساسيه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "pkg1.subtitle": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Storage & inventory",
+      "ar": "التخزين والمخزون",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg1.i.1": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Receiving administration",
+      "ar": "اداره الاستلام",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg1.i.2": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Receiving documentation",
+      "ar": "توثيق الاستلام",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg1.i.3": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Basic quantity check",
+      "ar": "فحص الكميات الاساسي",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg1.i.4": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Put-away & storage management",
+      "ar": "اداره الترتيب والتخزين",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg1.i.5": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Inventory management",
+      "ar": "اداره المخزون",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg1.i.6": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Standard inventory / WMS reporting*",
+      "ar": "تقارير المخزون / نظام ادارة المستودعات القياسيه*",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg1.i.7": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Standard customer support",
+      "ar": "دعم العملاء القياسي",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg1.addons.title": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Add-ons / charged separately",
+      "ar": "خدمات اضافيه / بمقابل منفصل",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg1.addon.1": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Physical inbound handling",
+      "ar": "المناوله الفعليه للوارد",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg1.addon.2": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Pallet / case / piece picking",
+      "ar": "التقاط المنصات / الكراتين / القطع",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg1.addon.3": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Packing / repacking",
+      "ar": "التعبئه / اعاده التعبئه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg1.addon.4": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Labeling",
+      "ar": "وضع الملصقات",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg1.addon.5": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Kitting",
+      "ar": "التجميع",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg1.addon.6": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Returns",
+      "ar": "المرتجعات",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg1.note": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "WMS / portal access is priced separately.",
+      "ar": "الوصول لنظام ادارة المستودعات / البوابه يسعّر بشكل منفصل.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "pkg2.title": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Fulfillment",
+      "ar": "التنفيذ",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "pkg2.subtitle": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Storage + order fulfillment",
+      "ar": "التخزين + تنفيذ الطلبات",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg2.i.1": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Everything in Essential",
+      "ar": "كل ما في الباقه الاساسيه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg2.i.2": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Order picking*",
+      "ar": "التقاط الطلبات*",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg2.i.3": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Standard packing*",
+      "ar": "التعبئه القياسيه*",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg2.i.4": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Order processing",
+      "ar": "معالجه الطلبات",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg2.i.5": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Staging & dispatch preparation",
+      "ar": "التهيئه والتحضير للارسال",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg2.i.6": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Priority order processing",
+      "ar": "معالجه الطلبات ذات الاولويه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg2.i.7": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Fulfillment KPI reporting",
+      "ar": "تقارير مؤشرات اداء التنفيذ",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg2.i.8": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Standard customer support",
+      "ar": "دعم العملاء القياسي",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg2.addons.title": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Optional add-ons",
+      "ar": "خدمات اضافيه اختياريه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg2.addon.1": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Customized packaging",
+      "ar": "تغليف مخصص",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg2.addon.2": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Labeling",
+      "ar": "وضع الملصقات",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg2.addon.3": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Kitting / assembly",
+      "ar": "التجميع / التركيب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg2.addon.4": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Returns / reverse logistics",
+      "ar": "المرتجعات / اللوجستيات العكسيه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg2.addon.5": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Special handling",
+      "ar": "مناوله خاصه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg2.addon.6": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Overtime",
+      "ar": "العمل الاضافي",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg2.note": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Picking, standard packing and same-day handling sit within the agreed monthly volume and SLA.",
+      "ar": "يقع التقاط الطلبات والتعبئه القياسيه والمناوله في اليوم نفسه ضمن حجم الشهر المتفق عليه واتفاقيه مستوى الخدمه.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "pkg3.title": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Managed 3PL",
+      "ar": "اداره 3PL",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "pkg3.subtitle": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "End-to-end logistics management",
+      "ar": "اداره لوجستيه شامله من البدايه الى النهايه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg3.i.1": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Everything in Fulfillment",
+      "ar": "كل ما في باقه التنفيذ",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg3.i.2": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Dedicated storage capacity",
+      "ar": "سعه تخزين مخصصه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg3.i.3": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Dedicated account manager",
+      "ar": "مدير حساب مخصص",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg3.i.4": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Enhanced SLA",
+      "ar": "اتفاقيه مستوى خدمه معززه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg3.i.5": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Priority order handling",
+      "ar": "مناوله الطلبات ذات الاولويه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg3.i.6": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Same-day handling",
+      "ar": "المناوله في اليوم نفسه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg3.i.7": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Customized KPI dashboard",
+      "ar": "لوحه مؤشرات اداء مخصصه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg3.i.8": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Customized reporting",
+      "ar": "تقارير مخصصه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg3.i.9": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "ERP / API integration",
+      "ar": "تكامل ERP / API",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg3.i.10": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Customized SOPs",
+      "ar": "اجراءات تشغيل قياسيه مخصصه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg3.i.11": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Enhanced inventory control",
+      "ar": "ضبط مخزون معزز",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "pkg3.i.12": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Scheduled cycle counting",
+      "ar": "جرد دوري مجدول",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "packages.footnote": {
+      "group": "Our services",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "* Same-day handling is subject to the agreed volume, SLA and operating scope.",
+      "ar": "* تخضع المناوله في اليوم نفسه لحجم العمل المتفق عليه واتفاقيه مستوى الخدمه ونطاق التشغيل.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "soon.eyebrow": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Eyebrow",
+      "en": "Delivery & distribution",
+      "ar": "التوصيل والتوزيع",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "سطر تمهيدي"
+    },
+    "soon.title": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Coming soon",
+      "ar": "قريبا",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "soon.badge": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Launching soon",
+      "ar": "يطلق قريبا",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "soon.text1": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "ING Logistics will soon launch its own dedicated delivery and distribution fleet.",
+      "ar": "ستطلق ING قريبا اسطولها الخاص والمخصص للتوصيل والتوزيع.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "soon.text2": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Operating directly from our Irbid facility, we are preparing to bridge the gap between supply and demand with a professional logistics network.",
+      "ar": "وانطلاقا من مرفقنا في اربد، نستعد لسد الفجوه بين العرض والطلب من خلال شبكه لوجستيه احترافيه.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "soon.scope.title": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Service scope",
+      "ar": "نطاق الخدمه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "soon.scope.1": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Direct delivery from suppliers to wholesalers",
+      "ar": "توصيل مباشر من الموردين الى تجار الجمله",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "soon.scope.2": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Specialized routes for retail & hypermarkets",
+      "ar": "مسارات مخصصه للتجزئه والهايبر ماركت",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "soon.scope.3": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Comprehensive coverage across Jordan",
+      "ar": "تغطيه شامله في جميع انحاء الاردن",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "soon.rates.title": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Table title",
+      "en": "Planned launch rates — indicative only",
+      "ar": "اسعار الاطلاق المخططه — استرشاديه فقط",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان الجدول"
+    },
+    "soon.rates.r1": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Irbid city and surroundings",
+      "ar": "مدينه اربد وضواحيها",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "soon.rates.r1.rate": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "soon.rates.basis": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Charging basis",
+      "en": "/ trip",
+      "ar": "/ رحله",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "اساس الاحتساب"
+    },
+    "soon.rates.r2": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Northern governorates",
+      "ar": "المحافظات الشماليه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "soon.rates.r2.rate": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "soon.rates.r3": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Amman / Zarqa",
+      "ar": "عمان / الزرقاء",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "soon.rates.r3.rate": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "soon.rates.r4": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Southern governorates / Aqaba",
+      "ar": "المحافظات الجنوبيه / العقبه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "soon.rates.r4.rate": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "soon.rates.r5": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Dedicated truck (monthly)",
+      "ar": "شاحنه مخصصه (شهريا)",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "soon.rates.r5.rate": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.eyebrow": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Eyebrow",
+      "en": "Commercial offer",
+      "ar": "العرض التجاري",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "سطر تمهيدي"
+    },
+    "rates.title": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Service rates",
+      "ar": "اسعار الخدمات",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "rates.lead": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Rates for storage, handling and system access. All prices are quoted in Jordanian Dinar and remain indicative until a site survey and volume assessment are completed.",
+      "ar": "اسعار التخزين والمناوله والوصول للانظمه. وجميع الاسعار بالدينار الاردني وتبقى استرشاديه حتى استكمال مسح الموقع وتقييم الاحجام.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "rates.storage.title": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Table title",
+      "en": "Storage rates",
+      "ar": "اسعار التخزين",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان الجدول"
+    },
+    "rates.storage.col1": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Column heading",
+      "en": "Storage description (monthly)",
+      "ar": "وصف التخزين (شهريا)",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان عمود"
+    },
+    "rates.storage.col2": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Column heading",
+      "en": "Rate (JOD)",
+      "ar": "السعر (دينار اردني)",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان عمود"
+    },
+    "rates.storage.std": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Row heading",
+      "en": "Standard pallet position (1.20 × 1.00 m, up to 1.75 m high, up to 1,150 kg)",
+      "ar": "موقع منصه قياسي (1.20 × 1.00 م، بارتفاع حتى 1.75 م، وبوزن حتى 1,150 كغ)",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان صف"
+    },
+    "rates.storage.r1.rate": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.storage.month.basis": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Charging basis",
+      "en": "/ pallet / month",
+      "ar": "/ منصه / شهر",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "اساس الاحتساب"
+    },
+    "rates.storage.r2.rate": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.storage.week.basis": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Charging basis",
+      "en": "/ pallet / week",
+      "ar": "/ منصه / اسبوع",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "اساس الاحتساب"
+    },
+    "rates.storage.over": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Row heading",
+      "en": "Oversized / non-standard pallet (price based on pallet dimensions and required storage space)",
+      "ar": "منصه كبيره / غير قياسيه (يحدد السعر حسب ابعاد المنصه والمساحه المطلوبه للتخزين)",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان صف"
+    },
+    "rates.storage.r3.rate": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.storage.r4.rate": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.note": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Handling services are charged based on the activity and unit handled. Package inclusions apply only to the services specifically listed as included.",
+      "ar": "تحتسب خدمات المناوله حسب النشاط والوحده التي تتم مناولتها. وتنطبق شموليات الباقه فقط على الخدمات المذكوره صراحه كخدمات مشموله.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "rates.handling.title": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Table title",
+      "en": "Handling & value-added services rates",
+      "ar": "اسعار المناوله والخدمات ذات القيمه المضافه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان الجدول"
+    },
+    "rates.handling.col1": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Column heading",
+      "en": "Service",
+      "ar": "الخدمه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان عمود"
+    },
+    "rates.handling.col2": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Column heading",
+      "en": "Standard pallet",
+      "ar": "منصه قياسيه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان عمود"
+    },
+    "rates.handling.col3": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Column heading",
+      "en": "Oversized pallet",
+      "ar": "منصه كبيره",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان عمود"
+    },
+    "rates.handling.col4": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Column heading",
+      "en": "Charging basis",
+      "ar": "اساس الاحتساب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان عمود"
+    },
+    "rates.handling.r1": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Row heading",
+      "en": "Inbound handling (pallet): unloading + scanning + put-away",
+      "ar": "المناوله الوارده (منصه): تنزيل + مسح + ترتيب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان صف"
+    },
+    "rates.handling.r1.std": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.r1.over": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.basis.pallet": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Charging basis",
+      "en": "per pallet",
+      "ar": "لكل منصه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "اساس الاحتساب"
+    },
+    "rates.handling.r2": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Row heading",
+      "en": "Inbound handling (loose): unloading + scanning + put-away",
+      "ar": "المناوله الوارده (سائب): تنزيل + مسح + ترتيب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان صف"
+    },
+    "rates.handling.r2.std": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.r2.over": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.r3": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Row heading",
+      "en": "Outbound handling (pallet): staging + loading + dispatch preparation",
+      "ar": "المناوله الصادره (منصه): تهيئه + تحميل + تحضير الارسال",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان صف"
+    },
+    "rates.handling.r3.std": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.r3.over": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.r4": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Row heading",
+      "en": "Outbound handling (loose): staging + loading + dispatch preparation",
+      "ar": "المناوله الصادره (سائب): تهيئه + تحميل + تحضير الارسال",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان صف"
+    },
+    "rates.handling.r4.std": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.r4.over": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.r5": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Row heading",
+      "en": "Pallet picking — full pallet",
+      "ar": "التقاط المنصات — منصه كامله",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان صف"
+    },
+    "rates.handling.r5.std": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.r5.over": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.r6": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Row heading",
+      "en": "Carton / case picking",
+      "ar": "التقاط الكراتين / العلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان صف"
+    },
+    "rates.handling.r6.std": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.r6.over": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.basis.carton": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Charging basis",
+      "en": "per carton",
+      "ar": "لكل كرتون",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "اساس الاحتساب"
+    },
+    "rates.handling.r7": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Row heading",
+      "en": "Piece picking",
+      "ar": "التقاط القطع",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان صف"
+    },
+    "rates.handling.r7.std": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.r7.over": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.basis.orderLine": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Charging basis",
+      "en": "per piece / order line",
+      "ar": "لكل قطعه / بند طلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "اساس الاحتساب"
+    },
+    "rates.handling.r8": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Row heading",
+      "en": "Labeling / relabeling",
+      "ar": "وضع الملصقات / اعاده وضعها",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان صف"
+    },
+    "rates.handling.r8.std": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.r8.over": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.basis.unit": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Charging basis",
+      "en": "per unit",
+      "ar": "لكل وحده",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "اساس الاحتساب"
+    },
+    "rates.handling.r9": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Row heading",
+      "en": "Repacking / co-packing",
+      "ar": "اعاده التعبئه / التعبئه المشتركه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان صف"
+    },
+    "rates.handling.r9.std": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.r9.over": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.r10": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Row heading",
+      "en": "Shrink-wrapping",
+      "ar": "التغليف بالانكماش",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان صف"
+    },
+    "rates.handling.r10.std": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.r10.over": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.r11": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Row heading",
+      "en": "Stretch wrapping",
+      "ar": "التغليف بالتمدد",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان صف"
+    },
+    "rates.handling.r11.std": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.r11.over": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.r12": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Row heading",
+      "en": "Kitting / repackaging",
+      "ar": "التجميع / اعاده التعبئه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان صف"
+    },
+    "rates.handling.r12.std": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.r12.over": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.basis.piece": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Charging basis",
+      "en": "per piece",
+      "ar": "لكل قطعه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "اساس الاحتساب"
+    },
+    "rates.handling.r13": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Row heading",
+      "en": "Handling at site",
+      "ar": "المناوله في الموقع",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان صف"
+    },
+    "rates.handling.r13.std": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.r13.over": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.basis.workerDay": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Charging basis",
+      "en": "per worker / day",
+      "ar": "لكل عامل / يوم",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "اساس الاحتساب"
+    },
+    "rates.handling.r14": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Row heading",
+      "en": "Overtime after working hours",
+      "ar": "العمل الاضافي بعد ساعات الدوام",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان صف"
+    },
+    "rates.handling.r14.std": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.handling.r14.over": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.basis.workerHour": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Charging basis",
+      "en": "per worker / hour",
+      "ar": "لكل عامل / ساعه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "اساس الاحتساب"
+    },
+    "rates.system.note": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "WMS / portal access is priced separately from physical warehouse operations.",
+      "ar": "يسعّر الوصول لنظام ادارة المستودعات / البوابه بشكل منفصل عن العمليات المستودعيه الفعليه.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "rates.system.title": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Table title",
+      "en": "System & account services",
+      "ar": "خدمات الانظمه والحسابات",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان الجدول"
+    },
+    "rates.system.col1": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Column heading",
+      "en": "Service",
+      "ar": "الخدمه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان عمود"
+    },
+    "rates.system.col2": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Column heading",
+      "en": "Description",
+      "ar": "الوصف",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان عمود"
+    },
+    "rates.system.col3": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Column heading",
+      "en": "Rate",
+      "ar": "السعر",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان عمود"
+    },
+    "rates.system.r1": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Row heading",
+      "en": "WMS access & customer portal",
+      "ar": "الوصول لنظام ادارة المستودعات وبوابه العملاء",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان صف"
+    },
+    "rates.system.r1.desc": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Description",
+      "en": "Up to 5 users per client",
+      "ar": "حتى 5 مستخدمين لكل عميل",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "الوصف"
+    },
+    "rates.system.r1.rate": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.system.r1.basis": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Charging basis",
+      "en": "/ client / month",
+      "ar": "/ عميل / شهر",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "اساس الاحتساب"
+    },
+    "rates.system.r2": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Row heading",
+      "en": "Additional portal user",
+      "ar": "مستخدم اضافي في البوابه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان صف"
+    },
+    "rates.system.r2.desc": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Description",
+      "en": "Additional user above the included 5",
+      "ar": "مستخدم اضافي فوق الخمسه المشمولين",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "الوصف"
+    },
+    "rates.system.r2.rate": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "On request",
+      "ar": "حسب الطلب",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.system.r2.basis": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Charging basis",
+      "en": "/ user / month",
+      "ar": "/ مستخدم / شهر",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "اساس الاحتساب"
+    },
+    "rates.system.r3": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Row heading",
+      "en": "ERP / API integration",
+      "ar": "تكامل ERP / API",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان صف"
+    },
+    "rates.system.r3.desc": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Description",
+      "en": "System integration with client ERP / systems",
+      "ar": "تكامل النظام مع انظمه ERP / انظمه العميل",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "الوصف"
+    },
+    "rates.system.r3.rate": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "Quoted separately",
+      "ar": "يسعّر بشكل منفصل",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.system.r4": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Row heading",
+      "en": "Physical stock count / cycle count",
+      "ar": "الجرد الفعلي / الجرد الدوري",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان صف"
+    },
+    "rates.system.r4.desc": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Description",
+      "en": "Scheduled inventory count service",
+      "ar": "خدمه جرد مخزون مجدوله",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "الوصف"
+    },
+    "rates.system.r4.rate": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Rate",
+      "en": "Quoted / agreed by scope",
+      "ar": "يسعّر / يتفق عليه حسب النطاق",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "السعر"
+    },
+    "rates.rule1.title": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "WMS / portal access",
+      "ar": "الوصول لنظام ادارة المستودعات / البوابه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "rates.rule1.text": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Not included in the package price unless explicitly stated in the commercial agreement.",
+      "ar": "غير مشمول في سعر الباقه الا اذا نصت الاتفاقيه التجاريه على ذلك صراحه.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "rates.rule2.title": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "ERP / API integration",
+      "ar": "تكامل ERP / API",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "rates.rule2.text": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Quoted separately according to the technical scope.",
+      "ar": "يسعّر بشكل منفصل حسب النطاق التقني.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "rates.rule3.title": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Picking services",
+      "ar": "خدمات التقاط الطلبات",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "rates.rule3.text": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Charged according to the applicable package scope, handling unit and agreed rates.",
+      "ar": "تحتسب حسب نطاق الباقه المطبقه ووحده المناوله والاسعار المتفق عليها.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "rates.rule4.title": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Additional services & volumes",
+      "ar": "خدمات وكميات اضافيه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "rates.rule4.text": {
+      "group": "Commercial offer",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Services outside the agreed package scope or volume may be charged separately.",
+      "ar": "قد تحتسب الخدمات الخارجه عن نطاق الباقه او الكميه المتفق عليها بشكل منفصل.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "terms.eyebrow": {
+      "group": "Service agreement guidelines",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Eyebrow",
+      "en": "Service agreement guidelines",
+      "ar": "ارشادات اتفاقيه الخدمه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "سطر تمهيدي"
+    },
+    "terms.title": {
+      "group": "Service agreement guidelines",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Terms & conditions",
+      "ar": "الشروط والاحكام",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "terms.t1.title": {
+      "group": "Service agreement guidelines",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Pricing & currency",
+      "ar": "الاسعار والعملة",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "terms.t1.text": {
+      "group": "Service agreement guidelines",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Prices are quoted in Jordanian Dinar (JOD) and exclude sales tax. This is an indicative offer, valid for 30 days from the date of issue.",
+      "ar": "الاسعار بالدينار الاردني (JOD) ولا تشمل ضريبه المبيعات. وهذا عرض استرشادي صالح لمده 30 يوما من تاريخ الاصدار.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "terms.t2.title": {
+      "group": "Service agreement guidelines",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Billing & payment",
+      "ar": "الفوتره والدفع",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "terms.t2.text": {
+      "group": "Service agreement guidelines",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Payment is due within 15 days of receiving the invoice.",
+      "ar": "يستحق الدفع خلال 15 يوما من استلام الفاتوره.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "terms.t3.title": {
+      "group": "Service agreement guidelines",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Operational hours",
+      "ar": "ساعات العمل",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "terms.t3.text": {
+      "group": "Service agreement guidelines",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Standard hours: Saturday to Thursday, 08:00–17:00. Work outside these hours or on holidays is charged at overtime rates.",
+      "ar": "ساعات العمل القياسيه: من السبت الى الخميس، 08:00–17:00. ويحتسب العمل خارج هذه الساعات او في العطل باسعار العمل الاضافي.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "terms.t4.title": {
+      "group": "Service agreement guidelines",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Inbound notice",
+      "ar": "الاشعار بالوارد",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "terms.t4.text": {
+      "group": "Service agreement guidelines",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Clients must provide detailed inbound shipment information at least 24 hours prior to vehicle arrival.",
+      "ar": "على العملاء تزويدنا بتفاصيل الشحنه الوارده قبل وصول المركبه بـ 24 ساعه على الاقل.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "terms.t5.title": {
+      "group": "Service agreement guidelines",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Contract term",
+      "ar": "مده العقد",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "terms.t5.text": {
+      "group": "Service agreement guidelines",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Minimum contract term of 6 months, renewable. Valid subject to a final site survey and volume assessment.",
+      "ar": "مده العقد الدنيا 6 اشهر قابله للتجديد. ويسري العرض رهنا باستكمال مسح الموقع وتقييم الاحجام.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "terms.t6.title": {
+      "group": "Service agreement guidelines",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Restricted goods",
+      "ar": "البضائع المحظوره",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "terms.t6.text": {
+      "group": "Service agreement guidelines",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Hazardous, flammable, perishable and temperature-sensitive goods are not accepted without prior written approval.",
+      "ar": "لا تقبل البضائع الخطره والقابله للاشتعال والقابله للتلف والحساسه للحراره بدون موافقه خطيه مسبقه.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "terms.t7.title": {
+      "group": "Service agreement guidelines",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Termination",
+      "ar": "انهاء الاتفاقيه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "terms.t7.text": {
+      "group": "Service agreement guidelines",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Either party may terminate with 30 days' written notice. All stock must be cleared before the account is closed and reconciled.",
+      "ar": "يحق لاي من الطرفين انهاء الاتفاقيه باخطار خطي مدته 30 يوما. ويجب اخلاء جميع المخزون قبل اقفال الحساب وتسويته.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "terms.t8.title": {
+      "group": "Service agreement guidelines",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Heading",
+      "en": "Survey & confirmation",
+      "ar": "المسح والتاكيد",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "عنوان"
+    },
+    "terms.t8.text": {
+      "group": "Service agreement guidelines",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "All rates remain indicative until a formal volume assessment and site survey are completed by ING Logistics.",
+      "ar": "تبقى جميع الاسعار استرشاديه حتى استكمال تقييم الاحجام ومسح الموقع رسميا من قبل ING للخدمات اللوجستيه.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "closing.eyebrow": {
+      "group": "Banner band",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Eyebrow",
+      "en": "Smarter logistics, stronger business",
+      "ar": "لوجستيات اذكى. اعمال اقوى",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "سطر تمهيدي"
+    },
+    "closing.title": {
+      "group": "Banner band",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Quote",
+      "en": "Thank you for your partnership",
+      "ar": "شكرا لشراكتكم",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "اقتباس"
+    },
+    "closing.text": {
+      "group": "Banner band",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Paragraph",
+      "en": "Contact ING Logistics to improve your logistics operations.",
+      "ar": "تواصل مع ING للخدمات اللوجستيه للارتقاء بعملياتك اللوجستيه.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "closing.value.1": {
+      "group": "Banner band",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Reliability",
+      "ar": "الموثوقيه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "closing.value.2": {
+      "group": "Banner band",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Efficiency",
+      "ar": "الكفاءه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
+    },
+    "closing.value.3": {
+      "group": "Banner band",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Text",
+      "en": "Technology",
+      "ar": "التقنيه",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "نص"
     },
     "pageClients.eyebrow": {
       "group": "Page banner",
@@ -3093,9 +7313,90 @@ window.ING_ADMIN_FIELDS = {
       "where": [
         "our-services.html"
       ],
-      "label": "Photo - Our Services",
-      "default": "assets/img/services-hero.jpg",
-      "labelAr": "صورة - خدماتنا"
+      "label": "Photo warehouse",
+      "default": "assets/img/services-warehouse.jpg",
+      "labelAr": "صورة المستودع"
+    },
+    "addon.1.photo": {
+      "group": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Photo order picking",
+      "default": "assets/img/add-order-picking.jpg",
+      "labelAr": "صورة التقاط الطلبات"
+    },
+    "addon.2.photo": {
+      "group": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Photo packing",
+      "default": "assets/img/add-packing.jpg",
+      "labelAr": "صورة التعبئه"
+    },
+    "addon.3.photo": {
+      "group": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Photo labeling",
+      "default": "assets/img/add-labeling.jpg",
+      "labelAr": "صورة الملصقات"
+    },
+    "addon.4.photo": {
+      "group": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Photo palletizing",
+      "default": "assets/img/add-palletizing.jpg",
+      "labelAr": "صورة التشكيل على المنصات"
+    },
+    "addon.5.photo": {
+      "group": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Photo returns",
+      "default": "assets/img/add-returns.jpg",
+      "labelAr": "صورة المرتجعات"
+    },
+    "addon.6.photo": {
+      "group": "Efficiency redefined",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Photo weighing",
+      "default": "assets/img/add-weighing.jpg",
+      "labelAr": "صورة الوزن والعينات"
+    },
+    "location.photo": {
+      "group": "Strategic location",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Photo location",
+      "default": "assets/img/services-location.jpg",
+      "labelAr": "صورة الموقع"
+    },
+    "tech.photo": {
+      "group": "ING digital hub",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Photo technology",
+      "default": "assets/img/services-wms.jpg",
+      "labelAr": "صورة التقنيه"
+    },
+    "delivery.photo": {
+      "group": "Delivery & distribution",
+      "where": [
+        "our-services.html"
+      ],
+      "label": "Photo delivery",
+      "default": "assets/img/services-delivery.jpg",
+      "labelAr": "صورة التوصيل"
     },
     "clients.pagehead": {
       "group": "Page banner",
