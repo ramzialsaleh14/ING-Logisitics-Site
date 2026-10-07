@@ -336,6 +336,7 @@ account `ramzialsaleh14` — see [Accounts](#accounts). What can be changed:
 | **Rates** | the four rate tables on `our-services.html` (storage, handling, system & account, planned launch): each amount, the charging basis beside it, and the row and column headings are separate fields, ready to be filled in whenever the numbers are settled |
 | **Numbers** | the four statistics in the "By the numbers" band |
 | **Team members** | remove a member, bring one back, add a new one, and give each one a photo, a role and a description (see below) |
+| **Hero slides** | add a slide with its own photo and text, take one off the banner, and give every slide a background photo, an eyebrow, a headline and an intro line (see below) |
 
 ### Arabic
 
@@ -418,6 +419,34 @@ they are validated, previewed and applied exactly like every other edit.
 
 The publish function refuses a new member that has no role or description, so a half-made
 card can never reach the site.
+
+### The hero slides
+
+The home page's banner is marked the same way (`data-cslide`, one per slide, inside a
+`data-cslides` container), so the screen offers the slides as a list too:
+
+* **Photo, eyebrow, headline and intro line** — the three pieces of text and the background
+  photo each slide is made of, in English and Arabic.
+* **Remove this slide** — takes the slide (and its dot) off the banner. The slider always
+  keeps **at least three slides**, so a slide can only come off once another has been
+  added; the screen says so if you try, and the publish function refuses a push that would
+  leave fewer than three.
+* **Add a slide** — adds one to the end of the banner. It is built from the last slide on
+  the page, so it looks and behaves like the rest. Give it a headline and a photo before
+  pushing; a new slide carries text and a photo but no buttons of its own.
+* **Delete this slide** — only for a slide you added: the slide, its text and its photo are
+  dropped from `content.js`. A slide that came from the page can be removed, not deleted.
+
+Two further lists travel with the content:
+
+| List | Meaning |
+| --- | --- |
+| `slidesHidden` | the ids of the slides taken off the banner, e.g. `["slide.2"]` |
+| `slidesAdded` | the slides put on it, e.g. `[{ "id": "slide.new1" }]` |
+
+A slide's eyebrow, headline and intro line are the text keys `<id>.eyebrow`, `<id>.title`
+and `<id>.text`, its background is the image key `<id>.photo`, and its dot is built with
+the slide, so nothing else has to be kept in step.
 
 ### The two-pushes-a-day limit
 
@@ -524,7 +553,7 @@ python tools/build_admin_manifest.py --check    # fail if it is out of date
 * The page `<title>` and meta description — per-page SEO metadata whose Arabic is shared
   across pages in `i18n.js`.
 * Anything structural: page order, section layout, colours, fonts, the decorative
-  numbering ("01 / 02 / 03"), the team-card initials and the hero slide count.
+  numbering ("01 / 02 / 03") and the team-card initials.
 * The contact form, which is off the page for now (see [Known limitations](#known-limitations)).
 
 ---

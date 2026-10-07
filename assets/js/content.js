@@ -16,6 +16,14 @@
                            text keys "<id>.role" and "<id>.desc", and its photo
                            is the image key "<id>.photo".
 
+   slidesHidden [ "slide.2" ]  hero slides taken off the banner (their data-cslide)
+   slidesAdded  [ { "id": "slide.new1" } ]
+                           extra hero slides, built from the last slide on the
+                           page. A slide's eyebrow, headline and intro line are
+                           the text keys "<id>.eyebrow", "<id>.title" and
+                           "<id>.text", and its background is the image key
+                           "<id>.photo". The slider always keeps three slides.
+
    Written by netlify/functions/publish.js when an admin presses "Push
    changes". Anything not listed here falls back to the English copy in the
    markup and the Arabic in i18n.js, so an empty file means "unchanged".
@@ -32,5 +40,7 @@ window.ING_CONTENT = {
   "numbers": {},
   "images": {},
   "hidden": [],
-  "added": []
+  "added": [],
+  "slidesHidden": [],
+  "slidesAdded": []
 };

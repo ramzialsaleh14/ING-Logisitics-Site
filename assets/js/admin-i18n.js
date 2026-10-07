@@ -99,6 +99,33 @@
     "This card is in the page, so it can be removed but not deleted. The initials {initials} are used when it has no photo.":
       "هذه البطاقة موجودة في الصفحة، لذا يمكن إزالتها لا حذفها. تُستخدم الأحرف الأولى {initials} عندما لا توجد صورة.",
 
+    /* hero slides */
+    "Slides": "الشرائح",
+    "Slide": "شريحة",
+    "New slide": "شريحة جديدة",
+    "Slide photo": "صورة الشريحة",
+    "Eyebrow": "سطر تمهيدي",
+    "Headline": "عنوان رئيسي",
+    "Intro text": "نص تمهيدي",
+    "Each slide has a background photo, an eyebrow, a headline and an intro line, on {pages}. The slider keeps at least {n} slides, so add one before taking one off.":
+      "لكل شريحة صورة خلفية وسطر تمهيدي وعنوان رئيسي ونص تمهيدي، وتظهر في {pages}. يحتفظ الشريط بـ {n} شرائح على الأقل، لذا أضف شريحة قبل إزالة واحدة.",
+    "Add a slide": "إضافة شريحة",
+    "The banner shows {n} slides as things stand.": "يعرض الشريط {n} شرائح حاليًا.",
+    "Remove this slide": "إزالة هذه الشريحة",
+    "Bring this slide back": "إعادة هذه الشريحة",
+    "Delete this slide": "حذف هذه الشريحة",
+    "Delete this slide?": "حذف هذه الشريحة؟",
+    "Its slide, text and photo are dropped from the site the next time you push. Removing it instead keeps the text, so you can bring it back later.":
+      "ستُحذف الشريحة والنص والصورة من الموقع عند النشر التالي. أما الإزالة فتُبقي النصّ، فيمكنك إعادتها لاحقًا.",
+    "The slider must keep at least {n} slides": "يجب أن يحتفظ الشريط بـ {n} شرائح على الأقل",
+    "Add a new slide first, then you can take this one off the banner.":
+      "أضف شريحة جديدة أولًا، ثم يمكنك إزالة هذه من الشريط.",
+    "Bring another slide back before deleting this one.": "أعد شريحة أخرى قبل حذف هذه.",
+    "A new slide is built from the last slide on the page and carries no buttons of its own.":
+      "تُبنى الشريحة الجديدة من آخر شريحة في الصفحة ولا تحمل أزرارًا خاصة بها.",
+    "This slide is in the page, so it can be removed but not deleted.":
+      "هذه الشريحة موجودة في الصفحة، لذا يمكن إزالتها لا حذفها.",
+
     /* the state line */
     "This browser is not saving the draft": "هذا المتصفح لا يحفظ المسودة",
     "Everything is pushed · {time}": "تم نشر كل شيء · {time}",

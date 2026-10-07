@@ -49,6 +49,10 @@ const PUBLISH_LOG_FIELD = "publishes";
 const PUBLISH_LOG_MAX = 20;
 const MAX_HIDDEN = 200;
 const MAX_ADDED = 50;
+/* The hero slider is written with three slides in index.html; the admin screen
+   may add to them or take some away, but never leaves fewer than three. */
+const BASE_SLIDES = 3;
+const MIN_SLIDES = 3;
 const CONTENT_COMMIT_MESSAGE = "Update site content from the admin screen";
 
 function publishLimit() {
@@ -73,6 +77,14 @@ const CONTENT_HEADER = `/* =====================================================
                            on the page. A card's role and description are the
                            text keys "<id>.role" and "<id>.desc", and its photo
                            is the image key "<id>.photo".
+
+   slidesHidden [ "slide.2" ]  hero slides taken off the banner (their data-cslide)
+   slidesAdded  [ { "id": "slide.new1" } ]
+                           extra hero slides, built from the last slide on the
+                           page. A slide's eyebrow, headline and intro line are
+                           the text keys "<id>.eyebrow", "<id>.title" and
+                           "<id>.text", and its background is the image key
+                           "<id>.photo". The slider always keeps three slides.
 
    Written by netlify/functions/publish.js when an admin presses "Push
    changes". Anything not listed here falls back to the English copy in the
@@ -354,7 +366,8 @@ function cleanContent(input) {
   });
 
   const empty = function (value) { return value && Object.keys(value).length; };
-  const content = { version: 1, updated: "", text: {}, hrefs: {}, numbers: {}, images: {}, hidden: [], added: [] };
+  const content = { version: 1, updated: "", text: {}, hrefs: {}, numbers: {}, images: {},
+    hidden: [], added: [], slidesHidden: [], slidesAdded: [] };
   content.updated = typeof input.updated === "string" ? input.updated.slice(0, 40) : new Date().toISOString();
   Object.keys(text).forEach(function (key) { if (empty(text[key])) content.text[key] = text[key]; });
   Object.keys(numbers).forEach(function (key) { if (empty(numbers[key])) content.numbers[key] = numbers[key]; });
@@ -367,6 +380,16 @@ function cleanContent(input) {
       throw new Refused(400, "The new member " + member.id + " is also on the list of removed cards.");
     }
   });
+  content.slidesHidden = cleanSlidesHidden(input.slidesHidden);
+  content.slidesAdded = cleanSlidesAdded(input.slidesAdded, content.text, content.images);
+  content.slidesAdded.forEach(function (slide) {
+    if (content.slidesHidden.indexOf(slide.id) !== -1) {
+      throw new Refused(400, "The new slide " + slide.id + " is also on the list of removed slides.");
+    }
+  });
+  if (BASE_SLIDES - content.slidesHidden.length + content.slidesAdded.length < MIN_SLIDES) {
+    throw new Refused(400, "The hero slider must keep at least " + MIN_SLIDES + " slides.");
+  }
   return content;
 }
 
@@ -412,6 +435,50 @@ function cleanAdded(input, text) {
   });
 }
 
+/* The slides taken off the hero. As with the member cards, only the shape of
+   the names is checked - a name that matches nothing is simply ignored. */
+function cleanSlidesHidden(input) {
+  if (input === undefined || input === null) return [];
+  if (!Array.isArray(input)) throw new Refused(400, "The list of removed slides is malformed.");
+  if (input.length > MAX_HIDDEN) {
+    throw new Refused(400, "Too many slides are being removed at once (the limit is " + MAX_HIDDEN + ").");
+  }
+  const seen = [];
+  input.forEach(function (id) {
+    const name = cleanText(String(id), "a removed slide").slice(0, 80).trim();
+    if (!KEY.test(name)) throw new Refused(400, "A removed slide has an unexpected name: " + name);
+    if (seen.indexOf(name) === -1) seen.push(name);
+  });
+  return seen;
+}
+
+/* New hero slides. Like a member card it is only the identity: the text and the
+   background photo are ordinary entries above, so that they are validated and
+   applied like every other edit. A slide without a headline or a photo would
+   show as an empty banner, so both are required. */
+function cleanSlidesAdded(input, text, images) {
+  if (input === undefined || input === null) return [];
+  if (!Array.isArray(input)) throw new Refused(400, "The list of new slides is malformed.");
+  if (input.length > MAX_ADDED) {
+    throw new Refused(400, "Too many new slides are being added at once (the limit is " + MAX_ADDED + ").");
+  }
+  const seen = [];
+  return input.map(function (entry) {
+    if (!entry || typeof entry !== "object") throw new Refused(400, "A new slide is malformed.");
+    const id = String(entry.id || "").trim();
+    if (!KEY.test(id) || id.length > 80) throw new Refused(400, "A new slide has an unexpected name: " + id);
+    if (seen.indexOf(id) !== -1) throw new Refused(400, "Two new slides share the name " + id + ".");
+    seen.push(id);
+    if (!(text[id + ".title"] || {}).en) {
+      throw new Refused(400, "The new slide " + id + " needs a headline.");
+    }
+    if (!images[id + ".photo"]) {
+      throw new Refused(400, "The new slide " + id + " needs a photo.");
+    }
+    return { id: id };
+  });
+}
+
 function serialise(content) {
   return CONTENT_HEADER + "window.ING_CONTENT = " + JSON.stringify(content, null, 2) + ";\n";
 }
@@ -445,6 +512,8 @@ async function saveContent(config, body, state, file) {
     images: content.images,
     hidden: content.hidden,
     added: content.added,
+    slidesHidden: content.slidesHidden,
+    slidesAdded: content.slidesAdded,
   };
   const base64 = Buffer.from(serialise(published), "utf8").toString("base64");
   const commitUrl = await writeFile(config, CONTENT_PATH, base64, CONTENT_COMMIT_MESSAGE, file.sha);

@@ -7422,5 +7422,44 @@ window.ING_ADMIN_FIELDS = {
       ],
       "labelAr": "فريقنا"
     }
+  },
+  "slides": {
+    "": {
+      "group": "Hero slider",
+      "where": [
+        "index.html"
+      ],
+      "label": "Slides",
+      "items": [
+        {
+          "id": "slide.1",
+          "label": "Slide 1",
+          "photo": "home.hero1",
+          "eyebrow": "slide1.eyebrow",
+          "title": "slide1.title",
+          "text": "slide1.text",
+          "labelAr": "شريحة 1"
+        },
+        {
+          "id": "slide.2",
+          "label": "Slide 2",
+          "photo": "home.hero2",
+          "eyebrow": "slide2.eyebrow",
+          "title": "slide2.title",
+          "text": "slide2.text",
+          "labelAr": "شريحة 2"
+        },
+        {
+          "id": "slide.3",
+          "label": "Slide 3",
+          "photo": "home.hero3",
+          "eyebrow": "slide3.eyebrow",
+          "title": "slide3.title",
+          "text": "slide3.text",
+          "labelAr": "شريحة 3"
+        }
+      ],
+      "labelAr": "الشرائح"
+    }
   }
 };

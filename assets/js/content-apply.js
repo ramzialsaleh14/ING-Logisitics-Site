@@ -6,7 +6,9 @@
    dictionary main.js reads, image/number overrides are applied to the
    elements carrying data-cimg / data-cnum, the cards named in the hidden list
    are taken off the page and the cards named in the added list are built and
-   appended. Nothing here changes a page until an override exists, so the site
+   appended. The hero slides work the same way through slidesHidden and
+   slidesAdded, except that the slider is never left with fewer than three
+   slides. Nothing here changes a page until an override exists, so the site
    is byte-for-byte the same when empty.
 
    Adding ?preview=draft to a URL overlays the unpublished draft that
@@ -17,7 +19,11 @@
   "use strict";
 
   var DRAFT_KEY = "ing-admin-draft";
-  var buckets = { text: {}, hrefs: {}, numbers: {}, images: {}, hidden: [], added: [] };
+  var MIN_SLIDES = 3;
+  var buckets = {
+    text: {}, hrefs: {}, numbers: {}, images: {},
+    hidden: [], added: [], slidesHidden: [], slidesAdded: []
+  };
 
   function isDraftPreview() {
     return /(^|[?&])preview=draft(&|$)/.test(window.location.search);
@@ -46,6 +52,10 @@
     if (Array.isArray(source.hidden)) buckets.hidden = source.hidden.slice();
     if (Array.isArray(source.added)) buckets.added = source.added.map(function (member) {
       return { id: String(member && member.id || ""), initials: String(member && member.initials || "") };
+    });
+    if (Array.isArray(source.slidesHidden)) buckets.slidesHidden = source.slidesHidden.slice();
+    if (Array.isArray(source.slidesAdded)) buckets.slidesAdded = source.slidesAdded.map(function (slide) {
+      return { id: String(slide && slide.id || "") };
     });
   }
 
@@ -145,6 +155,92 @@
     });
   }
 
+  /* New hero slides the admin added: the last slide on the page is copied,
+     pointed at the new slide's own keys and appended, so it looks and behaves
+     like the rest, including the EN/AR toggle. A new slide carries text and a
+     photo but no buttons, and an empty eyebrow or intro line is dropped rather
+     than left as a gap. */
+  function buildSlides() {
+    if (!buckets.slidesAdded.length) return;
+    var grid = document.querySelector("[data-cslides]");
+    if (!grid) return;
+    var slides = grid.querySelectorAll(".hero__slide");
+    var template = slides[slides.length - 1];
+    if (!template) return;
+
+    buckets.slidesAdded.forEach(function (slide) {
+      var card = template.cloneNode(true);
+      card.classList.remove("is-active");
+      card.setAttribute("data-cslide", slide.id);
+
+      var bg = card.querySelector(".hero__bg");
+      if (bg) {
+        bg.setAttribute("data-cimg", slide.id + ".photo");
+        bg.style.backgroundImage = "";
+      }
+      fill(card.querySelector(".eyebrow"), slide.id + ".eyebrow", hasText(slide.id + ".eyebrow"));
+      fill(card.querySelector(".hero__title"), slide.id + ".title", true);
+      fill(card.querySelector(".hero__text"), slide.id + ".text", hasText(slide.id + ".text"));
+
+      var actions = card.querySelector(".hero__actions");
+      if (actions) actions.parentNode.removeChild(actions);
+      grid.appendChild(card);
+    });
+  }
+
+  /* Points one piece of a new slide's copy at its own key, or drops it when it
+     has no text. applyText()/applyImages() fill it in like any other element. */
+  function fill(el, key, keep) {
+    if (!el) return;
+    if (!keep) {
+      el.parentNode.removeChild(el);
+      return;
+    }
+    el.setAttribute("data-i18n", key);
+    el.textContent = "";
+  }
+
+  function hasText(key) {
+    var entry = buckets.text[key] || {};
+    return Boolean(entry.en || entry.ar);
+  }
+
+  /* Slides the admin took off the hero, and the dot for each one that goes with
+     them. The slider is never left with fewer than three slides, so a list that
+     would go too far stops at three rather than emptying the banner. */
+  function applySlides() {
+    if (!buckets.slidesAdded.length && !buckets.slidesHidden.length) return;
+    var grid = document.querySelector("[data-cslides]");
+    if (!grid) return;
+
+    var slides = Array.prototype.slice.call(grid.querySelectorAll(".hero__slide"));
+    var removable = slides.filter(function (slide) {
+      return buckets.slidesHidden.indexOf(slide.getAttribute("data-cslide")) !== -1;
+    });
+    removable.slice(0, Math.max(0, slides.length - MIN_SLIDES)).forEach(function (slide) {
+      grid.removeChild(slide);
+    });
+
+    rebuildDots(Array.prototype.slice.call(grid.querySelectorAll(".hero__slide")));
+  }
+
+  /* The dots are rebuilt from the slides that are left, so one button always
+     points at one slide. main.js binds them by position after this runs. */
+  function rebuildDots(slides) {
+    var dots = document.querySelector(".hero__dots");
+    if (!dots) return;
+    dots.textContent = "";
+    slides.forEach(function (slide, index) {
+      var dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "hero__dot" + (index === 0 ? " is-active" : "");
+      dot.setAttribute("role", "tab");
+      dot.setAttribute("aria-label", "Slide " + (index + 1));
+      dot.appendChild(document.createElement("span"));
+      dots.appendChild(dot);
+    });
+  }
+
   /* Draft photos live in IndexedDB (they can be megabytes), so they are
      painted once the blobs arrive, after the published content above. */
   function applyDraftImages() {
@@ -169,10 +265,12 @@
   if (isDraftPreview()) merge(readDraft());
 
   buildAdded();
+  buildSlides();
   applyText();
   applyHrefs();
   applyNumbers();
   applyImages();
   applyDraftImages();
   applyHidden();
+  applySlides();
 })();

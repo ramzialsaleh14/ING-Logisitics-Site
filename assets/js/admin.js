@@ -31,8 +31,12 @@
   var SESSION_HOURS = 8;
   var MAX_IMAGE_WIDTH = 1920;
   var UPLOAD_DIR = "assets/img/uploads/";
+  /* The hero slider keeps at least this many slides, matching the publish
+     function. There are three in index.html to begin with. */
+  var MIN_SLIDES = 3;
 
-  var MANIFEST = window.ING_ADMIN_FIELDS || { pages: [], groups: [], fields: {}, images: {}, numbers: {}, members: {} };
+  var MANIFEST = window.ING_ADMIN_FIELDS
+    || { pages: [], groups: [], fields: {}, images: {}, numbers: {}, members: {}, slides: {} };
 
   /* The screen's own words are translated by admin-i18n.js. English is the
      default and anything missing falls back to the English it was written as. */
@@ -65,6 +69,7 @@
   var photoInfo = {};           // photos the manifest does not know about, e.g. a new member's
 
   normaliseMembers();
+  normaliseSlides();
 
   /* -------------------------------------------------------------- storage -- */
 
@@ -106,6 +111,8 @@
     // absent list means "nothing changed" and is filled from the published one
     if (Array.isArray(stored.hidden)) clean.hidden = stored.hidden;
     if (Array.isArray(stored.added)) clean.added = stored.added;
+    if (Array.isArray(stored.slidesHidden)) clean.slidesHidden = stored.slidesHidden;
+    if (Array.isArray(stored.slidesAdded)) clean.slidesAdded = stored.slidesAdded;
     return clean;
   }
 
@@ -168,6 +175,7 @@
   function isChanged(kind, key) {
     if (kind === "image") return Boolean(draft.images[key]);
     if (kind === "member") return isMemberChanged(String(key).replace(/^member:/, ""));
+    if (kind === "slide") return isSlideChanged(String(key).replace(/^slide:/, ""));
     if (kind === "href") return hrefValue(key) !== baselineHref(key);
     if (kind === "number") {
       return numberValue(key, "value") !== baselineNumber(key, "value")
@@ -182,7 +190,7 @@
     Object.keys(draft.text).forEach(function (key) { if (isChanged("text", key)) total += 1; });
     Object.keys(draft.hrefs).forEach(function (key) { if (isChanged("href", key)) total += 1; });
     Object.keys(draft.numbers).forEach(function (key) { if (isChanged("number", key)) total += 1; });
-    return total + memberChangeCount();
+    return total + memberChangeCount() + slideChangeCount();
   }
 
   /* Only differences from the published content are worth keeping. */
@@ -212,6 +220,10 @@
       out.hidden = source.hidden.slice();
       out.added = clone(source.added);
     }
+    if (slidesChanged()) {
+      out.slidesHidden = source.slidesHidden.slice();
+      out.slidesAdded = clone(source.slidesAdded);
+    }
     return out;
   }
 
@@ -233,6 +245,7 @@
   function discardDraft() {
     draft = emptyDraft();
     normaliseMembers();
+    normaliseSlides();
     remove(window.localStorage, DRAFT_KEY);
     Object.keys(blobs).forEach(function (key) {
       URL.revokeObjectURL(blobs[key].url);
@@ -463,11 +476,210 @@
 
   function memberKey(id) { return "member:" + id; }
 
+  /* ---------------------------------------------------------------- slides -- */
+
+  /* The hero sliders the markup declares, one per banner, with the fields of
+     the slides already on the page. */
+  function slideSets() {
+    var sets = MANIFEST.slides || {};
+    return Object.keys(sets).map(function (name) { return sets[name]; });
+  }
+
+  function primarySlideSet() { return slideSets()[0] || null; }
+
+  function manifestSlide(id) {
+    var found = null;
+    slideSets().forEach(function (set) {
+      (set.items || []).forEach(function (item) { if (item.id === id) found = item; });
+    });
+    return found;
+  }
+
+  /* The keys a slide's eyebrow, headline, intro text and photo live under. For
+     the slides in the markup the manifest names them; a slide added in this
+     screen uses the "<id>.eyebrow" / "<id>.title" / "<id>.text" / "<id>.photo"
+     names that the site reads when it builds the extra slides. */
+  function slideKeys(id) {
+    var item = manifestSlide(id);
+    return item
+      ? { eyebrow: item.eyebrow, title: item.title, text: item.text, photo: item.photo }
+      : { eyebrow: id + ".eyebrow", title: id + ".title", text: id + ".text", photo: id + ".photo" };
+  }
+
+  /* Every key the slide cards own, so the group's plain list does not offer the
+     same fields a second time. */
+  function slideOwnedKeys() {
+    var owned = {};
+    slideSets().forEach(function (set) {
+      (set.items || []).forEach(function (item) {
+        [item.eyebrow, item.title, item.text, item.photo].forEach(function (key) {
+          if (key) owned[key] = true;
+        });
+      });
+    });
+    return owned;
+  }
+
+  /* How many slides the banner shows with the draft applied. */
+  function activeSlideCount() {
+    var total = 0;
+    slideSets().forEach(function (set) { total += (set.items || []).length; });
+    return total - draft.slidesHidden.length + draft.slidesAdded.length;
+  }
+
+  function isSlideRemoved(id) { return draft.slidesHidden.indexOf(id) !== -1; }
+  function wasSlideRemoved(id) { return (baseline.slidesHidden || []).indexOf(id) !== -1; }
+  function isSlideAdded(id) { return Boolean(addedSlideEntry(id)); }
+  function wasSlideAdded(id) {
+    return (baseline.slidesAdded || []).some(function (slide) { return slide.id === id; });
+  }
+
+  function addedSlideEntry(id) {
+    var found = null;
+    draft.slidesAdded.forEach(function (slide) { if (slide.id === id) found = slide; });
+    return found;
+  }
+
+  function slideTitle(id) {
+    var keys = slideKeys(id);
+    var first = TEXT.isArabic() ? "ar" : "en";
+    var second = TEXT.isArabic() ? "en" : "ar";
+    var headline = textValue(keys.title, first) || textValue(keys.title, second);
+    if (headline) {
+      headline = headline.replace(/<[^>]*>/g, "").trim();
+      return headline.length > 42 ? headline.slice(0, 39).trim() + "\u2026" : headline;
+    }
+    var item = manifestSlide(id);
+    return (item && label(item)) || t(isSlideAdded(id) ? "New slide" : "Slide");
+  }
+
+  /* The published slide lists, used as the starting point of the draft. */
+  function slideStateFromBaseline() {
+    return { slidesHidden: (baseline.slidesHidden || []).slice(), slidesAdded: clone(baseline.slidesAdded || []) };
+  }
+
+  function slideState(source) {
+    return { slidesHidden: (source.slidesHidden || []).slice(), slidesAdded: clone(source.slidesAdded || []) };
+  }
+
+  function slidesChanged() {
+    return JSON.stringify(slideState(draft)) !== JSON.stringify(slideState(baseline));
+  }
+
+  function normaliseSlides() {
+    var state = slideStateFromBaseline();
+    if (Array.isArray(draft.slidesHidden)) state.slidesHidden = draft.slidesHidden.slice();
+    if (Array.isArray(draft.slidesAdded)) state.slidesAdded = clone(draft.slidesAdded);
+    draft.slidesHidden = state.slidesHidden;
+    draft.slidesAdded = state.slidesAdded;
+    return state;
+  }
+
+  function slideChangeCount() {
+    var total = 0;
+    draft.slidesHidden.forEach(function (id) { if (!wasSlideRemoved(id)) total += 1; });
+    (baseline.slidesHidden || []).forEach(function (id) { if (!isSlideRemoved(id)) total += 1; });
+    draft.slidesAdded.forEach(function (slide) { if (!wasSlideAdded(slide.id)) total += 1; });
+    (baseline.slidesAdded || []).forEach(function (slide) { if (!isSlideAdded(slide.id)) total += 1; });
+    return total;
+  }
+
+  function isSlideChanged(id) {
+    var keys = slideKeys(id);
+    if (keys.eyebrow && isChanged("text", keys.eyebrow)) return true;
+    if (keys.title && isChanged("text", keys.title)) return true;
+    if (keys.text && isChanged("text", keys.text)) return true;
+    if (keys.photo && isChanged("image", keys.photo)) return true;
+    if (isSlideRemoved(id) !== wasSlideRemoved(id)) return true;
+    if (isSlideAdded(id) !== wasSlideAdded(id)) return true;
+    return false;
+  }
+
+  /* A slide only comes off the banner while at least MIN_SLIDES would be left. */
+  function setSlideRemoved(id, removed) {
+    if (removed && activeSlideCount() <= MIN_SLIDES) {
+      notice(t("The slider must keep at least {n} slides", { n: MIN_SLIDES }),
+        t("Add a new slide first, then you can take this one off the banner."), t("Close"));
+      return;
+    }
+    var at = draft.slidesHidden.indexOf(id);
+    if (removed && at === -1) draft.slidesHidden.push(id);
+    if (!removed && at !== -1) draft.slidesHidden.splice(at, 1);
+    saveDraft();
+    renderFields();
+    schedulePreview();
+  }
+
+  /* A slide is added by naming it; its text and photo are ordinary edits, which
+     is what makes the new slide render like the others. */
+  function nextSlideId() {
+    var taken = {};
+    slideSets().forEach(function (set) {
+      (set.items || []).forEach(function (item) { taken[item.id] = true; });
+    });
+    (baseline.slidesAdded || []).forEach(function (slide) { taken[slide.id] = true; });
+    draft.slidesAdded.forEach(function (slide) { taken[slide.id] = true; });
+    var number = 1;
+    while (taken["slide.new" + number]) number += 1;
+    return "slide.new" + number;
+  }
+
+  function addSlide() {
+    var id = nextSlideId();
+    draft.slidesAdded.push({ id: id });
+    saveDraft();
+    renderFields();
+    schedulePreview();
+    var headline = $('.field[data-key="' + slideKey(id) + '"] .field__row input');
+    if (headline) {
+      headline.focus();
+      headline.scrollIntoView({ block: "nearest" });
+    }
+  }
+
+  function deleteSlide(id) {
+    if (!isSlideRemoved(id) && activeSlideCount() <= MIN_SLIDES) {
+      notice(t("The slider must keep at least {n} slides", { n: MIN_SLIDES }),
+        t("Bring another slide back before deleting this one."), t("Close"));
+      return;
+    }
+    var keys = slideKeys(id);
+    draft.slidesAdded = draft.slidesAdded.filter(function (slide) { return slide.id !== id; });
+    draft.slidesHidden = draft.slidesHidden.filter(function (name) { return name !== id; });
+    [keys.eyebrow, keys.title, keys.text].forEach(function (key) { if (key) delete draft.text[key]; });
+    if (keys.photo) {
+      delete draft.images[keys.photo];
+      if (blobs[keys.photo]) {
+        URL.revokeObjectURL(blobs[keys.photo].url);
+        delete blobs[keys.photo];
+      }
+      window.INGDraftImages.remove(keys.photo).catch(function () { /* nothing stored */ });
+    }
+    saveDraft();
+    renderFields();
+    schedulePreview();
+  }
+
+  function slideKey(id) { return "slide:" + id; }
+
+  function slideWhere() {
+    var set = primarySlideSet();
+    return (set && set.where) || [];
+  }
+
   function imageInfo(key) {
     if (MANIFEST.images[key]) return MANIFEST.images[key];
     if (!photoInfo[key]) {
-      var set = primaryMemberSet();
-      photoInfo[key] = { label: "Member photo", labelAr: t("Member photo"), where: (set && set.where) || [], default: "" };
+      var slide = null;
+      draft.slidesAdded.forEach(function (added) {
+        if (slideKeys(added.id).photo === key) slide = added.id;
+      });
+      if (slide) {
+        photoInfo[key] = { label: "Slide photo", labelAr: t("Slide photo"), where: slideWhere(), default: "" };
+      } else {
+        var set = primaryMemberSet();
+        photoInfo[key] = { label: "Member photo", labelAr: t("Member photo"), where: (set && set.where) || [], default: "" };
+      }
     }
     return photoInfo[key];
   }
@@ -636,15 +848,19 @@
     host.appendChild(lead);
 
     var owned = memberOwnedKeys();
+    var slideOwned = slideOwnedKeys();
     keysWhere(MANIFEST.fields, group.id).forEach(function (key) {
-      if (!owned[key]) host.appendChild(textField(key));
+      if (!owned[key] && !slideOwned[key]) host.appendChild(textField(key));
     });
     keysWhere(MANIFEST.numbers, group.id).forEach(function (key) { host.appendChild(numberField(key)); });
     keysWhere(MANIFEST.images, group.id).forEach(function (key) {
-      if (!owned[key]) host.appendChild(photoField(key));
+      if (!owned[key] && !slideOwned[key]) host.appendChild(photoField(key));
     });
     memberSets().forEach(function (set) {
       if (set.group === group.id) host.appendChild(memberSection(set));
+    });
+    slideSets().forEach(function (set) {
+      if (set.group === group.id) host.appendChild(slideSection(set));
     });
   }
 
@@ -804,6 +1020,164 @@
     return row;
   }
 
+  /* ------------------------------------------------------------- slides UI -- */
+
+  function slideSection(set) {
+    var wrapper = document.createElement("section");
+    wrapper.className = "members";
+
+    var head = document.createElement("h2");
+    head.className = "members__head";
+    head.textContent = label(set) || t("Slides");
+    wrapper.appendChild(head);
+
+    var lead = document.createElement("p");
+    lead.className = "fields__lead";
+    lead.textContent = t("Each slide has a background photo, an eyebrow, a headline and an "
+      + "intro line, on {pages}. The slider keeps at least {n} slides, so add one before "
+      + "taking one off.", { pages: pagesLabel(set.where), n: MIN_SLIDES });
+    wrapper.appendChild(lead);
+
+    set.items.forEach(function (item) { wrapper.appendChild(slideCard(item.id)); });
+    draft.slidesAdded.forEach(function (slide) { wrapper.appendChild(slideCard(slide.id)); });
+
+    var add = document.createElement("button");
+    add.type = "button";
+    add.className = "members__add";
+    add.textContent = t("Add a slide");
+    add.addEventListener("click", addSlide);
+    wrapper.appendChild(add);
+
+    var count = document.createElement("p");
+    count.className = "field__hint";
+    count.textContent = t("The banner shows {n} slides as things stand.", { n: activeSlideCount() });
+    wrapper.appendChild(count);
+    return wrapper;
+  }
+
+  function slideCard(id) {
+    var keys = slideKeys(id);
+    var card = document.createElement("article");
+    card.className = "field field--slide" + (isSlideChanged(id) ? " is-changed" : "")
+      + (isSlideRemoved(id) ? " is-removed" : "");
+    card.setAttribute("data-kind", "slide");
+    card.setAttribute("data-key", slideKey(id));
+    card.setAttribute("data-slide", id);
+
+    var head = document.createElement("div");
+    head.className = "field__head";
+    var name = document.createElement("span");
+    name.className = "field__label";
+    name.textContent = slideTitle(id);
+    var tag = document.createElement("span");
+    tag.className = "field__tag";
+    tag.textContent = t(isSlideRemoved(id) ? "Removed" : "Changed");
+    tag.hidden = !isSlideChanged(id);
+    head.appendChild(name);
+    head.appendChild(tag);
+    card.appendChild(head);
+
+    card.appendChild(photoBlock(keys.photo, card, t("Back to no photo")));
+    paintPhoto(card, keys.photo);
+
+    card.appendChild(slideTextBox(id, keys.eyebrow, t("Eyebrow"), false));
+    card.appendChild(slideTextBox(id, keys.title, t("Headline"), false));
+    card.appendChild(slideTextBox(id, keys.text, t("Intro text"), true));
+
+    var warn = document.createElement("p");
+    warn.className = "field__warn";
+    warn.textContent = t("The Arabic side is empty, so the Arabic site shows the English text.");
+    warn.hidden = !(isSlideAdded(id) && missingSlideArabic(id));
+    card.appendChild(warn);
+
+    card.appendChild(slideFoot(id));
+
+    var note = document.createElement("p");
+    note.className = "field__hint";
+    note.textContent = isSlideAdded(id)
+      ? t("A new slide is built from the last slide on the page and carries no buttons of its own.")
+      : t("This slide is in the page, so it can be removed but not deleted.");
+    card.appendChild(note);
+    return card;
+  }
+
+  function slideFoot(id) {
+    var foot = document.createElement("div");
+    foot.className = "member__foot";
+    var actions = document.createElement("div");
+    actions.className = "member__actions";
+
+    var toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "member__toggle";
+    toggle.textContent = t(isSlideRemoved(id) ? "Bring this slide back" : "Remove this slide");
+    toggle.addEventListener("click", function () {
+      setSlideRemoved(id, !isSlideRemoved(id));
+      changed(slideKey(id), "slide");
+    });
+    actions.appendChild(toggle);
+
+    if (isSlideAdded(id)) {
+      var drop = document.createElement("button");
+      drop.type = "button";
+      drop.className = "member__delete";
+      drop.textContent = t("Delete this slide");
+      drop.addEventListener("click", function () {
+        confirmDialog(t("Delete this slide?"),
+          t("Its slide, text and photo are dropped from the site the next time you push. "
+            + "Removing it instead keeps the text, so you can bring it back later."), t("Delete"))
+          .then(function (yes) { if (yes) deleteSlide(id); });
+      });
+      actions.appendChild(drop);
+    }
+
+    foot.appendChild(actions);
+    return foot;
+  }
+
+  function missingSlideArabic(id) {
+    var keys = slideKeys(id);
+    return !textValue(keys.title, "ar") || !textValue(keys.text, "ar");
+  }
+
+  function slideTextBox(id, key, labelText, multiline) {
+    var row = document.createElement("div");
+    row.className = "field__row";
+    if (!key) return row;
+
+    [[t("English"), "en"], [t("Arabic"), "ar"]].forEach(function (pair) {
+      var control = document.createElement(multiline ? "textarea" : "input");
+      if (multiline) control.rows = 3;
+      else control.type = "text";
+      control.value = textValue(key, pair[1]);
+      if (pair[1] === "ar") control.dir = "rtl";
+      control.addEventListener("input", function () {
+        setText(key, pair[1], control.value);
+        refreshSlide(id);
+      });
+
+      var wrapper = box(labelText + " (" + pair[0] + ")", control);
+      if (pair[1] === "ar") wrapper.className += " field__box--ar";
+      row.appendChild(wrapper);
+    });
+    return row;
+  }
+
+  /* The parts of a slide card that change while it is being edited. */
+  function refreshSlide(id) {
+    var card = $('.field[data-key="' + slideKey(id) + '"]');
+    if (!card) return;
+    var isChangedNow = isSlideChanged(id);
+    card.classList.toggle("is-changed", isChangedNow);
+    card.classList.toggle("is-removed", isSlideRemoved(id));
+    $(".field__tag", card).hidden = !isChangedNow;
+    $(".field__tag", card).textContent = t(isSlideRemoved(id) ? "Removed" : "Changed");
+    $(".field__warn", card).hidden = !(isSlideAdded(id) && missingSlideArabic(id));
+    var toggle = $(".member__toggle", card);
+    if (toggle) toggle.textContent = t(isSlideRemoved(id) ? "Bring this slide back" : "Remove this slide");
+    $(".field__label", card).textContent = slideTitle(id);
+  }
+
   /* A member photo belongs to a member card, which has to be told when it
      changes so its "Changed" chip keeps up. */
   function refreshPhotoOwner(key) {
@@ -816,6 +1190,12 @@
       if (memberPhoto === key) owner = member.id;
     });
     if (owner) refreshMember(owner);
+
+    var slideOwner = null;
+    draft.slidesAdded.forEach(function (slide) {
+      if (slideKeys(slide.id).photo === key) slideOwner = slide.id;
+    });
+    if (slideOwner) refreshSlide(slideOwner);
   }
 
   /* The parts of a member card that change while it is being edited. */
@@ -1321,7 +1701,10 @@
 
     content.hidden = draft.hidden.slice();
     content.added = clone(draft.added);
+    content.slidesHidden = draft.slidesHidden.slice();
+    content.slidesAdded = clone(draft.slidesAdded);
     forgetDeletedMembers(content);
+    forgetDeletedSlides(content);
     return content;
   }
 
@@ -1342,6 +1725,28 @@
         if (bucket[1].indexOf(match[2]) === -1 || live[id]) return;
         // only a member that was published and has since been deleted qualifies
         if (!wasAdded(id)) return;
+        delete content[bucket[0]][key];
+      });
+    });
+  }
+
+  /* The text and photo of a slide that has been deleted stay in the published
+     file unless they are taken out here. */
+  function forgetDeletedSlides(content) {
+    var live = {};
+    slideSets().forEach(function (set) {
+      (set.items || []).forEach(function (item) { live[item.id] = true; });
+    });
+    draft.slidesAdded.forEach(function (slide) { live[slide.id] = true; });
+
+    [["text", ["eyebrow", "title", "text"]], ["images", ["photo"]]].forEach(function (bucket) {
+      Object.keys(content[bucket[0]]).forEach(function (key) {
+        var match = /^(.*)\.(eyebrow|title|text|photo)$/.exec(key);
+        if (!match) return;
+        var id = match[1];
+        if (bucket[1].indexOf(match[2]) === -1 || live[id]) return;
+        // only a slide that was published and has since been deleted qualifies
+        if (!wasSlideAdded(id)) return;
         delete content[bucket[0]][key];
       });
     });

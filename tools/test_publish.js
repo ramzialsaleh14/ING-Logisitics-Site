@@ -247,6 +247,52 @@ async function run() {
   response = await write({ added: "team.new1" });
   check("a new member list that is not a list -> 400", response.statusCode === 400, response);
 
+  /* ---------------------------------------------------------- hero slides */
+  const slide = (extra) => Object.assign({ id: "slide.new1" }, extra || {});
+  const slideText = (id) => ({
+    [id + ".title"]: { en: "A new route", ar: "\u0645\u0633\u0627\u0631" },
+    [id + ".text"]: { en: "Shipping to new markets.", ar: "\u0634\u062d\u0646" },
+  });
+  const slideImages = (id) => ({ [id + ".photo"]: PHOTO });
+
+  response = await write({ slidesAdded: [slide()] });
+  check("a new slide with no headline -> 400", response.statusCode === 400, response);
+  response = await write({ slidesAdded: [slide()], text: slideText("slide.new1") });
+  check("a new slide with no photo -> 400", response.statusCode === 400, response);
+
+  response = await write({
+    slidesAdded: [slide()], text: slideText("slide.new1"), images: slideImages("slide.new1"),
+  });
+  check("a new slide with a headline and a photo is kept",
+    response.statusCode === 200 && published.slidesAdded[0].id === "slide.new1", published && published.slidesAdded);
+  check("the published file always carries both slide lists",
+    Array.isArray(published.slidesHidden) && !published.slidesHidden.length, published && published.slidesHidden);
+
+  response = await write({ slidesHidden: ["slide.2"] });
+  check("removing a slide with nothing added would leave too few -> 400",
+    response.statusCode === 400, response);
+
+  response = await write({
+    slidesHidden: ["slide.2"], slidesAdded: [slide()],
+    text: slideText("slide.new1"), images: slideImages("slide.new1"),
+  });
+  check("a slide may come off once another is added",
+    response.statusCode === 200 && published.slidesHidden.join() === "slide.2", published && published.slidesHidden);
+
+  response = await write({
+    slidesAdded: [slide(), slide()], text: slideText("slide.new1"), images: slideImages("slide.new1"),
+  });
+  check("two new slides with the same name -> 400", response.statusCode === 400, response);
+  response = await write({
+    slidesAdded: [slide()], slidesHidden: ["slide.new1"],
+    text: slideText("slide.new1"), images: slideImages("slide.new1"),
+  });
+  check("a new slide that is also on the removed list -> 400", response.statusCode === 400, response);
+  response = await write({ slidesHidden: "slide.2" });
+  check("a removed slide list that is not a list -> 400", response.statusCode === 400, response);
+  response = await write({ slidesAdded: "slide.new1" });
+  check("a new slide list that is not a list -> 400", response.statusCode === 400, response);
+
   /* -------------------------------------------------------------- photos */
   response = await handler(event(Object.assign({
     action: "image", path: PHOTO, base64: Buffer.from("pretend jpeg bytes").toString("base64"),
