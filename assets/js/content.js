@@ -23,9 +23,16 @@
    ========================================================================== */
 window.ING_CONTENT = {
   "version": 1,
-  "updated": "",
-  "publishes": [],
-  "text": {},
+  "updated": "2026-10-07T18:50:19.338Z",
+  "publishes": [
+    "2026-10-07T18:50:19.544Z"
+  ],
+  "text": {
+    "contact.address": {
+      "en": "Irbid – Baghdad Street, opposite the Trucks City, Jordan",
+      "ar": "Irbid – Baghdad Street, opposite the Trucks City, Jordan"
+    }
+  },
   "hrefs": {},
   "numbers": {},
   "images": {},
