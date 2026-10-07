@@ -27,12 +27,7 @@ window.ING_CONTENT = {
   "publishes": [
     "2026-10-07T18:50:19.544Z"
   ],
-  "text": {
-    "contact.address": {
-      "en": "Irbid – Baghdad Street, opposite the Trucks City, Jordan",
-      "ar": "Irbid – Baghdad Street, opposite the Trucks City, Jordan"
-    }
-  },
+  "text": {},
   "hrefs": {},
   "numbers": {},
   "images": {},

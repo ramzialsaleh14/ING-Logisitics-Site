@@ -2335,7 +2335,7 @@ window.ING_ADMIN_FIELDS = {
       ],
       "labelAr": "عنوان"
     },
-    "contact.address": {
+    "location.address": {
       "group": "site:footer",
       "where": [
         "index.html",
@@ -2346,8 +2346,8 @@ window.ING_ADMIN_FIELDS = {
         "get-in-touch.html"
       ],
       "label": "Link",
-      "en": "32.514226, 35.942958",
-      "ar": "32.514226, 35.942958",
+      "en": "Irbid – Baghdad Street, opposite the Trucks City, Jordan.",
+      "ar": "اربد – شارع بغداد، مقابل مدينه الشاحنات، الاردن.",
       "href": "https://maps.google.com/?q=32.51422635237183,35.94295766426107",
       "langs": [
         "en",
@@ -2985,22 +2985,6 @@ window.ING_ADMIN_FIELDS = {
         "ar"
       ],
       "labelAr": "فقرة"
-    },
-    "location.address": {
-      "group": "Strategic location",
-      "where": [
-        "our-services.html",
-        "get-in-touch.html"
-      ],
-      "label": "Name",
-      "en": "Irbid – Baghdad Street, opposite the Trucks City, Jordan.",
-      "ar": "اربد – شارع بغداد، مقابل مدينه الشاحنات، الاردن.",
-      "href": "https://maps.google.com/?q=32.51422635237183,35.94295766426107",
-      "langs": [
-        "en",
-        "ar"
-      ],
-      "labelAr": "الاسم"
     },
     "location.c.1": {
       "group": "Strategic location",
