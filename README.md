@@ -363,6 +363,13 @@ back from the publish function (a refused push, for example) are in English.
    the push succeeds.
 4. **Discard draft** throws the unpublished changes away.
 
+**A push from this screen commits to GitHub directly**, so the repository moves ahead of any
+clone that has not fetched since. Before pushing from a working copy, run `git pull --rebase`:
+otherwise GitHub rejects the push with *"the remote contains work that you do not have
+locally"* — which is easy to mistake for a Netlify problem, but environment variables never
+create commits. `git log origin/main` names the admin's commits for what they are:
+*"Update site content from the admin screen"*.
+
 Serve the screen over `http://localhost` or `https://` while working on it: signing in uses
 the browser's crypto API, which browsers only expose in a secure context.
 
