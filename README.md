@@ -27,7 +27,7 @@ python -m http.server 8765 --bind 127.0.0.1   # then open http://127.0.0.1:8765/
 | `our-services.html` | Why ING Logistics, Warehouse Services Management, value-added operations, strategic location, TECHNOLOGY & WMS, service scope, service packages, Delivery & Distribution (coming soon), service rates, terms & conditions, Track & Trace, Offices, FAQ |
 | `our-clients.html` | Who ING serves |
 | `our-team.html` | Team functions and the values behind them |
-| `get-in-touch.html` | Contact details and an enquiry form, FAQ |
+| `get-in-touch.html` | Phone / e-mail / address cards with their descriptions, FAQ, and the proposal deck's closing slide (strapline, thanks, the three values). The enquiry form is parked for now — see below |
 | `admin.html` | The editing screen (see [Editing the site](#editing-the-site-admin-screen)) — not linked from anywhere and marked `noindex` |
 
 ## Layout
@@ -178,7 +178,7 @@ the two disagree:
 | 11–13 | Commercial offer — storage, handling and system rate tables + commercial rules |
 | 14 | Delivery & Distribution — coming soon |
 | 15 | Service agreement guidelines (terms & conditions) |
-| 16 | Reliability / Efficiency / Technology in the closing band |
+| 16 | The three contact cards (phone, e-mail, address, each with its line of explanation) and the closing band — strapline, "Thank you for your partnership", the contact line and the numbered Reliability / Efficiency / Technology row — on `get-in-touch.html`, whose call-to-action band this replaces |
 
 The four deck photographs are cut into `assets/img/`: `services-warehouse.jpg` (slide 5),
 `services-wms.jpg` (slide 4), `services-location.jpg` (slide 3) and `services-delivery.jpg`
@@ -488,14 +488,18 @@ python tools/build_admin_manifest.py --check    # fail if it is out of date
   across pages in `i18n.js`.
 * Anything structural: page order, section layout, colours, fonts, the decorative
   numbering ("01 / 02 / 03"), the team-card initials and the hero slide count.
-* The contact form still has no backend (see [Known limitations](#known-limitations)).
+* The contact form, which is off the page for now (see [Known limitations](#known-limitations)).
 
 ---
 
 ## Known limitations
 
-* The contact form has **no backend** — it validates in the browser and stops there.
-  Point it at your form handler (or a service such as Formspree) before going live.
+* The contact form is **not on the page** while it has no backend: it only validated in the
+  browser and stopped there, so showing it promised a reply that could never arrive. Its
+  markup and Arabic are still in place — `CONTACT_FORM` in `tools/build_pages.py`, parked
+  with a comment — so putting it back is one line in the contact page's body plus
+  `python tools/build_pages.py`, once it points at a real form handler (or a service such
+  as Formspree). `main.js`'s submit handler is guarded with `if (form)` and is ready for it.
 * Phone number, e-mail address and street address are **not** in the brochure. The phone
   (`0799723777`, i.e. `+962 79 972 3777`), the opening hours (Saturday–Thursday,
   8:00 AM – 5:00 PM) and the location — linked to the company's coordinates

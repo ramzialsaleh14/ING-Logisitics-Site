@@ -767,6 +767,11 @@ html[data-lang="ar"] .rates__table thead th { letter-spacing: normal; }
   letter-spacing: -.02em;
 }
 .band cite { font-size: 16px; letter-spacing: .16em; text-transform: uppercase; color: var(--main); font-style: normal; }
+/* planned-launch values under the closing message (proposal slide 16) */
+.values-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr)); gap: 28px; margin-block-start: 46px; text-align: start; }
+.values-row > div { border-inline-start: 2px solid var(--main); padding-inline-start: 20px; }
+.values-row__num { display: block; font-size: 30px; font-weight: 800; line-height: 1; color: var(--main); margin-bottom: 8px; }
+.values-row strong { display: block; font-size: 20px; font-weight: 700; color: var(--white); }
 
 /* ------------------------------- stats ---------------------------------- */
 .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
@@ -853,6 +858,20 @@ html[data-lang="ar"] .rates__table thead th { letter-spacing: normal; }
 .info-list .card__icon svg { width: 22px; height: 22px; }
 .info-list strong { display: block; color: var(--dark); font-size: 18px; margin-bottom: 4px; }
 .info-list a:hover { color: var(--main); }
+
+/* contact cards (proposal slide 16: phone, e-mail, address + a description) */
+.contact-card__value { font-size: 19px; font-weight: 700; color: var(--dark); margin-bottom: 10px; }
+.contact-card__hours { margin-block-start: 16px; font-size: 15px; color: var(--muted); }
+.contact-card__hours strong { display: block; color: var(--dark); margin-bottom: 2px; }
+.form-panel {
+  max-width: 860px;
+  margin-inline: auto;
+  margin-block-start: 56px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 46px;
+}
 
 /* --------------------------------- accordion ---------------------------- */
 .accordion { border-top: 1px solid var(--line); }
@@ -1004,6 +1023,7 @@ html[data-lang="ar"] .rates__table thead th { letter-spacing: normal; }
   .section { padding: 70px 0; }
   .cards, .stats, .team-grid, .cards.cards--3 { grid-template-columns: 1fr; }
   .scope, .package { padding: 32px 26px; }
+  .form-panel { padding: 28px 22px; margin-block-start: 40px; }
   .client-grid { grid-template-columns: repeat(2, 1fr); }
   .form__row { grid-template-columns: 1fr; }
   .feature { grid-template-columns: 1fr; gap: 14px; }

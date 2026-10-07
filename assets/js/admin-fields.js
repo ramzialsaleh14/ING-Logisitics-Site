@@ -2206,8 +2206,7 @@ window.ING_ADMIN_FIELDS = {
         "index.html",
         "about-us.html",
         "our-clients.html",
-        "our-team.html",
-        "get-in-touch.html"
+        "our-team.html"
       ],
       "label": "Quote",
       "en": "Thank you",
@@ -2225,8 +2224,7 @@ window.ING_ADMIN_FIELDS = {
         "index.html",
         "about-us.html",
         "our-clients.html",
-        "our-team.html",
-        "get-in-touch.html"
+        "our-team.html"
       ],
       "label": "Paragraph",
       "en": "Thank you for your trust. We are ready to support your business with end-to-end logistics solutions, from warehousing to your customer's door.",
@@ -2245,8 +2243,7 @@ window.ING_ADMIN_FIELDS = {
         "about-us.html",
         "our-services.html",
         "our-clients.html",
-        "our-team.html",
-        "get-in-touch.html"
+        "our-team.html"
       ],
       "label": "Button",
       "en": "Start with us",
@@ -2992,12 +2989,13 @@ window.ING_ADMIN_FIELDS = {
     "location.address": {
       "group": "Strategic location",
       "where": [
-        "our-services.html"
+        "our-services.html",
+        "get-in-touch.html"
       ],
       "label": "Name",
       "en": "Irbid – Baghdad Street, opposite the Trucks City, Jordan.",
       "ar": "اربد – شارع بغداد، مقابل مدينه الشاحنات، الاردن.",
-      "href": "",
+      "href": "https://maps.google.com/?q=32.51422635237183,35.94295766426107",
       "langs": [
         "en",
         "ar"
@@ -6502,7 +6500,8 @@ window.ING_ADMIN_FIELDS = {
     "closing.eyebrow": {
       "group": "Banner band",
       "where": [
-        "our-services.html"
+        "our-services.html",
+        "get-in-touch.html"
       ],
       "label": "Eyebrow",
       "en": "Smarter logistics, stronger business",
@@ -6517,7 +6516,8 @@ window.ING_ADMIN_FIELDS = {
     "closing.title": {
       "group": "Banner band",
       "where": [
-        "our-services.html"
+        "our-services.html",
+        "get-in-touch.html"
       ],
       "label": "Quote",
       "en": "Thank you for your partnership",
@@ -6532,7 +6532,8 @@ window.ING_ADMIN_FIELDS = {
     "closing.text": {
       "group": "Banner band",
       "where": [
-        "our-services.html"
+        "our-services.html",
+        "get-in-touch.html"
       ],
       "label": "Paragraph",
       "en": "Contact ING Logistics to improve your logistics operations.",
@@ -6547,7 +6548,8 @@ window.ING_ADMIN_FIELDS = {
     "closing.value.1": {
       "group": "Banner band",
       "where": [
-        "our-services.html"
+        "our-services.html",
+        "get-in-touch.html"
       ],
       "label": "Text",
       "en": "Reliability",
@@ -6562,7 +6564,8 @@ window.ING_ADMIN_FIELDS = {
     "closing.value.2": {
       "group": "Banner band",
       "where": [
-        "our-services.html"
+        "our-services.html",
+        "get-in-touch.html"
       ],
       "label": "Text",
       "en": "Efficiency",
@@ -6577,7 +6580,8 @@ window.ING_ADMIN_FIELDS = {
     "closing.value.3": {
       "group": "Banner band",
       "where": [
-        "our-services.html"
+        "our-services.html",
+        "get-in-touch.html"
       ],
       "label": "Text",
       "en": "Technology",
@@ -6829,179 +6833,59 @@ window.ING_ADMIN_FIELDS = {
       ],
       "labelAr": "فقرة"
     },
-    "contact.formName": {
+    "contact.phoneLabel": {
       "group": "Get in touch",
       "where": [
         "get-in-touch.html"
       ],
-      "label": "Text",
-      "en": "Full name",
-      "ar": "الاسم الكامل",
+      "label": "Heading",
+      "en": "Phone",
+      "ar": "الهاتف",
       "href": "",
       "langs": [
         "en",
         "ar"
       ],
-      "labelAr": "نص"
+      "labelAr": "عنوان"
     },
-    "contact.formEmail": {
+    "contact.phoneText": {
       "group": "Get in touch",
       "where": [
         "get-in-touch.html"
       ],
-      "label": "Text",
-      "en": "Email address",
+      "label": "Paragraph",
+      "en": "Connect with our experts directly for immediate inquiries.",
+      "ar": "تواصل مع خبرائنا مباشره للاستفسارات العاجله.",
+      "href": "",
+      "langs": [
+        "en",
+        "ar"
+      ],
+      "labelAr": "فقرة"
+    },
+    "contact.emailLabel": {
+      "group": "Get in touch",
+      "where": [
+        "get-in-touch.html"
+      ],
+      "label": "Heading",
+      "en": "Email",
       "ar": "البريد الالكتروني",
       "href": "",
       "langs": [
         "en",
         "ar"
       ],
-      "labelAr": "نص"
+      "labelAr": "عنوان"
     },
-    "contact.formPhone": {
-      "group": "Get in touch",
-      "where": [
-        "get-in-touch.html"
-      ],
-      "label": "Text",
-      "en": "Mobile number",
-      "ar": "رقم الجوال",
-      "href": "",
-      "langs": [
-        "en",
-        "ar"
-      ],
-      "labelAr": "نص"
-    },
-    "contact.formService": {
-      "group": "Get in touch",
-      "where": [
-        "get-in-touch.html"
-      ],
-      "label": "Text",
-      "en": "Service required",
-      "ar": "الخدمه المطلوبه",
-      "href": "",
-      "langs": [
-        "en",
-        "ar"
-      ],
-      "labelAr": "نص"
-    },
-    "contact.selectPlaceholder": {
-      "group": "Get in touch",
-      "where": [
-        "get-in-touch.html"
-      ],
-      "label": "Menu option",
-      "en": "Choose a service",
-      "ar": "اختر الخدمه",
-      "href": "",
-      "langs": [
-        "en",
-        "ar"
-      ],
-      "labelAr": "خيار في القائمة"
-    },
-    "contact.service.warehouse": {
-      "group": "Get in touch",
-      "where": [
-        "get-in-touch.html"
-      ],
-      "label": "Menu option",
-      "en": "Warehouse Services Management",
-      "ar": "اداره الخدمات المستودعيه",
-      "href": "",
-      "langs": [
-        "en",
-        "ar"
-      ],
-      "labelAr": "خيار في القائمة"
-    },
-    "contact.service.delivery": {
-      "group": "Get in touch",
-      "where": [
-        "get-in-touch.html"
-      ],
-      "label": "Menu option",
-      "en": "Delivery and Distribution",
-      "ar": "التوصيل والتوزيع",
-      "href": "",
-      "langs": [
-        "en",
-        "ar"
-      ],
-      "labelAr": "خيار في القائمة"
-    },
-    "contact.service.track": {
-      "group": "Get in touch",
-      "where": [
-        "get-in-touch.html"
-      ],
-      "label": "Menu option",
-      "en": "Track and Trace",
-      "ar": "التتبع والتعقب",
-      "href": "",
-      "langs": [
-        "en",
-        "ar"
-      ],
-      "labelAr": "خيار في القائمة"
-    },
-    "contact.service.offices": {
-      "group": "Get in touch",
-      "where": [
-        "get-in-touch.html"
-      ],
-      "label": "Menu option",
-      "en": "Various Offices for Work",
-      "ar": "مكاتب متنوعه للعمل",
-      "href": "",
-      "langs": [
-        "en",
-        "ar"
-      ],
-      "labelAr": "خيار في القائمة"
-    },
-    "contact.formMessage": {
-      "group": "Get in touch",
-      "where": [
-        "get-in-touch.html"
-      ],
-      "label": "Text",
-      "en": "Your message",
-      "ar": "رسالتك",
-      "href": "",
-      "langs": [
-        "en",
-        "ar"
-      ],
-      "labelAr": "نص"
-    },
-    "contact.formSubmit": {
-      "group": "Get in touch",
-      "where": [
-        "get-in-touch.html"
-      ],
-      "label": "Button",
-      "en": "Send message",
-      "ar": "ارسال الرساله",
-      "href": "",
-      "langs": [
-        "en",
-        "ar"
-      ],
-      "labelAr": "زر"
-    },
-    "contact.formNote": {
+    "contact.emailText": {
       "group": "Get in touch",
       "where": [
         "get-in-touch.html"
       ],
       "label": "Paragraph",
-      "en": "This is a demo form and does not send data to any server.",
-      "ar": "هذا نموذج تجريبي لا يرسل بيانات الى اي خادم.",
+      "en": "Reach out for logistics partner inquiries.",
+      "ar": "راسلنا لاستفسارات الشراكات اللوجستيه.",
       "href": "",
       "langs": [
         "en",
@@ -7014,7 +6898,7 @@ window.ING_ADMIN_FIELDS = {
       "where": [
         "get-in-touch.html"
       ],
-      "label": "Name",
+      "label": "Heading",
       "en": "Address",
       "ar": "العنوان",
       "href": "",
@@ -7022,37 +6906,22 @@ window.ING_ADMIN_FIELDS = {
         "en",
         "ar"
       ],
-      "labelAr": "الاسم"
+      "labelAr": "عنوان"
     },
-    "contact.phoneLabel": {
+    "contact.addressText": {
       "group": "Get in touch",
       "where": [
         "get-in-touch.html"
       ],
-      "label": "Name",
-      "en": "Phone",
-      "ar": "الهاتف",
+      "label": "Paragraph",
+      "en": "Visit our central coordination office for strategic planning sessions.",
+      "ar": "زوروا مكتب التنسيق المركزي لدينا لجلسات التخطيط الاستراتيجي.",
       "href": "",
       "langs": [
         "en",
         "ar"
       ],
-      "labelAr": "الاسم"
-    },
-    "contact.emailLabel": {
-      "group": "Get in touch",
-      "where": [
-        "get-in-touch.html"
-      ],
-      "label": "Name",
-      "en": "Email",
-      "ar": "البريد الالكتروني",
-      "href": "",
-      "langs": [
-        "en",
-        "ar"
-      ],
-      "labelAr": "الاسم"
+      "labelAr": "فقرة"
     },
     "contact.hoursLabel": {
       "group": "Get in touch",

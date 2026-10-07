@@ -926,6 +926,113 @@ CLOSING = """
     </div>
   </section>""" % chips("closing.value", ["Reliability", "Efficiency", "Technology"], indent=8)
 
+# The deck's closing slide again, for the contact page: the same strapline and
+# thanks, but the three values as a numbered row and no call-to-action button -
+# on this page the reader has already arrived.
+CONTACT_CLOSING = """
+  <section class="band" data-cimg="band.cta" style="background-image:url('assets/img/cta.jpg')">
+    <div class="band__inner container" data-reveal>
+      <span class="eyebrow eyebrow--plain" data-i18n="closing.eyebrow">Smarter logistics, stronger business</span>
+      <blockquote data-i18n="closing.title" style="font-size:56px">Thank you for your partnership</blockquote>
+      <p class="lead" style="color:rgba(255,255,255,.82);max-width:640px;margin:0 auto" data-i18n="closing.text">Contact ING Logistics to improve your logistics operations.</p>
+      <div class="values-row">
+        <div>
+          <span class="values-row__num">01</span>
+          <strong data-i18n="closing.value.1">Reliability</strong>
+        </div>
+        <div>
+          <span class="values-row__num">02</span>
+          <strong data-i18n="closing.value.2">Efficiency</strong>
+        </div>
+        <div>
+          <span class="values-row__num">03</span>
+          <strong data-i18n="closing.value.3">Technology</strong>
+        </div>
+      </div>
+    </div>
+  </section>"""
+
+# slide 16's three contact blocks: an icon, the label, the way to reach us and
+# the line explaining what that channel is for
+CONTACT_DETAILS = """
+      <div class="cards cards--3" data-reveal>
+        <article class="card">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+              <path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/>
+            </svg>
+          </div>
+          <h3 data-i18n="contact.phoneLabel">Phone</h3>
+          <p class="contact-card__value"><a href="tel:+962799723777" dir="ltr" data-ctext="contact.phone">0799723777</a></p>
+          <p data-i18n="contact.phoneText">Connect with our experts directly for immediate inquiries.</p>
+        </article>
+        <article class="card" data-reveal data-reveal-delay="90">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>
+            </svg>
+          </div>
+          <h3 data-i18n="contact.emailLabel">Email</h3>
+          <p class="contact-card__value"><a href="mailto:info@ing-logistics.com" dir="ltr" data-ctext="contact.email">info@ing-logistics.com</a></p>
+          <p data-i18n="contact.emailText">Reach out for logistics partner inquiries.</p>
+        </article>
+        <article class="card" data-reveal data-reveal-delay="180">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+              <path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/>
+            </svg>
+          </div>
+          <h3 data-i18n="contact.addressLabel">Address</h3>
+          <p class="contact-card__value"><a href="https://maps.google.com/?q=32.51422635237183,35.94295766426107" target="_blank" rel="noopener" data-i18n="location.address">Irbid – Baghdad Street, opposite the Trucks City, Jordan.</a></p>
+          <p data-i18n="contact.addressText">Visit our central coordination office for strategic planning sessions.</p>
+          <p class="contact-card__hours"><strong data-i18n="contact.hoursLabel">Opening hours</strong><span data-i18n="contact.hours">Saturday – Thursday: 8:00 AM – 5:00 PM</span></p>
+        </article>
+      </div>"""
+
+# Parked while there is no endpoint behind it: main.js only simulates the send,
+# so the enquiry form is off the contact page for now. Add CONTACT_FORM back
+# after CONTACT_DETAILS in the contact page's section to put it back.
+CONTACT_FORM = """
+      <div class="form-panel" data-reveal>
+        <form class="form" data-demo-form novalidate>
+          <div class="form__row">
+            <label class="field">
+              <span data-i18n="contact.formName">Full name</span>
+              <input type="text" name="name" required autocomplete="name">
+            </label>
+            <label class="field">
+              <span data-i18n="contact.formEmail">Email address</span>
+              <input type="email" name="email" required autocomplete="email">
+            </label>
+          </div>
+          <div class="form__row">
+            <label class="field">
+              <span data-i18n="contact.formPhone">Mobile number</span>
+              <input type="tel" name="phone" autocomplete="tel">
+            </label>
+            <label class="field">
+              <span data-i18n="contact.formService">Service required</span>
+              <select name="service">
+                <option value="" data-i18n="contact.selectPlaceholder">Choose a service</option>
+                <option value="warehouse" data-i18n="contact.service.warehouse">Warehouse Services Management</option>
+                <option value="delivery" data-i18n="contact.service.delivery">Delivery and Distribution</option>
+                <option value="track" data-i18n="contact.service.track">Track and Trace</option>
+                <option value="offices" data-i18n="contact.service.offices">Various Offices for Work</option>
+              </select>
+            </label>
+          </div>
+          <label class="field">
+            <span data-i18n="contact.formMessage">Your message</span>
+            <textarea name="message" required></textarea>
+          </label>
+          <div>
+            <button class="btn" type="submit" data-i18n="contact.formSubmit">Send message</button>
+          </div>
+          <p class="form__note" data-i18n="contact.formNote">This is a demo form and does not send data to any server.</p>
+          <p class="form__status" role="status" aria-live="polite"></p>
+        </form>
+      </div>"""
+
 
 # --------------------------------------------------------------------------
 # pages
@@ -1079,91 +1186,17 @@ PAGES = [
         eyebrow="pageContact.eyebrow", eyebrow_en="Get in touch",
         title_key="pageContact.title", h1="Contact",
         body="""
-  <section class="section">
+  <section class="section section--soft">
     <div class="container">
-      <div class="contact-grid">
-        <div data-reveal>
-          <div class="section-head">
-            <span class="eyebrow" data-i18n="contact.eyebrow">Get in touch</span>
-            <h2 data-i18n="contact.title">How can we help you?</h2>
-            <p data-i18n="contact.text">Tell us about your logistics requirement and our team will get back to you as soon as possible.</p>
-          </div>
-
-          <form class="form" data-demo-form novalidate>
-            <div class="form__row">
-              <label class="field">
-                <span data-i18n="contact.formName">Full name</span>
-                <input type="text" name="name" required autocomplete="name">
-              </label>
-              <label class="field">
-                <span data-i18n="contact.formEmail">Email address</span>
-                <input type="email" name="email" required autocomplete="email">
-              </label>
-            </div>
-            <div class="form__row">
-              <label class="field">
-                <span data-i18n="contact.formPhone">Mobile number</span>
-                <input type="tel" name="phone" autocomplete="tel">
-              </label>
-              <label class="field">
-                <span data-i18n="contact.formService">Service required</span>
-                <select name="service">
-                  <option value="" data-i18n="contact.selectPlaceholder">Choose a service</option>
-                  <option value="warehouse" data-i18n="contact.service.warehouse">Warehouse Services Management</option>
-                  <option value="delivery" data-i18n="contact.service.delivery">Delivery and Distribution</option>
-                  <option value="track" data-i18n="contact.service.track">Track and Trace</option>
-                  <option value="offices" data-i18n="contact.service.offices">Various Offices for Work</option>
-                </select>
-              </label>
-            </div>
-            <label class="field">
-              <span data-i18n="contact.formMessage">Your message</span>
-              <textarea name="message" required></textarea>
-            </label>
-            <div>
-              <button class="btn" type="submit" data-i18n="contact.formSubmit">Send message</button>
-            </div>
-            <p class="form__note" data-i18n="contact.formNote">This is a demo form and does not send data to any server.</p>
-            <p class="form__status" role="status" aria-live="polite"></p>
-          </form>
-        </div>
-
-        <div data-reveal data-reveal-delay="120">
-          <ul class="info-list">
-            <li>
-              <div class="card__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg>
-              </div>
-              <div><strong data-i18n="contact.addressLabel">Address</strong>
-              <a href="https://maps.google.com/?q=32.51422635237183,35.94295766426107" target="_blank" rel="noopener" dir="ltr" data-i18n="contact.address">32.514226, 35.942958</a></div>
-            </li>
-            <li>
-              <div class="card__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg>
-              </div>
-              <div><strong data-i18n="contact.phoneLabel">Phone</strong>
-              <a href="tel:+962799723777" dir="ltr" data-ctext="contact.phone">0799723777</a></div>
-            </li>
-            <li>
-              <div class="card__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-              </div>
-              <div><strong data-i18n="contact.emailLabel">Email</strong>
-              <a href="mailto:info@ing-logistics.com" dir="ltr" data-ctext="contact.email">info@ing-logistics.com</a></div>
-            </li>
-            <li>
-              <div class="card__icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
-              </div>
-              <div><strong data-i18n="contact.hoursLabel">Opening hours</strong>
-              <span data-i18n="contact.hours">Saturday – Thursday: 8:00 AM – 5:00 PM</span></div>
-            </li>
-          </ul>
-        </div>
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow" data-i18n="contact.eyebrow">Get in touch</span>
+        <h2 data-i18n="contact.title">How can we help you?</h2>
+        <p data-i18n="contact.text">Tell us about your logistics requirement and our team will get back to you as soon as possible.</p>
       </div>
+%s
     </div>
   </section>
-""" + faq_section() + CTA,
+""" % CONTACT_DETAILS + faq_section() + CONTACT_CLOSING,
     ),
 ]
 
