@@ -7438,6 +7438,16 @@ window.ING_ADMIN_FIELDS = {
           "eyebrow": "slide1.eyebrow",
           "title": "slide1.title",
           "text": "slide1.text",
+          "buttons": [
+            {
+              "text": "slide.cta",
+              "href": "our-services.html"
+            },
+            {
+              "text": "slide.cta2",
+              "href": "get-in-touch.html"
+            }
+          ],
           "labelAr": "شريحة 1"
         },
         {
@@ -7447,6 +7457,12 @@ window.ING_ADMIN_FIELDS = {
           "eyebrow": "slide2.eyebrow",
           "title": "slide2.title",
           "text": "slide2.text",
+          "buttons": [
+            {
+              "text": "story.cta",
+              "href": "about-us.html"
+            }
+          ],
           "labelAr": "شريحة 2"
         },
         {
@@ -7456,6 +7472,12 @@ window.ING_ADMIN_FIELDS = {
           "eyebrow": "slide3.eyebrow",
           "title": "slide3.title",
           "text": "slide3.text",
+          "buttons": [
+            {
+              "text": "services.cta",
+              "href": "our-services.html"
+            }
+          ],
           "labelAr": "شريحة 3"
         }
       ],

@@ -325,9 +325,23 @@ def member_item(card, member_id, arabic):
     }, label_ar)
 
 
+def slide_buttons(slide):
+    """The call-to-action buttons a slide already carries, if any - the label
+    keys their text lives under and where each one goes."""
+    buttons = []
+    actions = slide.select_one(".hero__actions")
+    if not actions:
+        return buttons
+    for link in actions.find_all("a"):
+        key = link.get("data-i18n") or link.get("data-ctext")
+        if key:
+            buttons.append({"text": key, "href": (link.get("href") or "").strip()})
+    return buttons
+
+
 def slide_item(slide, slide_id, arabic):
-    """One hero slide: the background photo and the three pieces of text the
-    banner and the intro paragraph are made of."""
+    """One hero slide: the background photo, the three pieces of text the
+    banner and the intro paragraph are made of, and its buttons."""
     grid = slide.find_parent(class_="hero__slides")
     number = list(grid.find_all(class_="hero__slide")).index(slide) + 1 if grid else 0
     bg = slide.select_one("[data-cimg]")
@@ -341,6 +355,7 @@ def slide_item(slide, slide_id, arabic):
         "eyebrow": (eyebrow.get("data-i18n") if eyebrow else "") or "",
         "title": (title.get("data-i18n") if title else "") or "",
         "text": (text.get("data-i18n") if text else "") or "",
+        "buttons": slide_buttons(slide),
     }, "%s %d" % (SLIDE_PREFIX_AR.split("%d")[0].strip(), number))
 
 

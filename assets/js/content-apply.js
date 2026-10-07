@@ -157,9 +157,9 @@
 
   /* New hero slides the admin added: the last slide on the page is copied,
      pointed at the new slide's own keys and appended, so it looks and behaves
-     like the rest, including the EN/AR toggle. A new slide carries text and a
-     photo but no buttons, and an empty eyebrow or intro line is dropped rather
-     than left as a gap. */
+     like the rest, including the EN/AR toggle. A new slide carries text, a photo
+     and - when the admin chose one - a button; an empty eyebrow or intro line is
+     dropped rather than left as a gap. */
   function buildSlides() {
     if (!buckets.slidesAdded.length) return;
     var grid = document.querySelector("[data-cslides]");
@@ -183,7 +183,18 @@
       fill(card.querySelector(".hero__text"), slide.id + ".text", hasText(slide.id + ".text"));
 
       var actions = card.querySelector(".hero__actions");
-      if (actions) actions.parentNode.removeChild(actions);
+      if (actions) {
+        actions.textContent = "";
+        // the button is only there when a label and a destination were chosen;
+        // applyText() fills the words and applyHrefs() the link, like any other
+        if (hasText(slide.id + ".cta") && buckets.hrefs[slide.id + ".cta"]) {
+          var button = document.createElement("a");
+          button.className = "btn";
+          button.setAttribute("data-i18n", slide.id + ".cta");
+          actions.appendChild(button);
+        }
+        if (!actions.children.length) actions.parentNode.removeChild(actions);
+      }
       grid.appendChild(card);
     });
   }

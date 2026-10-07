@@ -83,8 +83,10 @@ const CONTENT_HEADER = `/* =====================================================
                            extra hero slides, built from the last slide on the
                            page. A slide's eyebrow, headline and intro line are
                            the text keys "<id>.eyebrow", "<id>.title" and
-                           "<id>.text", and its background is the image key
-                           "<id>.photo". The slider always keeps three slides.
+                           "<id>.text", its background is the image key
+                           "<id>.photo", and its button - when it has one - is
+                           the text key "<id>.cta" with the same name in hrefs.
+                           The slider always keeps three slides.
 
    Written by netlify/functions/publish.js when an admin presses "Push
    changes". Anything not listed here falls back to the English copy in the
@@ -381,7 +383,7 @@ function cleanContent(input) {
     }
   });
   content.slidesHidden = cleanSlidesHidden(input.slidesHidden);
-  content.slidesAdded = cleanSlidesAdded(input.slidesAdded, content.text, content.images);
+  content.slidesAdded = cleanSlidesAdded(input.slidesAdded, content.text, content.images, content.hrefs);
   content.slidesAdded.forEach(function (slide) {
     if (content.slidesHidden.indexOf(slide.id) !== -1) {
       throw new Refused(400, "The new slide " + slide.id + " is also on the list of removed slides.");
@@ -452,11 +454,12 @@ function cleanSlidesHidden(input) {
   return seen;
 }
 
-/* New hero slides. Like a member card it is only the identity: the text and the
-   background photo are ordinary entries above, so that they are validated and
-   applied like every other edit. A slide without a headline or a photo would
-   show as an empty banner, so both are required. */
-function cleanSlidesAdded(input, text, images) {
+/* New hero slides. Like a member card it is only the identity: the text, the
+   background photo and the button are ordinary entries above, so that they are
+   validated and applied like every other edit. A slide without a headline or a
+   photo would show as an empty banner, and a button needs both its words and
+   somewhere to go, so those are required too. */
+function cleanSlidesAdded(input, text, images, hrefs) {
   if (input === undefined || input === null) return [];
   if (!Array.isArray(input)) throw new Refused(400, "The list of new slides is malformed.");
   if (input.length > MAX_ADDED) {
@@ -474,6 +477,12 @@ function cleanSlidesAdded(input, text, images) {
     }
     if (!images[id + ".photo"]) {
       throw new Refused(400, "The new slide " + id + " needs a photo.");
+    }
+    const button = (text[id + ".cta"] || {}).en;
+    const target = hrefs[id + ".cta"];
+    if (Boolean(button) !== Boolean(target)) {
+      throw new Refused(400, "The button on the new slide " + id
+        + " needs both its words and somewhere to go - or neither.");
     }
     return { id: id };
   });

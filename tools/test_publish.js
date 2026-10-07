@@ -293,6 +293,37 @@ async function run() {
   response = await write({ slidesAdded: "slide.new1" });
   check("a new slide list that is not a list -> 400", response.statusCode === 400, response);
 
+  /* -------------------------------------------------- the button on a slide */
+  const withCta = (extra) => Object.assign({
+    slidesAdded: [slide()], text: slideText("slide.new1"), images: slideImages("slide.new1"),
+  }, extra);
+
+  response = await write(withCta({ text: Object.assign(slideText("slide.new1"), {
+    "slide.new1.cta": { en: "Talk to us" },
+  }) }));
+  check("a new slide's button with words but nowhere to go -> 400", response.statusCode === 400, response);
+
+  response = await write(withCta({ hrefs: { "slide.new1.cta": "get-in-touch.html" } }));
+  check("a new slide's button with a link but no words -> 400", response.statusCode === 400, response);
+
+  response = await write(withCta({
+    text: Object.assign(slideText("slide.new1"), { "slide.new1.cta": { en: "Talk to us" } }),
+    hrefs: { "slide.new1.cta": "get-in-touch.html" },
+  }));
+  check("a new slide's button with both words and a link is kept",
+    response.statusCode === 200 && published.hrefs["slide.new1.cta"] === "get-in-touch.html",
+    published && published.hrefs);
+
+  response = await write(withCta({ hrefs: { "slide.new1.cta": "nowhere.invalid" } }));
+  check("a new slide's button pointing somewhere impossible -> 400", response.statusCode === 400, response);
+
+  response = await write({ hrefs: { "slide.cta": "our-clients.html" } });
+  check("a slide that is in the page may point its button elsewhere",
+    response.statusCode === 200 && published.hrefs["slide.cta"] === "our-clients.html",
+    published && published.hrefs);
+  response = await write({ hrefs: { "slide.cta": "javascript:alert(1)" } });
+  check("a slide button pointing at javascript: -> 400", response.statusCode === 400, response);
+
   /* -------------------------------------------------------------- photos */
   response = await handler(event(Object.assign({
     action: "image", path: PHOTO, base64: Buffer.from("pretend jpeg bytes").toString("base64"),

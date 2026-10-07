@@ -506,6 +506,19 @@
       : { eyebrow: id + ".eyebrow", title: id + ".title", text: id + ".text", photo: id + ".photo" };
   }
 
+  /* The buttons a slide has. A slide in the page names its own in the manifest
+     and keeps them; a slide added here uses the "<id>.cta" name the site reads
+     when it builds the button, and carries none until one is chosen. */
+  function slideButtons(id) {
+    var item = manifestSlide(id);
+    if (item) {
+      return (item.buttons || []).map(function (button) {
+        return { text: button.text, href: button.href, optional: false };
+      });
+    }
+    return [{ text: id + ".cta", href: "", optional: true }];
+  }
+
   /* Every key the slide cards own, so the group's plain list does not offer the
      same fields a second time. */
   function slideOwnedKeys() {
@@ -514,6 +527,9 @@
       (set.items || []).forEach(function (item) {
         [item.eyebrow, item.title, item.text, item.photo].forEach(function (key) {
           if (key) owned[key] = true;
+        });
+        (item.buttons || []).forEach(function (button) {
+          if (button.text) owned[button.text] = true;
         });
       });
     });
@@ -590,6 +606,11 @@
     if (keys.title && isChanged("text", keys.title)) return true;
     if (keys.text && isChanged("text", keys.text)) return true;
     if (keys.photo && isChanged("image", keys.photo)) return true;
+    var buttons = slideButtons(id);
+    for (var i = 0; i < buttons.length; i += 1) {
+      if (isChanged("text", buttons[i].text)) return true;
+      if (isChanged("href", buttons[i].text)) return true;
+    }
     if (isSlideRemoved(id) !== wasSlideRemoved(id)) return true;
     if (isSlideAdded(id) !== wasSlideAdded(id)) return true;
     return false;
@@ -647,6 +668,10 @@
     draft.slidesAdded = draft.slidesAdded.filter(function (slide) { return slide.id !== id; });
     draft.slidesHidden = draft.slidesHidden.filter(function (name) { return name !== id; });
     [keys.eyebrow, keys.title, keys.text].forEach(function (key) { if (key) delete draft.text[key]; });
+    slideButtons(id).forEach(function (button) {
+      delete draft.text[button.text];
+      delete draft.hrefs[button.text];
+    });
     if (keys.photo) {
       delete draft.images[keys.photo];
       if (blobs[keys.photo]) {
@@ -1033,9 +1058,10 @@
 
     var lead = document.createElement("p");
     lead.className = "fields__lead";
-    lead.textContent = t("Each slide has a background photo, an eyebrow, a headline and an "
-      + "intro line, on {pages}. The slider keeps at least {n} slides, so add one before "
-      + "taking one off.", { pages: pagesLabel(set.where), n: MIN_SLIDES });
+    lead.textContent = t("Each slide has a background photo, an eyebrow, a headline, an "
+      + "intro line and a button that points at any page or link the site already has, on "
+      + "{pages}. The slider keeps at least {n} slides, so add one before taking one off.",
+      { pages: pagesLabel(set.where), n: MIN_SLIDES });
     wrapper.appendChild(lead);
 
     set.items.forEach(function (item) { wrapper.appendChild(slideCard(item.id)); });
@@ -1084,8 +1110,13 @@
     card.appendChild(slideTextBox(id, keys.title, t("Headline"), false));
     card.appendChild(slideTextBox(id, keys.text, t("Intro text"), true));
 
+    var buttons = slideButtons(id);
+    buttons.forEach(function (button, position) {
+      card.appendChild(slideCta(id, button, position, buttons.length));
+    });
+
     var warn = document.createElement("p");
-    warn.className = "field__warn";
+    warn.className = "field__warn field__warn--arabic";
     warn.textContent = t("The Arabic side is empty, so the Arabic site shows the English text.");
     warn.hidden = !(isSlideAdded(id) && missingSlideArabic(id));
     card.appendChild(warn);
@@ -1095,7 +1126,8 @@
     var note = document.createElement("p");
     note.className = "field__hint";
     note.textContent = isSlideAdded(id)
-      ? t("A new slide is built from the last slide on the page and carries no buttons of its own.")
+      ? t("A new slide is built from the last slide on the page: give it a headline and "
+        + "a photo, and a button if you want one.")
       : t("This slide is in the page, so it can be removed but not deleted.");
     card.appendChild(note);
     return card;
@@ -1140,6 +1172,135 @@
     return !textValue(keys.title, "ar") || !textValue(keys.text, "ar");
   }
 
+  /* Where a button may point: the pages, the sections and the contact details
+     the site already has, so the admin picks something that exists rather than
+     typing an address that may lead nowhere. */
+  function destinations() {
+    var list = [];
+    var seen = {};
+    MANIFEST.pages.forEach(function (page) {
+      if (seen[page.file]) return;
+      seen[page.file] = true;
+      list.push({ value: page.file, label: label(page), group: "Pages" });
+    });
+    Object.keys(MANIFEST.fields).forEach(function (key) {
+      var info = MANIFEST.fields[key];
+      if (!info.href || seen[info.href]) return;
+      seen[info.href] = true;
+      list.push({ value: info.href, label: destinationName(info.href, info), group: destinationGroup(info.href) });
+    });
+    return list;
+  }
+
+  function destinationGroup(href) {
+    if (href.indexOf("#") !== -1) return "Sections";
+    return href.indexOf(".html") !== -1 ? "Pages" : "Contact";
+  }
+
+  /* The words the admin sees for a destination. The site's own text names it
+     where that reads as a name (a section heading); the kind of link is put in
+     front of the ones that would otherwise show a bare address. */
+  function destinationName(href, info) {
+    var text = String(info.en || "").replace(/<[^>]*>/g, "").trim();
+    if (href.indexOf("tel:") === 0) return text ? t("Phone") + " \u2014 " + text : t("Phone");
+    if (href.indexOf("mailto:") === 0) return text ? t("E-mail") + " \u2014 " + text : t("E-mail");
+    if (/^https?:/i.test(href)) return text ? t("External link") + " \u2014 " + text : t("External link");
+    return text || href;
+  }
+
+  /* One call-to-action button: its label in both languages and where it goes.
+     A slide that came from the page keeps the button it has; a new slide's is
+     optional, and picking "No button" takes both the label and the link away. */
+  function slideCta(id, button, position, total) {
+    var block = document.createElement("div");
+    block.className = "field__cta";
+
+    var caption = document.createElement("p");
+    caption.className = "field__caption";
+    caption.textContent = total > 1
+      ? t("Call to action {n}", { n: position + 1 })
+      : t("Call to action");
+    block.appendChild(caption);
+
+    var row = document.createElement("div");
+    row.className = "field__row";
+
+    var current = hrefValue(button.text);
+    var list = destinations();
+    if (current && !list.some(function (item) { return item.value === current; })) {
+      list = list.concat([{ value: current, label: current, group: "Current" }]);
+    }
+
+    var select = document.createElement("select");
+    select.className = "field__select";
+    if (button.optional) select.appendChild(option(t("No button"), ""));
+    else if (!current) select.appendChild(option(t("Choose a destination"), ""));
+
+    ["Pages", "Sections", "Contact", "Current"].forEach(function (name) {
+      var items = list.filter(function (item) { return item.group === name; });
+      if (!items.length) return;
+      var group = document.createElement("optgroup");
+      group.label = t(name);
+      items.forEach(function (item) { group.appendChild(option(item.label, item.value)); });
+      select.appendChild(group);
+    });
+    select.value = current;
+
+    select.addEventListener("change", function () {
+      if (!select.value) {
+        // "No button": the label and the link both go, so nothing is left over
+        delete draft.hrefs[button.text];
+        delete draft.text[button.text];
+        saveDraft();
+        renderFields();
+        schedulePreview();
+        return;
+      }
+      setHref(button.text, select.value);
+      warn.hidden = !(button.optional && buttonIncomplete(button));
+      changed(button.text, "href");
+      refreshSlide(id);
+    });
+    row.appendChild(box(t("Goes to"), select));
+
+    [[t("English"), "en"], [t("Arabic"), "ar"]].forEach(function (pair) {
+      var control = document.createElement("input");
+      control.type = "text";
+      control.value = textValue(button.text, pair[1]);
+      if (pair[1] === "ar") control.dir = "rtl";
+      control.addEventListener("input", function () {
+        setText(button.text, pair[1], control.value);
+        warn.hidden = !(button.optional && buttonIncomplete(button));
+        refreshSlide(id);
+      });
+      var wrapper = box(pair[0], control);
+      if (pair[1] === "ar") wrapper.className += " field__box--ar";
+      row.appendChild(wrapper);
+    });
+
+    block.appendChild(row);
+
+    var warn = document.createElement("p");
+    warn.className = "field__warn field__warn--button";
+    warn.textContent = t("A button needs either both its words and where it goes, or neither.");
+    warn.hidden = !(button.optional && buttonIncomplete(button));
+    block.appendChild(warn);
+    return block;
+  }
+
+  /* A half-made button - words with nowhere to go, or a link with nothing to
+     say - is refused on push, so it is worth saying so here first. */
+  function buttonIncomplete(button) {
+    return Boolean(textValue(button.text, "en")) !== Boolean(hrefValue(button.text));
+  }
+
+  function option(text, value) {
+    var item = document.createElement("option");
+    item.value = value;
+    item.textContent = text;
+    return item;
+  }
+
   function slideTextBox(id, key, labelText, multiline) {
     var row = document.createElement("div");
     row.className = "field__row";
@@ -1172,7 +1333,7 @@
     card.classList.toggle("is-removed", isSlideRemoved(id));
     $(".field__tag", card).hidden = !isChangedNow;
     $(".field__tag", card).textContent = t(isSlideRemoved(id) ? "Removed" : "Changed");
-    $(".field__warn", card).hidden = !(isSlideAdded(id) && missingSlideArabic(id));
+    $(".field__warn--arabic", card).hidden = !(isSlideAdded(id) && missingSlideArabic(id));
     var toggle = $(".member__toggle", card);
     if (toggle) toggle.textContent = t(isSlideRemoved(id) ? "Bring this slide back" : "Remove this slide");
     $(".field__label", card).textContent = slideTitle(id);
@@ -1739,9 +1900,10 @@
     });
     draft.slidesAdded.forEach(function (slide) { live[slide.id] = true; });
 
-    [["text", ["eyebrow", "title", "text"]], ["images", ["photo"]]].forEach(function (bucket) {
+    [["text", ["eyebrow", "title", "text", "cta"]], ["hrefs", ["cta"]],
+      ["images", ["photo"]]].forEach(function (bucket) {
       Object.keys(content[bucket[0]]).forEach(function (key) {
-        var match = /^(.*)\.(eyebrow|title|text|photo)$/.exec(key);
+        var match = /^(.*)\.(eyebrow|title|text|cta|photo)$/.exec(key);
         if (!match) return;
         var id = match[1];
         if (bucket[1].indexOf(match[2]) === -1 || live[id]) return;

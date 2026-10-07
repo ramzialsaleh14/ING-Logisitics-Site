@@ -21,8 +21,10 @@
                            extra hero slides, built from the last slide on the
                            page. A slide's eyebrow, headline and intro line are
                            the text keys "<id>.eyebrow", "<id>.title" and
-                           "<id>.text", and its background is the image key
-                           "<id>.photo". The slider always keeps three slides.
+                           "<id>.text", its background is the image key
+                           "<id>.photo", and its button - when it has one - is
+                           the text key "<id>.cta" with the same name in hrefs.
+                           The slider always keeps three slides.
 
    Written by netlify/functions/publish.js when an admin presses "Push
    changes". Anything not listed here falls back to the English copy in the

@@ -107,8 +107,8 @@
     "Eyebrow": "سطر تمهيدي",
     "Headline": "عنوان رئيسي",
     "Intro text": "نص تمهيدي",
-    "Each slide has a background photo, an eyebrow, a headline and an intro line, on {pages}. The slider keeps at least {n} slides, so add one before taking one off.":
-      "لكل شريحة صورة خلفية وسطر تمهيدي وعنوان رئيسي ونص تمهيدي، وتظهر في {pages}. يحتفظ الشريط بـ {n} شرائح على الأقل، لذا أضف شريحة قبل إزالة واحدة.",
+    "Each slide has a background photo, an eyebrow, a headline, an intro line and a button that points at any page or link the site already has, on {pages}. The slider keeps at least {n} slides, so add one before taking one off.":
+      "لكل شريحة صورة خلفية وسطر تمهيدي وعنوان رئيسي ونص تمهيدي وزر يشير إلى أي صفحة أو رابط موجود في الموقع، وتظهر في {pages}. يحتفظ الشريط بـ {n} شرائح على الأقل، لذا أضف شريحة قبل إزالة واحدة.",
     "Add a slide": "إضافة شريحة",
     "The banner shows {n} slides as things stand.": "يعرض الشريط {n} شرائح حاليًا.",
     "Remove this slide": "إزالة هذه الشريحة",
@@ -121,10 +121,26 @@
     "Add a new slide first, then you can take this one off the banner.":
       "أضف شريحة جديدة أولًا، ثم يمكنك إزالة هذه من الشريط.",
     "Bring another slide back before deleting this one.": "أعد شريحة أخرى قبل حذف هذه.",
-    "A new slide is built from the last slide on the page and carries no buttons of its own.":
-      "تُبنى الشريحة الجديدة من آخر شريحة في الصفحة ولا تحمل أزرارًا خاصة بها.",
+    "A new slide is built from the last slide on the page: give it a headline and a photo, and a button if you want one.":
+      "تُبنى الشريحة الجديدة من آخر شريحة في الصفحة: امنحها عنوانًا وصورة، وزرًا إن أردت.",
     "This slide is in the page, so it can be removed but not deleted.":
       "هذه الشريحة موجودة في الصفحة، لذا يمكن إزالتها لا حذفها.",
+
+    /* the call-to-action button on a slide */
+    "Call to action": "زر الإجراء",
+    "Call to action {n}": "زر الإجراء {n}",
+    "Goes to": "يؤدي إلى",
+    "No button": "بلا زر",
+    "Choose a destination": "اختر وجهة",
+    "Pages": "الصفحات",
+    "Sections": "أقسام الصفحة",
+    "Contact": "التواصل",
+    "Current": "الحالي",
+    "Phone": "الهاتف",
+    "E-mail": "البريد الإلكتروني",
+    "External link": "رابط خارجي",
+    "A button needs either both its words and where it goes, or neither.":
+      "يحتاج الزر إلى نصّه ووجهته معًا، أو لا شيء منهما.",
 
     /* the state line */
     "This browser is not saving the draft": "هذا المتصفح لا يحفظ المسودة",

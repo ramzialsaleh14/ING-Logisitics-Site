@@ -336,7 +336,7 @@ account `ramzialsaleh14` — see [Accounts](#accounts). What can be changed:
 | **Rates** | the four rate tables on `our-services.html` (storage, handling, system & account, planned launch): each amount, the charging basis beside it, and the row and column headings are separate fields, ready to be filled in whenever the numbers are settled |
 | **Numbers** | the four statistics in the "By the numbers" band |
 | **Team members** | remove a member, bring one back, add a new one, and give each one a photo, a role and a description (see below) |
-| **Hero slides** | add a slide with its own photo and text, take one off the banner, and give every slide a background photo, an eyebrow, a headline and an intro line (see below) |
+| **Hero slides** | add a slide with its own photo, text and button, take one off the banner, and give every slide a background photo, an eyebrow, a headline, an intro line and a button (see below) |
 
 ### Arabic
 
@@ -433,7 +433,12 @@ The home page's banner is marked the same way (`data-cslide`, one per slide, ins
   leave fewer than three.
 * **Add a slide** — adds one to the end of the banner. It is built from the last slide on
   the page, so it looks and behaves like the rest. Give it a headline and a photo before
-  pushing; a new slide carries text and a photo but no buttons of its own.
+  pushing.
+* **Button** — every slide's button has a label in both languages and a destination picked
+  from a list of what the site already has: its six pages, the sections of `our-services.html`,
+  and the phone number, e-mail address and map link. A destination is chosen, never typed, so
+  a button cannot be pointed at an address that does not exist. A slide added from this screen
+  has no button until one is chosen, and picking **No button** takes it away again.
 * **Delete this slide** — only for a slide you added: the slide, its text and its photo are
   dropped from `content.js`. A slide that came from the page can be removed, not deleted.
 
@@ -445,8 +450,14 @@ Two further lists travel with the content:
 | `slidesAdded` | the slides put on it, e.g. `[{ "id": "slide.new1" }]` |
 
 A slide's eyebrow, headline and intro line are the text keys `<id>.eyebrow`, `<id>.title`
-and `<id>.text`, its background is the image key `<id>.photo`, and its dot is built with
-the slide, so nothing else has to be kept in step.
+and `<id>.text`, its background is the image key `<id>.photo`, and its button is the text
+key `<id>.cta` with the same name in `hrefs`. Its dot is built with the slide, so nothing
+else has to be kept in step.
+
+A button is either complete or absent: the publish function refuses a new slide whose button
+has words but nowhere to go, or a link but nothing to say, so a half-made button can never
+reach the site. A slide that is already in the page keeps its button whatever happens - only
+the words and the destination it points at are yours to change.
 
 ### The two-pushes-a-day limit
 

@@ -175,7 +175,8 @@ body { background: var(--soft); }
 .field__box { display: block; }
 .field__box span { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
 .field__box textarea,
-.field__box input {
+.field__box input,
+.field__box select {
   width: 100%;
   padding: 10px 12px;
   background: var(--white);
@@ -187,9 +188,14 @@ body { background: var(--soft); }
 }
 .field__box textarea { min-height: 74px; }
 .field__box textarea:focus,
-.field__box input:focus { border-color: var(--main); outline: 2px solid rgba(243, 108, 36, .16); }
+.field__box input:focus,
+.field__box select:focus { border-color: var(--main); outline: 2px solid rgba(243, 108, 36, .16); }
 .field__box--ar textarea,
 .field__box--ar input { direction: rtl; font-family: var(--font-arabic); }
+
+/* the call-to-action button on a slide */
+.field__cta { margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--line); }
+.field__caption { margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--dark); }
 
 /* photo field */
 .photo { display: flex; gap: 16px; align-items: flex-start; }
